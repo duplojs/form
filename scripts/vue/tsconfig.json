@@ -1,0 +1,11 @@
+{
+  "extends": "../../tsconfig.app.json",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+	  "@V/*": ["./*"],
+    },
+	"types": ["web"],
+  },
+  "include": ["**/*.ts", "**/*.vue"],
+}

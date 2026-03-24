@@ -1,0 +1,96 @@
+{
+  "name": "@duplojs/form",
+  "version": "0.0.0",
+  "author": {
+    "name": "mathcovax",
+    "url": "https://github.com/mathcovax"
+  },
+  "contributors": [
+    {
+      "name": "zeriix",
+      "url": "https://github.com/ZeRiix"
+    }
+  ],
+  "license": "MIT",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/duplojs/form.git"
+  },
+  "scripts": {
+    "build": "./.commands/build.sh",
+    "dev:vue": "cd dev/vue && vite --config vite.config.js",
+    "docs:dev": "npm -w docs run docs:dev",
+    "docs:build": "npm -w docs run docs:build",
+    "docs:preview": "npm -w docs run docs:preview",
+    "test:tu": "vitest --coverage",
+    "test:tu:bench": "vitest bench",
+    "test:tu:watch": "vitest --coverage --watch",
+    "test:tu:update": "vitest --coverage --update",
+    "test:types": "./.commands/test-types.sh",
+    "test:lint": "./.commands/test-eslint.sh",
+    "test:lint:fix": "./.commands/test-eslint.sh --fix",
+    "prepare": "husky"
+  },
+  "exports": {
+    "./vue": {
+      "import": "./dist/vue/index.js",
+      "require": "./dist/client/index.cjs",
+      "types": "./dist/client/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "peerDependencies": {
+    "@duplojs/utils": ">=1.6.1 <2.0.0",
+    "vue": ">=3.5.30 <4.0.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "19.8.1",
+    "@commitlint/config-conventional": "19.8.1",
+    "@duplojs/dev-tools": "0.2.0",
+    "@duplojs/eslint": "0.5.0",
+    "@types/web": "^0.0.344",
+    "@vitejs/plugin-vue": "^6.0.5",
+    "@vitest/coverage-istanbul": "3.2.4",
+    "eslint": "9.34.0",
+    "eslint-plugin-vue": "^10.8.0",
+    "husky": "9.1.7",
+    "tsc-alias": "^1.8.16",
+    "typescript": "5.9.3",
+    "typescript-eslint": "^8.57.2",
+    "vite": "7.3.1",
+    "vite-tsconfig-paths": "5.1.4",
+    "vitest": "3.2.4",
+    "vue-eslint-parser": "^10.4.0",
+    "vue-tsc": "3.2.6"
+  },
+  "workspaces": [
+    "integration",
+    "docs"
+  ],
+  "keywords": [
+    "typescript",
+    "utils",
+    "functional-programming",
+    "immutable",
+    "pipe",
+    "curry",
+    "data-parser",
+    "pattern-matching",
+    "either",
+    "monad",
+    "array-utils",
+    "object-utils",
+    "string-utils",
+    "date-utils",
+    "ddd",
+    "clean-architecture",
+    "duplojs"
+  ],
+  "engines": {
+    "node": ">=22.15.1"
+  }
+}

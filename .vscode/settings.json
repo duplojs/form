@@ -1,0 +1,28 @@
+{
+	"editor.tabSize": 4,
+	"editor.insertSpaces": false,
+	"editor.detectIndentation": false,
+
+	"files.autoSave": "off",
+
+	"[yaml]": {
+		"editor.tabSize": 2,
+		"editor.insertSpaces": true,
+	},
+
+	"[json]": {
+		"editor.tabSize": 2,
+		"editor.insertSpaces": true,
+	},
+    
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": "explicit"
+	},
+	
+	"js/ts.tsdk.path": "node_modules/typescript/lib",
+	"js/ts.updateImportsOnFileMove.enabled": "prompt",
+	"prettier.enable": false,
+	"js/ts.format.enabled": false,
+	"html.format.enable": false,
+	"json.format.enable": false,
+}
