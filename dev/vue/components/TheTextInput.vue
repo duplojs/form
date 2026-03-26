@@ -4,10 +4,11 @@ interface Props {
 }
 
 defineProps<Props>();
+
+const model = defineModel<string>();
+
 </script>
 
 <template>
-	<div>
-		{{ test }}
-	</div>
+	<input v-model="model" />
 </template>

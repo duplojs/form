@@ -65,6 +65,15 @@ export default [
 					order: [["script", "template"], "style"],
 				},
 			],
+			"vue/html-self-closing": ["error", {
+				"html": {
+					"void": "always",
+					"normal": "always",
+					"component": "always"
+				},
+				"svg": "always",
+				"math": "always"
+			}],
 			"@stylistic/js/max-len": "off",
 			"@typescript-eslint/no-unsafe-argument": "off",
 			"@typescript-eslint/no-unsafe-call": "off",

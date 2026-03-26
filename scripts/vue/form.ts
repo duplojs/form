@@ -1,0 +1,90 @@
+import { type FunctionalComponent, type HTMLAttributes, type Ref, ref } from "vue";
+import { type GetFormFieldCheckedValue, type GetFormFieldValue, type FormField, type ErrorProperties } from "./formField";
+import { simpleClone } from "@duplojs/utils";
+import type * as EE from "@duplojs/utils/either";
+import { type Templates } from "./template";
+import { type VueComponent } from "./types";
+
+export interface FormTemplateProperties {
+	props: {
+		getCurrentValue(): unknown;
+	};
+	emits: {
+		submit: [];
+	};
+	slots: {
+		formField(): any;
+		submitter(): any;
+	};
+}
+declare module "./template" {
+	interface AllowedTemplateComponents {
+		form: VueComponent<FormTemplateProperties>;
+	}
+}
+
+export interface FormProperties<
+	GenericFormField extends FormField = FormField,
+> {
+	check(): EE.Error<ErrorProperties> | EE.Success<GetFormFieldCheckedValue<GenericFormField>>;
+	currentValue: Ref<GetFormFieldValue<GenericFormField>>;
+	reset(): void;
+	component: FunctionalComponent<
+		HTMLAttributes,
+		{ default?(): any }
+	>;
+}
+
+export interface UseFormParams {
+	template?: Templates["form"];
+}
+
+export type UseForm = <
+	GenericFormField extends FormField,
+>(
+	formField: GenericFormField,
+	params?: UseFormParams
+) => FormProperties<GenericFormField>;
+
+export function createForm(templates: Templates): UseForm;
+
+export function createForm(templates: Templates) {
+	return (formField: FormField, params: UseFormParams = {}) => {
+		const templateForm = params.template ?? templates.form;
+
+		const currentValue = ref(formField.defaultValue);
+
+		const formFieldInstance = formField.new(
+			currentValue,
+			"root",
+			templates,
+		);
+
+		const check = () => formFieldInstance.check();
+
+		const reset = () => {
+			formFieldInstance.reset();
+			currentValue.value = simpleClone(formField.defaultValue);
+		};
+
+		const getCurrentValue = () => currentValue.value;
+
+		const component: FormProperties["component"] = (props, { slots }) => templateForm.getVNode(
+			{
+				...props,
+				getCurrentValue,
+			},
+			{
+				submitter: slots.default ?? (() => null),
+				formField: formFieldInstance.getVNode,
+			},
+		);
+
+		return {
+			currentValue,
+			component,
+			reset,
+			check,
+		};
+	};
+}
