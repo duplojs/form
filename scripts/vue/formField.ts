@@ -1,4 +1,4 @@
-import { type Kind } from "@duplojs/utils";
+import { type AnyTuple, type Kind } from "@duplojs/utils";
 import type * as DP from "@duplojs/utils/dataParser";
 import type * as EE from "@duplojs/utils/either";
 import { createVueFormKind } from "./kind";
@@ -21,9 +21,10 @@ export interface ErrorProperties {
 export interface FormFieldInstance<
 	GenericCheckedValue extends unknown = unknown,
 > {
-	check(): EE.Error<ErrorProperties> | EE.Success<GenericCheckedValue>;
+	check(): EE.Error<AnyTuple<ErrorProperties>> | EE.Success<GenericCheckedValue>;
 	reset(): void;
-	getVNode(): VNode | null | boolean;
+	dispose(): void;
+	getVNode(): VNode;
 }
 
 export interface FormFieldProperties<

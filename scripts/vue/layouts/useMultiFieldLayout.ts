@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/prefer-for-of */
-import { type GetFormFieldCheckedValue, type GetFormFieldValue, type FormField, createFormField } from "@V/formField";
-import { computed, type VNode } from "vue";
+import { type GetFormFieldCheckedValue, type GetFormFieldValue, type FormField, createFormField, type ErrorProperties } from "@V/formField";
+import { computed, h, type VNode } from "vue";
 import * as EE from "@duplojs/utils/either";
+import * as AA from "@duplojs/utils/array";
 import { unwrap } from "@duplojs/utils";
 import { type VueComponent } from "@V/types";
 import { type Templates } from "@V/template";
@@ -10,7 +11,7 @@ export interface MultiFieldTemplateProperties {
 	props: {
 		fieldKey: string;
 		getCurrentValue(): unknown;
-		formFields?: (VNode | null | boolean)[];
+		getFormFields(): VNode[];
 	};
 	slots: {
 		formField(): any;
@@ -98,6 +99,7 @@ export function useMultiFieldLayout(
 
 			const check = () => {
 				const result: Record<string, unknown> = {};
+				const errors: ErrorProperties[] = [];
 
 				for (let index = 0; index < formFieldInstanceEntries.length; index++) {
 					const [key, formFieldInstance] = formFieldInstanceEntries[index]!;
@@ -105,10 +107,14 @@ export function useMultiFieldLayout(
 					const checkResult = formFieldInstance.check();
 
 					if (EE.isLeft(checkResult)) {
-						return checkResult;
+						errors.push(...unwrap(checkResult));
+					} else {
+						result[key] = unwrap(checkResult);
 					}
+				}
 
-					result[key] = unwrap(checkResult);
+				if (AA.minElements(errors, 1)) {
+					return EE.error(errors);
 				}
 
 				return EE.success(result);
@@ -120,21 +126,39 @@ export function useMultiFieldLayout(
 				);
 			};
 
+			const dispose = () => {
+				console.log("dispose multi");
+
+				formFieldInstanceEntries.forEach(
+					([, formFieldInstance]) => void formFieldInstance.dispose(),
+				);
+			};
+
 			const getCurrentValue = () => modelValue.value;
 
-			const getVNode = () => {
-				const formFields = formFieldInstanceEntries.map(
-					(entry) => entry[1].getVNode(),
-				);
+			const formFieldVNodes = formFieldInstanceEntries.map(
+				(entry) => entry[1].getVNode(),
+			);
 
-				return template.getVNode(
-					{
-						fieldKey: key,
-						formFields,
-						getCurrentValue,
-					},
-					{
-						formField: () => formFields,
+			const getFormFieldVNodes = () => formFieldVNodes;
+
+			const getVNode = () => {
+				console.log("render multi");
+
+				return h(
+					() => {
+						console.log("inner render multi");
+
+						return template.getVNode(
+							{
+								fieldKey: key,
+								getFormFields: getFormFieldVNodes,
+								getCurrentValue,
+							},
+							{
+								formField: getFormFieldVNodes,
+							},
+						);
 					},
 				);
 			};
@@ -142,6 +166,7 @@ export function useMultiFieldLayout(
 			return {
 				check,
 				reset,
+				dispose,
 				getVNode,
 			};
 		},

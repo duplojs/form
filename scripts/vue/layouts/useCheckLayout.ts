@@ -2,15 +2,15 @@ import { createFormField, type FormField, type GetFormFieldValue } from "@V/form
 import * as EE from "@duplojs/utils/either";
 import type * as DP from "@duplojs/utils/dataParser";
 import { unwrap } from "@duplojs/utils";
-import { ref, watch } from "vue";
+import { h, ref, watch } from "vue";
 import { type VueComponent } from "@V/types";
 import { type Templates } from "@V/template";
 
 export interface CheckTemplateProperties {
 	props: {
 		fieldKey: string;
-		errorMessage: string | null;
 		getCurrentValue(): unknown;
+		getErrorMessage(): string | null;
 	};
 	slots: {
 		formField(): any;
@@ -70,10 +70,14 @@ export function useCheckLayout(
 					const dataParserError = unwrap(result);
 					errorMessage.value = dataParserError.issues[0]?.source.definition.errorMessage ?? "Error";
 
-					return EE.error({
-						key,
-						dataParserError,
-					});
+					return EE.error(
+						[
+							{
+								key,
+								dataParserError,
+							},
+						] as const,
+					);
 				}
 
 				errorMessage.value = null;
@@ -95,24 +99,41 @@ export function useCheckLayout(
 				errorMessage.value = null;
 			};
 
+			const dispose = () => {
+				formFieldInstance.dispose();
+			};
+
 			const getCurrentValue = () => modelValue.value;
 
-			const getVNode = () => {
-				const vNode = formFieldInstance.getVNode();
+			const formFieldVNode = formFieldInstance.getVNode();
 
-				return template.getVNode(
-					{
-						fieldKey: key,
-						errorMessage: errorMessage.value,
-						getCurrentValue,
+			const getFormFieldVNode = () => formFieldVNode;
+
+			const getErrorMessage = () => errorMessage.value;
+
+			const getVNode = () => {
+				console.log("render check");
+
+				return h(
+					() => {
+						console.log("inner render check");
+
+						return template.getVNode(
+							{
+								fieldKey: key,
+								getErrorMessage,
+								getCurrentValue,
+							},
+							{ formField: getFormFieldVNode },
+						);
 					},
-					{ formField: () => vNode },
 				);
 			};
 
 			return {
 				check,
 				reset,
+				dispose,
 				getVNode,
 			};
 		},

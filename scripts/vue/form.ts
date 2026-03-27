@@ -1,7 +1,6 @@
-import { type FunctionalComponent, type HTMLAttributes, type Ref, ref } from "vue";
-import { type GetFormFieldCheckedValue, type GetFormFieldValue, type FormField, type ErrorProperties } from "./formField";
+import { type FunctionalComponent, h, type HTMLAttributes, onBeforeUnmount, type Ref, ref } from "vue";
+import { type GetFormFieldCheckedValue, type GetFormFieldValue, type FormField, type FormFieldInstance } from "./formField";
 import { simpleClone } from "@duplojs/utils";
-import type * as EE from "@duplojs/utils/either";
 import { type Templates } from "./template";
 import { type VueComponent } from "./types";
 
@@ -26,11 +25,12 @@ declare module "./template" {
 export interface FormProperties<
 	GenericFormField extends FormField = FormField,
 > {
-	check(): EE.Error<ErrorProperties> | EE.Success<GetFormFieldCheckedValue<GenericFormField>>;
+	check: FormFieldInstance<GetFormFieldCheckedValue<GenericFormField>>["check"];
 	currentValue: Ref<GetFormFieldValue<GenericFormField>>;
 	reset(): void;
 	component: FunctionalComponent<
 		HTMLAttributes,
+		{},
 		{ default?(): any }
 	>;
 }
@@ -52,7 +52,7 @@ export function createForm(templates: Templates) {
 	return (formField: FormField, params: UseFormParams = {}) => {
 		const templateForm = params.template ?? templates.form;
 
-		const currentValue = ref(formField.defaultValue);
+		const currentValue = ref(simpleClone(formField.defaultValue));
 
 		const formFieldInstance = formField.new(
 			currentValue,
@@ -69,16 +69,29 @@ export function createForm(templates: Templates) {
 
 		const getCurrentValue = () => currentValue.value;
 
-		const component: FormProperties["component"] = (props, { slots }) => templateForm.getVNode(
-			{
-				...props,
-				getCurrentValue,
-			},
-			{
-				submitter: slots.default ?? (() => null),
-				formField: formFieldInstance.getVNode,
-			},
-		);
+		const formFieldVNode = formFieldInstance.getVNode();
+
+		const component: FormProperties["component"] = (props, { slots }) => {
+			console.log("form render");
+
+			return h(
+				() => {
+					console.log("inner form render");
+
+					return templateForm.getVNode(
+						{
+							...props,
+							onSubmit: () => {},
+							getCurrentValue,
+						},
+						{
+							submitter: slots.default ?? (() => null),
+							formField: () => formFieldVNode,
+						},
+					);
+				},
+			);
+		};
 
 		return {
 			currentValue,

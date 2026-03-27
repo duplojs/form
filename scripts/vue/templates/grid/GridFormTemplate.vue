@@ -13,6 +13,8 @@ const emit = defineEmits<FormTemplateProperties["emits"]>();
 
 function submit(event: SubmitEvent) {
 	event.preventDefault();
+	event.stopPropagation();
+	event.stopImmediatePropagation();
 	emit("submit");
 }
 

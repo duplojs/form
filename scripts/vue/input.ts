@@ -1,6 +1,6 @@
 import { type MayBeGetter, type AnyFunction, type SimplifyTopLevel, type Unwrap, justReturn } from "@duplojs/utils";
 import * as EE from "@duplojs/utils/either";
-import { createFormField, type ErrorProperties, type FormField } from "./formField";
+import { createFormField, type FormFieldInstance, type FormField } from "./formField";
 import { type VueComponent } from "./types";
 import { h, ref } from "vue";
 
@@ -12,8 +12,9 @@ export type VueInputComponent = VueComponent<{
 		"update:modelValue"(value: any): any;
 	};
 	expose: {
-		check?(): EE.Error<ErrorProperties> | EE.Success<unknown>;
-		reset?(): void;
+		check?: FormFieldInstance["check"];
+		reset?: FormFieldInstance["reset"];
+		dispose?: FormFieldInstance["dispose"];
 	};
 }>;
 
@@ -140,24 +141,41 @@ export function createInput(
 					componentRef.value?.reset?.();
 				};
 
-				const getVNode = () => h(
-					inputComponent,
-					{
-						...defaultParams.props,
-						...getLocalProps(),
-						modelValue: modelValue.value,
-						"onUpdate:modelValue": (value: any) => {
-							modelValue.value = value;
+				const dispose = () => {
+					console.log("dispose input");
+
+					componentRef.value?.dispose?.();
+				};
+
+				const getVNode = () => {
+					console.log("render input");
+
+					return h(
+						() => {
+							console.log("inner render input");
+
+							return h(
+								inputComponent,
+								{
+									...defaultParams.props,
+									...getLocalProps(),
+									modelValue: modelValue.value,
+									"onUpdate:modelValue": (value: any) => {
+										modelValue.value = value;
+									},
+									id: key,
+									key: key,
+									ref: componentRef,
+								},
+							);
 						},
-						id: key,
-						key: key,
-						ref: componentRef,
-					},
-				);
+					);
+				};
 
 				return {
 					check,
 					reset,
+					dispose,
 					getVNode,
 				};
 			},

@@ -11,6 +11,7 @@ defineSlots<CheckTemplateProperties["slots"]>();
 <template>
 	<div>
 		<slot name="formField" />
-		{{ errorMessage }}
+
+		{{ getErrorMessage() }}
 	</div>
 </template>

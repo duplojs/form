@@ -32,7 +32,10 @@ export interface Template<
 	GenericComponentInstance extends AllowedTemplateComponentInstances = AllowedTemplateComponentInstances,
 > extends Kind<typeof templateKind.definition> {
 	getVNode(
-		props: GenericComponentInstance["$props"] & object,
+		props: (
+			& GenericComponentInstance["$props"]
+			& object
+		),
 		slots: GenericComponentInstance["$slots"]
 	): VNode;
 }
