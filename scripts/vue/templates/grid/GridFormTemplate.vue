@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import { type FormTemplateProperties } from "@V/form";
 
-export type Props = {
-	test: string;
-} & FormTemplateProperties["props"];
+export type Props = FormTemplateProperties["props"];
 
 defineProps<Props>();
 
@@ -23,7 +21,7 @@ function submit(event: SubmitEvent) {
 <template>
 	<form @submit="submit">
 		<slot name="formField" />
-		{{ test }}
+
 		<slot name="submitter" />
 	</form>
 </template>

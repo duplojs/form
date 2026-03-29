@@ -37,9 +37,6 @@ export interface UseRepeatLayoutParams {
 	template?: Templates["repeat"];
 }
 
-const tt = new WeakSet();
-console.log(tt);
-
 export function useRepeatLayout<
 	GenericFormField extends FormField,
 >(
@@ -58,19 +55,21 @@ export function useRepeatLayout(
 		(modelValue, key, templates) => {
 			const template = params?.template ?? templates.repeat;
 
-			const sizeModelValue = shallowRef(
-				Array.from({ length: modelValue.value.length }),
-			);
-
 			const scope = effectScope();
-			const formFieldInstances = scope.run(() => {
-				const stopWatch = watch(
+			const {
+				formFieldInstances,
+				formFieldVNodes,
+			} = scope.run(() => {
+				const sizeModelValue = shallowRef(
+					Array.from({ length: modelValue.value.length }),
+				);
+
+				watch(
 					() => modelValue.value.length,
 					(length) => {
 						sizeModelValue.value = Array.from({ length });
 					},
 				);
-				tt.add(stopWatch);
 
 				const formFieldInstances = computed(
 					() => sizeModelValue.value.map(
@@ -101,7 +100,17 @@ export function useRepeatLayout(
 					),
 				);
 
-				return formFieldInstances;
+				const formFieldVNodes = computed(
+					() => formFieldInstances.value
+						.map(
+							(formFieldInstance) => formFieldInstance.getVNode(),
+						),
+				);
+
+				return {
+					formFieldInstances,
+					formFieldVNodes,
+				};
 			})!;
 
 			const check = () => {
@@ -143,13 +152,6 @@ export function useRepeatLayout(
 			};
 
 			const getCurrentValue = () => modelValue.value;
-
-			const formFieldVNodes = computed(
-				() => formFieldInstances.value
-					.map(
-						(formFieldInstance) => formFieldInstance.getVNode(),
-					),
-			);
 
 			const getFormFieldVNodes = () => formFieldVNodes.value;
 

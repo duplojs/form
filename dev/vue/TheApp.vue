@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { createInput, useDisabledLayout, createForm, useMultiFieldLayout, useGridFormTemplate, useGridMultiFieldTemplate, useGridCheckTemplate, useCheckLayout, useGridRepeatTemplate, useRepeatLayout, useGridUnionTemplate, useUnionLayout } from "@V";
+import { createInput, useDisabledLayout, createForm, useMultiLayout, useGridFormTemplate, useGridMultiTemplate, useGridCheckTemplate, useCheckLayout, useGridRepeatTemplate, useRepeatLayout, useGridUnionTemplate, useUnionLayout } from "@V";
 import TheTextInput from "./components/TheTextInput.vue";
 import { ref } from "vue";
 import { DPE } from "@duplojs/utils";
@@ -16,7 +16,7 @@ const disabled = ref(false);
 
 const useForm = createForm({
 	form: useGridFormTemplate(),
-	multiField: useGridMultiFieldTemplate(),
+	multi: useGridMultiTemplate(),
 	check: useGridCheckTemplate(),
 	repeat: useGridRepeatTemplate(),
 	union: useGridUnionTemplate(),
@@ -28,7 +28,7 @@ const { component: Form, currentValue, check } = useForm(
 			[
 				[
 					"one",
-					useMultiFieldLayout({
+					useMultiLayout({
 						name: useRepeatLayout(
 							useInput({ defaultValue: "tt" }),
 							{

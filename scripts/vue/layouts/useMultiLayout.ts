@@ -7,7 +7,7 @@ import { unwrap } from "@duplojs/utils";
 import { type VueComponent } from "@V/types";
 import { type Templates } from "@V/template";
 
-export interface MultiFieldTemplateProperties {
+export interface MultiTemplateProperties {
 	props: {
 		fieldKey: string;
 		getCurrentValue(): unknown;
@@ -19,7 +19,7 @@ export interface MultiFieldTemplateProperties {
 }
 declare module "@V/template" {
 	interface AllowedTemplateComponents {
-		multiField: VueComponent<MultiFieldTemplateProperties>;
+		multi: VueComponent<MultiTemplateProperties>;
 	}
 }
 
@@ -34,10 +34,10 @@ export type FormFieldEntry = [
 ];
 
 export interface UseMultiFieldLayoutParams {
-	template?: Templates["multiField"];
+	template?: Templates["multi"];
 }
 
-export function useMultiFieldLayout<
+export function useMultiLayout<
 	GenericFormFieldWrapper extends FormFieldWrapper,
 >(
 	formFieldWrapper: GenericFormFieldWrapper,
@@ -51,7 +51,7 @@ export function useMultiFieldLayout<
 	}
 >;
 
-export function useMultiFieldLayout<
+export function useMultiLayout<
 	GenericFormFieldEntry extends FormFieldEntry,
 >(
 	formFieldEntries: GenericFormFieldEntry[],
@@ -65,7 +65,7 @@ export function useMultiFieldLayout<
 	}
 >;
 
-export function useMultiFieldLayout(
+export function useMultiLayout(
 	formFields: FormFieldWrapper | FormFieldEntry[],
 	params?: UseMultiFieldLayoutParams,
 ): FormField<
@@ -78,7 +78,7 @@ export function useMultiFieldLayout(
 
 	return createFormField(
 		(modelValue, key, templates) => {
-			const template = params?.template ?? templates.multiField;
+			const template = params?.template ?? templates.multi;
 
 			const formFieldInstanceEntries = formFieldEntries
 				.map(

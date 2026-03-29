@@ -76,7 +76,10 @@ export function useUnionLayout(
 			const template = params?.template ?? templates.union;
 
 			const scope = effectScope();
-			const formFieldInstance = scope.run(() => {
+			const {
+				formFieldInstance,
+				formFieldVNode,
+			} = scope.run(() => {
 				watch(
 					() => modelValue.value.kind,
 					(kind) => {
@@ -113,7 +116,12 @@ export function useUnionLayout(
 					(newValue, oldValue) => void oldValue.dispose(),
 				);
 
-				return formFieldInstance;
+				const formFieldVNode = computed(() => formFieldInstance.value.getVNode());
+
+				return {
+					formFieldInstance,
+					formFieldVNode,
+				};
 			})!;
 
 			const check = () => {
@@ -138,8 +146,6 @@ export function useUnionLayout(
 			};
 
 			const getCurrentValue = () => modelValue.value;
-
-			const formFieldVNode = computed(() => formFieldInstance.value.getVNode());
 
 			const getFieldVNode = () => formFieldVNode.value;
 
