@@ -15,6 +15,7 @@ export default defineConfig({
 			entry: {
 				index: Path.resolveRelative([import.meta.dirname, "index.ts"]),
 				grid: Path.resolveRelative([import.meta.dirname, "templates/grid/index.ts"]),
+				designSystem: Path.resolveRelative([import.meta.dirname, "designSystem/index.ts"]),
 			},
 			name: "form/vue",
 			formats: ["es", "cjs"],
