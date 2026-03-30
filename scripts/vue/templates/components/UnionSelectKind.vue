@@ -1,5 +1,5 @@
 <script setup lang="ts">
-interface Props {
+export interface Props {
 
 }
 
@@ -8,9 +8,5 @@ defineProps<Props>();
 </script>
 
 <template>
-	<button
-		type="button"
-	>
-		+
-	</button>
+	<div />
 </template>

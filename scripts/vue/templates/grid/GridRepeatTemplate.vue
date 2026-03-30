@@ -3,9 +3,7 @@ import { type RepeatTemplateProperties } from "@V/layouts";
 import { type GridTemplateLayoutContainerProps } from "./types";
 import { computed, type VNode } from "vue";
 import { type VueComponent } from "@V/types";
-import RepeatAddButton from "./components/RepeatAddButton.vue";
-import RepeatRemoveButton from "./components/RepeatRemoveButton.vue";
-import RepeatResetButton from "./components/RepeatResetButton.vue";
+import { RepeatAddButton, RepeatRemoveButton, RepeatResetButton } from "../components";
 
 export type Props = (
 	& RepeatTemplateProperties["props"]

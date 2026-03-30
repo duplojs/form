@@ -1,5 +1,5 @@
 <script setup lang="ts">
-interface Props {
+export interface Props {
 
 }
 
@@ -11,6 +11,6 @@ defineProps<Props>();
 	<button
 		type="button"
 	>
-		reset
+		+
 	</button>
 </template>
