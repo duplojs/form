@@ -2,22 +2,49 @@
 import { type UnionTemplateProperties } from "@V/layouts";
 import { computed } from "vue";
 import { type GridTemplateLayoutContainerProps } from "./types";
+import { type VueComponent } from "@V/types";
+import { UnionSelectKind } from "@V/designSystem";
 
 export type Props = (
 	& UnionTemplateProperties["props"]
 	& GridTemplateLayoutContainerProps
-	& { labels?: Record<string, string> }
+	& {
+		labels?: Record<string, string>;
+		selectKind?: VueComponent<{
+			props: {
+				fieldKey: string;
+				options: {
+					value: string;
+					label: string;
+				}[];
+				modelValue: string;
+			};
+			emits: {
+				"update:modelValue"(value: string): any;
+			};
+		}>;
+	}
 );
 
 const props = withDefaults(
 	defineProps<Props>(),
 	{
+		selectKind: UnionSelectKind,
 	},
 );
 
 const emit = defineEmits<UnionTemplateProperties["emits"]>();
 
 defineSlots<UnionTemplateProperties["slots"]>();
+
+const options = computed(
+	() => props.kinds.map(
+		(value) => ({
+			value,
+			label: props.labels?.[value] ?? value,
+		}),
+	),
+);
 
 const modelValue = computed({
 	get: () => props.getCurrentKind(),
@@ -41,18 +68,12 @@ const selfStyles = computed(() => ({
 		class="duplojs-form-vue-grid-self"
 		:style="selfStyles"
 	>
-		<select
+		<component
+			:is="props.selectKind"
+			:field-key="props.fieldKey"
+			:options
 			v-model="modelValue"
-			:id="`select-union-${props.fieldKey}`"
-		>
-			<option
-				v-for="kind in props.kinds"
-				:value="kind"
-				:key="kind"
-			>
-				{{ props.labels?.[kind] ?? kind }}
-			</option>
-		</select>
+		/>
 
 		<div
 			class="duplojs-form-vue-grid-container"
