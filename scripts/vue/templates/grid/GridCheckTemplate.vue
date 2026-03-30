@@ -8,6 +8,7 @@ export type Props = (
 	& GridTemplateLayoutContainerProps
 	& {
 		label?: string;
+		hideEmptyMessageError?: boolean;
 	}
 );
 
@@ -27,25 +28,28 @@ const containerStyles = computed(() => ({
 
 <template>
 	<div
-		class="duplojs-form-vue-grid-self"
+		class="duplojs-form-vue-grid-self duplojs-form-vue-grid-check-container"
 		:style="selfStyles"
 	>
 		<label
-			v-if="label"
+			v-if="props.label"
 			:for="props.fieldKey"
 			class="duplojs-form-vue-grid-check-label"
 		>
-			{{ label }}
+			{{ props.label }}
 		</label>
 
 		<div
-			class="duplojs-form-vue-grid-check-container"
+			class="duplojs-form-vue-grid-container"
 			:style="containerStyles"
 		>
 			<slot name="formField" />
 		</div>
 
-		<small class="duplojs-form-vue-grid-check-small">
+		<small
+			v-if="props.getErrorMessage() !== null || props.hideEmptyMessageError !== true"
+			class="duplojs-form-vue-grid-check-small"
+		>
 			{{ props.getErrorMessage() }}
 		</small>
 	</div>

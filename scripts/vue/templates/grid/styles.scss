@@ -16,26 +16,35 @@
   initial-value: 5px;
 }
 
-.duplojs-form-vue-grid- {
-	&container {
+.duplojs-form-vue-grid {
+	&-container {
 		display: grid;
 		grid-template-columns: repeat(var(--max-columns), minmax(0, 1fr));
 		gap: var(--gap);
 	}
 
-	&self {
+	&-self {
 		grid-column: span var(--columns)  / span var(--columns);
 	}
 
-	&input-container {
+	&-input-container {
 		display: flex;
 		flex-direction: column;
 	}
 
-	&check- {
-		&container {
+	&-check {
+		&-container {
 			display: flex;
 			flex-direction: column;
+		}
+
+		&-small {
+			display: inline-block;
+			line-height: 1.2em;
+
+			&:empty {
+				min-height: 1.2em;
+			}
 		}
 	}
 }

@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import { type RepeatTemplateProperties } from "@V/layouts";
 import { type GridTemplateLayoutContainerProps } from "./types";
-import { computed } from "vue";
+import { computed, type VNode } from "vue";
+import { type VueComponent } from "@V/types";
+import RepeatAddButton from "./components/RepeatAddButton.vue";
+import RepeatRemoveButton from "./components/RepeatRemoveButton.vue";
+import RepeatResetButton from "./components/RepeatResetButton.vue";
 
 export type Props = (
 	& RepeatTemplateProperties["props"]
@@ -9,12 +13,18 @@ export type Props = (
 	& {
 		elementColumn?: number;
 		elementMaxColumn?: number;
+		removeButton?: VueComponent | (() => VNode);
+		addButton?: VueComponent | (() => VNode);
+		resetButton?: VueComponent | (() => VNode);
 	}
 );
 
 const props = withDefaults(
 	defineProps<Props>(),
 	{
+		addButton: RepeatAddButton,
+		removeButton: RepeatRemoveButton,
+		resetButton: RepeatResetButton,
 	},
 );
 
@@ -55,19 +65,15 @@ const subElementContainerStyles = computed(() => ({
 				:key="index"
 				:style="subElementSelfStyles"
 			>
-				<button
+				<component
+					:is="props.resetButton"
 					@click="emit('resetElement', index)"
-					type="button"
-				>
-					reset
-				</button>
+				/>
 
-				<button
+				<component
+					:is="props.removeButton"
 					@click="emit('removeElement', index)"
-					type="button"
-				>
-					x
-				</button>
+				/>
 
 				<div
 					class="duplojs-form-vue-grid-container"
@@ -78,11 +84,9 @@ const subElementContainerStyles = computed(() => ({
 			</div>
 		</div>
 
-		<button
+		<component
+			:is="props.addButton"
 			@click="emit('addElement')"
-			type="button"
-		>
-			+
-		</button>
+		/>
 	</div>
 </template>

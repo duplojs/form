@@ -6,6 +6,7 @@ import { type GridTemplateLayoutContainerProps } from "./types";
 export type Props = (
 	& UnionTemplateProperties["props"]
 	& GridTemplateLayoutContainerProps
+	& { labels?: Record<string, string> }
 );
 
 const props = withDefaults(
@@ -49,7 +50,7 @@ const selfStyles = computed(() => ({
 				:value="kind"
 				:key="kind"
 			>
-				{{ kind }}
+				{{ props.labels?.[kind] ?? kind }}
 			</option>
 		</select>
 

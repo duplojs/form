@@ -71,6 +71,7 @@ export type CreateInputParams<
 			>
 			| (() => GetVueInputComponentValue<GenericInputComponentInstance>)
 		);
+		template?: Templates["input"];
 	}
 	& (
 		GetVueInputComponentProps<
@@ -141,7 +142,7 @@ export function createInput(
 
 		return createFormField(
 			(modelValue, key, templates) => {
-				const template = params?.template ?? templates.input;
+				const template = params?.template ?? defaultParams.template ?? templates.input;
 
 				const componentRef = ref<
 					InstanceType<VueInputComponent> | null

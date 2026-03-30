@@ -45,6 +45,7 @@ const { component: Form, currentValue, check } = useForm(
 								template: useGridCheckTemplate({
 									label: "test",
 									columns: 2,
+									hideEmptyMessageError: true,
 								}),
 							},
 						),
