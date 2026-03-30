@@ -159,28 +159,20 @@ export function useUnionLayout(
 				modelValue.value.kind = value;
 			};
 
-			const getVNode = () => {
-				console.log("render union");
-
-				return h(
-					() => {
-						console.log("inner render union");
-
-						return template.getVNode(
-							{
-								fieldKey: key,
-								kinds,
-								getCurrentValue,
-								getCurrentKind,
-								onChangeKind,
-							},
-							{
-								formField: getFieldVNode,
-							},
-						);
+			const getVNode = () => h(
+				() => template.getVNode(
+					{
+						fieldKey: key,
+						kinds,
+						getCurrentValue,
+						getCurrentKind,
+						onChangeKind,
 					},
-				);
-			};
+					{
+						formField: getFieldVNode,
+					},
+				),
+			);
 
 			return {
 				check,

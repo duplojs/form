@@ -1,9 +1,17 @@
 <script setup lang="ts">
 import { type FormTemplateProperties } from "@V/form";
+import { computed } from "vue";
+import { type GridTemplateContainerProps } from "./types";
 
-export type Props = FormTemplateProperties["props"];
+export type Props = (
+	& FormTemplateProperties["props"]
+	& GridTemplateContainerProps
+);
 
-defineProps<Props>();
+const props = withDefaults(
+	defineProps<Props>(),
+	{},
+);
 
 defineSlots<FormTemplateProperties["slots"]>();
 
@@ -16,10 +24,18 @@ function submit(event: SubmitEvent) {
 	emit("submit");
 }
 
+const containerStyles = computed(() => ({
+	"--max-columns": props.maxColumns,
+	"--gap": props.gap !== undefined ? `${props.gap}px` : undefined,
+}));
 </script>
 
 <template>
-	<form @submit="submit">
+	<form
+		@submit="submit"
+		class="duplojs-form-vue-grid-container"
+		:style="containerStyles"
+	>
 		<slot name="formField" />
 
 		<slot name="submitter" />

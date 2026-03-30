@@ -1,0 +1,41 @@
+@property --max-columns {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 12;
+}
+
+@property --columns {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 12;
+}
+
+@property --gap {
+  syntax: "<length-percentage>";
+  inherits: false;
+  initial-value: 5px;
+}
+
+.duplojs-form-vue-grid- {
+	&container {
+		display: grid;
+		grid-template-columns: repeat(var(--max-columns), minmax(0, 1fr));
+		gap: var(--gap);
+	}
+
+	&self {
+		grid-column: span var(--columns)  / span var(--columns);
+	}
+
+	&input-container {
+		display: flex;
+		flex-direction: column;
+	}
+
+	&check- {
+		&container {
+			display: flex;
+			flex-direction: column;
+		}
+	}
+}

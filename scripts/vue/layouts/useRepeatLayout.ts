@@ -73,23 +73,19 @@ export function useRepeatLayout(
 
 				const formFieldInstances = computed(
 					() => sizeModelValue.value.map(
-						(__, index) => {
-							console.log("render", index);
-
-							return formField.new(
-								computed({
-									get: () => modelValue.value[index] ?? formField.defaultValue,
-									set: (value) => {
-										if (index >= modelValue.value.length) {
-											return;
-										}
-										modelValue.value[index] = value;
-									},
-								}),
-								`${key}.${index}`,
-								templates,
-							);
-						},
+						(__, index) => formField.new(
+							computed({
+								get: () => modelValue.value[index] ?? formField.defaultValue,
+								set: (value) => {
+									if (index >= modelValue.value.length) {
+										return;
+									}
+									modelValue.value[index] = value;
+								},
+							}),
+							`${key}.${index}`,
+							templates,
+						),
 					),
 				);
 
@@ -143,8 +139,6 @@ export function useRepeatLayout(
 			};
 
 			const dispose = () => {
-				console.log("dispose");
-
 				scope.stop();
 				formFieldInstances.value.forEach(
 					(formFieldInstance) => void formFieldInstance.dispose(),
@@ -180,27 +174,23 @@ export function useRepeatLayout(
 				}
 			};
 
-			const getVNode = () => {
-				console.log("render repeat");
-
-				return h(
-					() => template.getVNode(
-						{
-							fieldKey: key,
-							getFormFields: getFormFieldVNodes,
-							getCurrentValue,
-							max: params.max,
-							min: params.min,
-							onAddElement,
-							onRemoveElement,
-							onResetElement,
-						},
-						{
-							formField: getFormFieldVNodes,
-						},
-					),
-				);
-			};
+			const getVNode = () => h(
+				() => template.getVNode(
+					{
+						fieldKey: key,
+						getFormFields: getFormFieldVNodes,
+						getCurrentValue,
+						max: params.max,
+						min: params.min,
+						onAddElement,
+						onRemoveElement,
+						onResetElement,
+					},
+					{
+						formField: getFormFieldVNodes,
+					},
+				),
+			);
 
 			return {
 				check,

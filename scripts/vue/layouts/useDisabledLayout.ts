@@ -46,19 +46,11 @@ export function useDisabledLayout(
 
 			const formFieldVNode = formFieldInstance.getVNode();
 
-			const getVNode = () => {
-				console.log("render disabled");
-
-				return h(
-					() => {
-						console.log("inner render disabled");
-
-						return params.isDisabled()
-							? null
-							: formFieldVNode;
-					},
-				);
-			};
+			const getVNode = () => h(
+				() => params.isDisabled()
+					? null
+					: formFieldVNode,
+			);
 
 			return {
 				check,

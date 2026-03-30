@@ -10,11 +10,14 @@ export default defineConfig({
 	],
 	build: {
 		outDir: Path.resolveRelative([import.meta.dirname, "../../dist/vue"]),
+		cssCodeSplit: true,
 		lib: {
-			entry: Path.resolveRelative([import.meta.dirname, "index.ts"]),
+			entry: {
+				index: Path.resolveRelative([import.meta.dirname, "index.ts"]),
+				grid: Path.resolveRelative([import.meta.dirname, "templates/grid/index.ts"]),
+			},
 			name: "form/vue",
 			formats: ["es", "cjs"],
-			fileName: "index",
 		},
 		rollupOptions: {
 			external: ["vue"],

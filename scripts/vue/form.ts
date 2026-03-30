@@ -1,4 +1,4 @@
-import { type FunctionalComponent, h, type HTMLAttributes, onBeforeUnmount, type Ref, ref } from "vue";
+import { type FunctionalComponent, h, type HTMLAttributes, type Ref, ref } from "vue";
 import { type GetFormFieldCheckedValue, type GetFormFieldValue, type FormField, type FormFieldInstance } from "./formField";
 import { simpleClone } from "@duplojs/utils";
 import { type Templates } from "./template";
@@ -71,27 +71,19 @@ export function createForm(templates: Templates) {
 
 		const formFieldVNode = formFieldInstance.getVNode();
 
-		const component: FormProperties["component"] = (props, { slots }) => {
-			console.log("form render");
-
-			return h(
-				() => {
-					console.log("inner form render");
-
-					return templateForm.getVNode(
-						{
-							...props,
-							onSubmit: () => {},
-							getCurrentValue,
-						},
-						{
-							submitter: slots.default ?? (() => null),
-							formField: () => formFieldVNode,
-						},
-					);
+		const component: FormProperties["component"] = (props, { slots }) => h(
+			() => templateForm.getVNode(
+				{
+					...props,
+					onSubmit: () => {},
+					getCurrentValue,
 				},
-			);
-		};
+				{
+					submitter: slots.default ?? (() => null),
+					formField: () => formFieldVNode,
+				},
+			),
+		);
 
 		return {
 			currentValue,

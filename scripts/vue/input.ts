@@ -3,6 +3,21 @@ import * as EE from "@duplojs/utils/either";
 import { createFormField, type FormFieldInstance, type FormField } from "./formField";
 import { type VueComponent } from "./types";
 import { h, ref } from "vue";
+import { type Templates } from "@V/template";
+
+export interface InputTemplateProperties {
+	props: {
+		getCurrentValue(): unknown;
+	};
+	slots: {
+		input(): any;
+	};
+}
+declare module "./template" {
+	interface AllowedTemplateComponents {
+		input: VueComponent<InputTemplateProperties>;
+	}
+}
 
 export type VueInputComponent = VueComponent<{
 	props: {
@@ -83,6 +98,7 @@ export interface UseInputParams<
 			GenericInputComponentInstance
 		>
 	>;
+	template?: Templates["input"];
 }
 
 export type UseInput<
@@ -106,12 +122,12 @@ export function createInput(
 	inputComponent: VueInputComponent,
 	defaultParams: CreateInputParams,
 ): UseInput {
-	return (localParams: UseInputParams = {}) => {
+	return (params: UseInputParams = {}) => {
 		const defaultValue = (() => {
-			if (localParams.defaultValue !== undefined) {
-				return typeof localParams.defaultValue === "function"
-					? localParams.defaultValue()
-					: localParams.defaultValue;
+			if (params.defaultValue !== undefined) {
+				return typeof params.defaultValue === "function"
+					? params.defaultValue()
+					: params.defaultValue;
 			}
 
 			return typeof defaultParams.defaultValue === "function"
@@ -119,12 +135,14 @@ export function createInput(
 				: defaultParams.defaultValue;
 		})();
 
-		const getLocalProps = typeof localParams.props === "function"
-			? localParams.props()
-			: justReturn(localParams.props);
+		const getLocalProps = typeof params.props === "function"
+			? params.props()
+			: justReturn(params.props);
 
 		return createFormField(
-			(modelValue, key) => {
+			(modelValue, key, templates) => {
+				const template = params?.template ?? templates.input;
+
 				const componentRef = ref<
 					InstanceType<VueInputComponent> | null
 				>(null);
@@ -142,35 +160,40 @@ export function createInput(
 				};
 
 				const dispose = () => {
-					console.log("dispose input");
-
 					componentRef.value?.dispose?.();
 				};
 
-				const getVNode = () => {
-					console.log("render input");
+				const getCurrentValue = () => modelValue.value;
 
-					return h(
-						() => {
-							console.log("inner render input");
-
-							return h(
-								inputComponent,
-								{
-									...defaultParams.props,
-									...getLocalProps(),
-									modelValue: modelValue.value,
-									"onUpdate:modelValue": (value: any) => {
-										modelValue.value = value;
-									},
-									id: key,
-									key: key,
-									ref: componentRef,
-								},
-							);
+				const inputVNode = h(
+					() => h(
+						inputComponent,
+						{
+							...defaultParams.props,
+							...getLocalProps(),
+							modelValue: modelValue.value,
+							"onUpdate:modelValue": (value: any) => {
+								modelValue.value = value;
+							},
+							id: key,
+							key: key,
+							ref: componentRef,
 						},
-					);
-				};
+					),
+				);
+
+				const getInputVNode = () => inputVNode;
+
+				const getVNode = () => h(
+					() => template.getVNode(
+						{
+							getCurrentValue,
+						},
+						{
+							input: getInputVNode,
+						},
+					),
+				);
 
 				return {
 					check,

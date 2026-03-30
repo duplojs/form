@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { createInput, useDisabledLayout, createForm, useMultiLayout, useGridFormTemplate, useGridMultiTemplate, useGridCheckTemplate, useCheckLayout, useGridRepeatTemplate, useRepeatLayout, useGridUnionTemplate, useUnionLayout } from "@V";
+import { createInput, useDisabledLayout, createForm, useMultiLayout, useCheckLayout, useRepeatLayout, useUnionLayout } from "@V";
+import { useGridFormTemplate, useGridCheckTemplate, useGridRepeatTemplate, useGridUnionTemplate, useGridMultiTemplate, useGridInputTemplate } from "@V/templates/grid";
 import TheTextInput from "./components/TheTextInput.vue";
 import { ref } from "vue";
 import { DPE } from "@duplojs/utils";
@@ -16,6 +17,7 @@ const disabled = ref(false);
 
 const useForm = createForm({
 	form: useGridFormTemplate(),
+	input: useGridInputTemplate(),
 	multi: useGridMultiTemplate(),
 	check: useGridCheckTemplate(),
 	repeat: useGridRepeatTemplate(),
@@ -40,6 +42,10 @@ const { component: Form, currentValue, check } = useForm(
 							useInput({ defaultValue: "198" }),
 							{
 								dataParser: DPE.coerce.number(),
+								template: useGridCheckTemplate({
+									label: "test",
+									columns: 2,
+								}),
 							},
 						),
 					}),
@@ -51,32 +57,9 @@ const { component: Form, currentValue, check } = useForm(
 			],
 			{ defaultKind: "one" },
 		),
-		{
-			isDisabled: () => disabled.value,
-		},
+		{ isDisabled: () => disabled.value },
 	),
 );
-
-// const { component: Form, currentValue, check } = useForm(
-// 	useRepeatLayout(
-// 		useDisabledLayout(
-// 			useMultiFieldLayout({
-// 				name: useCheckLayout(
-// 					useInput({ defaultValue: "198" }),
-// 					{ dataParser: DPE.coerce.number() },
-// 				),
-// 			}),
-// 			{
-// 				isDisabled: () => disabled.value,
-// 			},
-// 		),
-// 		{
-// 			min: 2,
-// 			max: 10,
-// 		},
-// 	),
-// );
-
 </script>
 
 <template>

@@ -1,15 +1,33 @@
 <script setup lang="ts">
 import { type MultiTemplateProperties } from "@V/layouts";
+import { type GridTemplateLayoutContainerProps } from "./types";
+import { computed } from "vue";
 
-export type Props = MultiTemplateProperties["props"];
+export type Props = (
+	& MultiTemplateProperties["props"]
+	& GridTemplateLayoutContainerProps
+);
 
-const props = defineProps<Props>();
+const props = withDefaults(
+	defineProps<Props>(),
+	{
+	},
+);
 
 defineSlots<MultiTemplateProperties["slots"]>();
+
+const containerStyles = computed(() => ({
+	"--max-columns": props.maxColumns,
+	"--gap": props.gap !== undefined ? `${props.gap}px` : undefined,
+	"--columns": props.columns,
+}));
 </script>
 
 <template>
-	<div>
+	<div
+		class="duplojs-form-vue-grid-container duplojs-form-vue-grid-self"
+		:style="containerStyles"
+	>
 		<slot name="formField" />
 	</div>
 </template>

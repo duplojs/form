@@ -111,24 +111,16 @@ export function useCheckLayout(
 
 			const getErrorMessage = () => errorMessage.value;
 
-			const getVNode = () => {
-				console.log("render check");
-
-				return h(
-					() => {
-						console.log("inner render check");
-
-						return template.getVNode(
-							{
-								fieldKey: key,
-								getErrorMessage,
-								getCurrentValue,
-							},
-							{ formField: getFormFieldVNode },
-						);
+			const getVNode = () => h(
+				() => template.getVNode(
+					{
+						fieldKey: key,
+						getErrorMessage,
+						getCurrentValue,
 					},
-				);
-			};
+					{ formField: getFormFieldVNode },
+				),
+			);
 
 			return {
 				check,

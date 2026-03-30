@@ -48,7 +48,7 @@ export type UseTemplate<
 		CreateTemplateParams<
 			GenericComponentInstance,
 			GenericTemplateSystemProps
-		>
+		>["props"]
 	>
 ) => Template<GenericComponentInstance>;
 
@@ -90,7 +90,7 @@ export function createTemplate(
 			templateComponent,
 			{
 				...params?.props,
-				...localParams?.props,
+				...localParams,
 				...props,
 			},
 			slots,

@@ -127,8 +127,6 @@ export function useMultiLayout(
 			};
 
 			const dispose = () => {
-				console.log("dispose multi");
-
 				formFieldInstanceEntries.forEach(
 					([, formFieldInstance]) => void formFieldInstance.dispose(),
 				);
@@ -142,26 +140,18 @@ export function useMultiLayout(
 
 			const getFormFieldVNodes = () => formFieldVNodes;
 
-			const getVNode = () => {
-				console.log("render multi");
-
-				return h(
-					() => {
-						console.log("inner render multi");
-
-						return template.getVNode(
-							{
-								fieldKey: key,
-								getFormFields: getFormFieldVNodes,
-								getCurrentValue,
-							},
-							{
-								formField: getFormFieldVNodes,
-							},
-						);
+			const getVNode = () => h(
+				() => template.getVNode(
+					{
+						fieldKey: key,
+						getFormFields: getFormFieldVNodes,
+						getCurrentValue,
 					},
-				);
-			};
+					{
+						formField: getFormFieldVNodes,
+					},
+				),
+			);
 
 			return {
 				check,
