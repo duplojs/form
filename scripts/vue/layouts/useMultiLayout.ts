@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/prefer-for-of */
 import { type GetFormFieldCheckedValue, type GetFormFieldValue, type FormField, createFormField, type ErrorProperties } from "@V/formField";
-import { computed, h, type VNode } from "vue";
+import { computed, effectScope, h, type VNode } from "vue";
 import * as EE from "@duplojs/utils/either";
 import * as AA from "@duplojs/utils/array";
 import { unwrap } from "@duplojs/utils";
@@ -80,22 +80,29 @@ export function useMultiLayout(
 		(modelValue, key, templates) => {
 			const template = params?.template ?? templates.multi;
 
-			const formFieldInstanceEntries = formFieldEntries
-				.map(
-					([subKey, formField]) => [
-						subKey,
-						formField.new(
-							computed({
-								get: () => modelValue.value[subKey],
-								set: (value) => {
-									modelValue.value[subKey] = value;
-								},
-							}),
-							`${key}.${subKey}`,
-							templates,
-						),
-					] as const,
-				);
+			const scope = effectScope();
+			const { formFieldInstanceEntries } = scope.run(() => {
+				const formFieldInstanceEntries = formFieldEntries
+					.map(
+						([subKey, formField]) => [
+							subKey,
+							formField.new(
+								computed({
+									get: () => modelValue.value[subKey],
+									set: (value) => {
+										modelValue.value[subKey] = value;
+									},
+								}),
+								`${key}.${subKey}`,
+								templates,
+							),
+						] as const,
+					);
+
+				return {
+					formFieldInstanceEntries,
+				};
+			})!;
 
 			const check = () => {
 				const result: Record<string, unknown> = {};
@@ -127,6 +134,7 @@ export function useMultiLayout(
 			};
 
 			const dispose = () => {
+				scope.stop();
 				formFieldInstanceEntries.forEach(
 					([, formFieldInstance]) => void formFieldInstance.dispose(),
 				);

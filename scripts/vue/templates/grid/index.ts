@@ -7,6 +7,7 @@ import GridMultiTemplate from "./GridMultiTemplate.vue";
 import GridCheckTemplate from "./GridCheckTemplate.vue";
 import GridRepeatTemplate from "./GridRepeatTemplate.vue";
 import GridUnionTemplate from "./GridUnionTemplate.vue";
+import GridStepByStepTemplate from "./GridStepByStepTemplate.vue";
 
 export * from "./types";
 export { default as GridFormTemplate } from "./GridFormTemplate.vue";
@@ -15,6 +16,7 @@ export { default as GridMultiTemplate } from "./GridMultiTemplate.vue";
 export { default as GridCheckTemplate } from "./GridCheckTemplate.vue";
 export { default as GridRepeatTemplate } from "./GridRepeatTemplate.vue";
 export { default as GridUnionTemplate } from "./GridUnionTemplate.vue";
+export { default as GridStepByStepTemplate } from "./GridStepByStepTemplate.vue";
 
 export const useGridFormTemplate = createTemplate(
 	GridFormTemplate,
@@ -38,4 +40,8 @@ export const useGridRepeatTemplate = createTemplate(
 
 export const useGridUnionTemplate = createTemplate(
 	GridUnionTemplate,
+);
+
+export const useGridStepByStepTemplate = createTemplate(
+	GridStepByStepTemplate,
 );

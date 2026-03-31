@@ -4,6 +4,11 @@ import vue from "@vitejs/plugin-vue";
 import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
+	resolve: {
+		alias: {
+			"@V": import.meta.dirname
+		},
+	},
 	plugins: [
 		vue(), 
 		tsconfigPaths(),

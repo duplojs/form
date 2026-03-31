@@ -19,7 +19,7 @@ const selfStyles = computed(() => ({
 
 <template>
 	<div
-		class="duplojs-form-vue-grid-self duplojs-form-vue-grid-input-container"
+		class="duplojs-form-vue-grid-self duplojs-form-vue-grid-input"
 		:style="selfStyles"
 	>
 		<slot name="input" />

@@ -27,7 +27,12 @@
 		grid-column: span var(--columns)  / span var(--columns);
 	}
 
-	&-input-container {
+	&-form {
+		display: flex;
+		flex-direction: column;
+	}
+
+	&-input {
 		display: flex;
 		flex-direction: column;
 	}

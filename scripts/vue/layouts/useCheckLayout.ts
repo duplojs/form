@@ -2,7 +2,7 @@ import { createFormField, type FormField, type GetFormFieldValue } from "@V/form
 import * as EE from "@duplojs/utils/either";
 import type * as DP from "@duplojs/utils/dataParser";
 import { unwrap } from "@duplojs/utils";
-import { h, ref, watch } from "vue";
+import { effectScope, h, ref, watch } from "vue";
 import { type VueComponent } from "@V/types";
 import { type Templates } from "@V/template";
 
@@ -53,7 +53,25 @@ export function useCheckLayout(
 				key,
 				templates,
 			);
-			const errorMessage = ref<null | string>(null);
+
+			const scope = effectScope();
+			const { errorMessage } = scope.run(() => {
+				const errorMessage = ref<null | string>(null);
+
+				watch(
+					modelValue,
+					() => {
+						if (errorMessage.value !== null) {
+							check();
+						}
+					},
+					{ flush: "post" },
+				);
+
+				return {
+					errorMessage,
+				};
+			})!;
 
 			const check = () => {
 				const fieldValue = formFieldInstance.check();
@@ -84,22 +102,13 @@ export function useCheckLayout(
 				return result;
 			};
 
-			watch(
-				modelValue,
-				() => {
-					if (errorMessage.value !== null) {
-						check();
-					}
-				},
-				{ flush: "post" },
-			);
-
 			const reset = () => {
 				formFieldInstance.reset();
 				errorMessage.value = null;
 			};
 
 			const dispose = () => {
+				scope.stop();
 				formFieldInstance.dispose();
 			};
 
