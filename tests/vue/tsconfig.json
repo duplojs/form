@@ -7,7 +7,7 @@
 	  "@V": ["../../scripts/vue/index.ts"],
 	  "@test-utils/*": ["../_utils/*"],
     },
-	"types": ["vitest/globals"]
+	"types": ["vitest/globals", "web"]
   },
   "include": [
 	"**/*.ts", 

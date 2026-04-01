@@ -166,12 +166,12 @@ describe("useCheckLayout", () => {
 
 		currentValue.value = "41";
 		await sleep();
-		expect(wrapper.find("#test-text-input").element.value).toBe("41");
+		expect(wrapper.find<HTMLInputElement>("#test-text-input").element.value).toBe("41");
 		expect(wrapper.find("#check-current-value").text()).toBe("41");
 
 		currentValue.value = "not-a-number";
 		await sleep();
-		expect(wrapper.find("#test-text-input").element.value).toBe("not-a-number");
+		expect(wrapper.find<HTMLInputElement>("#test-text-input").element.value).toBe("not-a-number");
 		expect(wrapper.find("#check-current-value").text()).toBe("not-a-number");
 	});
 });

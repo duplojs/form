@@ -140,7 +140,8 @@ describe("useMultiLayout", () => {
 			first: "first-from-current-value",
 			second: "second-from-current-value",
 		}));
-		expect(wrapper.findAll("#test-text-input")[0]!.element.value).toBe("first-from-current-value");
-		expect(wrapper.findAll("#test-text-input")[1]!.element.value).toBe("second-from-current-value");
+		const inputs = wrapper.findAll<HTMLInputElement>("#test-text-input");
+		expect(inputs[0]!.element.value).toBe("first-from-current-value");
+		expect(inputs[1]!.element.value).toBe("second-from-current-value");
 	});
 });

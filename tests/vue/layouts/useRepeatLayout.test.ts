@@ -67,7 +67,7 @@ describe("useRepeatLayout", () => {
 		expect(currentValue.value).toStrictEqual(["default"]);
 		currentValue.value = [undefined as never];
 		await sleep();
-		expect(wrapper.find("#test-text-input").element.value).toBe("");
+		expect(wrapper.find<HTMLInputElement>("#test-text-input").element.value).toBe("");
 		expect(check()).toStrictEqual(
 			E.success([undefined]),
 		);
@@ -152,7 +152,7 @@ describe("useRepeatLayout", () => {
 		const useForm = createForm(testTemplates);
 		let inactiveReadValue: unknown = undefined;
 		const disposableField = createFormField(
-			(modelValue) => ({
+			(modelValue: { value: string }) => ({
 				check: () => E.success(modelValue.value),
 				reset: () => {
 					inactiveReadValue = modelValue.value;
@@ -206,14 +206,15 @@ describe("useRepeatLayout", () => {
 		await sleep();
 		expect(wrapper.find("#repeat-current-value").text()).toBe(JSON.stringify(["first", "second"]));
 		expect(wrapper.find("#repeat-form-fields-count").text()).toBe("2");
-		expect(wrapper.findAll("#test-text-input")[0]!.element.value).toBe("first");
-		expect(wrapper.findAll("#test-text-input")[1]!.element.value).toBe("second");
+		const inputs = wrapper.findAll<HTMLInputElement>("#test-text-input");
+		expect(inputs[0]!.element.value).toBe("first");
+		expect(inputs[1]!.element.value).toBe("second");
 
 		currentValue.value = ["only-one"];
 		await sleep();
 		expect(wrapper.find("#repeat-current-value").text()).toBe(JSON.stringify(["only-one"]));
 		expect(wrapper.find("#repeat-form-fields-count").text()).toBe("1");
 		expect(wrapper.findAll("#test-text-input")).toHaveLength(1);
-		expect(wrapper.find("#test-text-input").element.value).toBe("only-one");
+		expect(wrapper.find<HTMLInputElement>("#test-text-input").element.value).toBe("only-one");
 	});
 });

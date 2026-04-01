@@ -38,7 +38,7 @@ describe("layout combinations", () => {
 		expect(wrapper.find("#check-current-value").text()).toBe("42");
 		expect(wrapper.find("#repeat-current-value").text()).toBe(JSON.stringify(["first-tag", "second-tag"]));
 
-		const inputs = wrapper.findAll("#test-text-input");
+		const inputs = wrapper.findAll<HTMLInputElement>("#test-text-input");
 		expect(inputs).toHaveLength(3);
 		expect(inputs[0]!.element.value).toBe("42");
 		expect(inputs[1]!.element.value).toBe("first-tag");
@@ -113,8 +113,9 @@ describe("layout combinations", () => {
 			last: "Lovelace",
 		}));
 		expect(wrapper.findAll("#test-text-input")).toHaveLength(2);
-		expect(wrapper.findAll("#test-text-input")[0]!.element.value).toBe("Ada");
-		expect(wrapper.findAll("#test-text-input")[1]!.element.value).toBe("Lovelace");
+		const personInputs = wrapper.findAll<HTMLInputElement>("#test-text-input");
+		expect(personInputs[0]!.element.value).toBe("Ada");
+		expect(personInputs[1]!.element.value).toBe("Lovelace");
 
 		currentValue.value.steps[0].updateKind("tags");
 		await sleep();
@@ -122,7 +123,7 @@ describe("layout combinations", () => {
 		expect(wrapper.find("#union-current-kind").text()).toBe("tags");
 		expect(wrapper.find("#repeat-current-value").text()).toBe(JSON.stringify(["tag-default"]));
 		expect(wrapper.findAll("#test-text-input")).toHaveLength(1);
-		expect(wrapper.find("#test-text-input").element.value).toBe("tag-default");
+		expect(wrapper.find<HTMLInputElement>("#test-text-input").element.value).toBe("tag-default");
 
 		if (currentValue.value.steps[0].kind === "tags") {
 			currentValue.value.steps[0].value[0] = "math";
@@ -136,8 +137,9 @@ describe("layout combinations", () => {
 		}));
 		expect(wrapper.find("#repeat-current-value").text()).toBe(JSON.stringify(["math", "analysis"]));
 		expect(wrapper.findAll("#test-text-input")).toHaveLength(2);
-		expect(wrapper.findAll("#test-text-input")[0]!.element.value).toBe("math");
-		expect(wrapper.findAll("#test-text-input")[1]!.element.value).toBe("analysis");
+		const tagInputs = wrapper.findAll<HTMLInputElement>("#test-text-input");
+		expect(tagInputs[0]!.element.value).toBe("math");
+		expect(tagInputs[1]!.element.value).toBe("analysis");
 
 		currentValue.value.currentStep = 1;
 		currentValue.value.steps[1] = "11";
@@ -146,7 +148,7 @@ describe("layout combinations", () => {
 		expect(wrapper.find("#step-current").text()).toBe("1/2");
 		expect(wrapper.find("#step-is-last").text()).toBe("true");
 		expect(wrapper.find("#check-current-value").text()).toBe("11");
-		expect(wrapper.find("#test-text-input").element.value).toBe("11");
+		expect(wrapper.find<HTMLInputElement>("#test-text-input").element.value).toBe("11");
 
 		isDisabled.value = true;
 		await sleep();
@@ -155,7 +157,7 @@ describe("layout combinations", () => {
 		isDisabled.value = false;
 		await sleep();
 		expect(wrapper.find("#check-current-value").text()).toBe("11");
-		expect(wrapper.find("#test-text-input").element.value).toBe("11");
+		expect(wrapper.find<HTMLInputElement>("#test-text-input").element.value).toBe("11");
 
 		expect(check()).toStrictEqual(
 			E.success([
@@ -210,7 +212,7 @@ describe("layout combinations", () => {
 		}));
 		expect(wrapper.find("#check-current-value").text()).toBe("33");
 
-		const inputs = wrapper.findAll("#test-text-input");
+		const inputs = wrapper.findAll<HTMLInputElement>("#test-text-input");
 		expect(inputs).toHaveLength(2);
 		expect(inputs[0]!.element.value).toBe("33");
 		expect(inputs[1]!.element.value).toBe("memo");
@@ -218,7 +220,7 @@ describe("layout combinations", () => {
 		currentValue.value.profile.currentStep = 0;
 		await sleep();
 		expect(wrapper.find("#step-current").text()).toBe("0/2");
-		expect(wrapper.find("#test-text-input").element.value).toBe("Ada");
+		expect(wrapper.find<HTMLInputElement>("#test-text-input").element.value).toBe("Ada");
 
 		currentValue.value.profile.steps[0] = "Grace";
 		await sleep();
@@ -226,7 +228,7 @@ describe("layout combinations", () => {
 			currentStep: 0,
 			steps: ["Grace", "33"],
 		}));
-		expect(wrapper.find("#test-text-input").element.value).toBe("Grace");
+		expect(wrapper.find<HTMLInputElement>("#test-text-input").element.value).toBe("Grace");
 
 		currentValue.value.profile.currentStep = 1;
 		await sleep();
@@ -284,8 +286,9 @@ describe("layout combinations", () => {
 		expect(wrapper.find("#step-current").text()).toBe("1/2");
 		expect(wrapper.find("#repeat-current-value").text()).toBe(JSON.stringify(["first-item", "second-item"]));
 		expect(wrapper.findAll("#test-text-input")).toHaveLength(2);
-		expect(wrapper.findAll("#test-text-input")[0]!.element.value).toBe("first-item");
-		expect(wrapper.findAll("#test-text-input")[1]!.element.value).toBe("second-item");
+		const wizardInputs = wrapper.findAll<HTMLInputElement>("#test-text-input");
+		expect(wizardInputs[0]!.element.value).toBe("first-item");
+		expect(wizardInputs[1]!.element.value).toBe("second-item");
 
 		currentValue.value.updateKind("single", "single-from-current-value");
 		await sleep();
@@ -295,7 +298,7 @@ describe("layout combinations", () => {
 			kind: "single",
 			value: "single-from-current-value",
 		}));
-		expect(wrapper.find("#test-text-input").element.value).toBe("single-from-current-value");
+		expect(wrapper.find<HTMLInputElement>("#test-text-input").element.value).toBe("single-from-current-value");
 
 		currentValue.value.updateKind("wizard");
 		await sleep();
@@ -303,8 +306,9 @@ describe("layout combinations", () => {
 		expect(wrapper.find("#union-current-kind").text()).toBe("wizard");
 		expect(wrapper.find("#step-current").text()).toBe("1/2");
 		expect(wrapper.find("#repeat-current-value").text()).toBe(JSON.stringify(["first-item", "second-item"]));
-		expect(wrapper.findAll("#test-text-input")[0]!.element.value).toBe("first-item");
-		expect(wrapper.findAll("#test-text-input")[1]!.element.value).toBe("second-item");
+		const restoredWizardInputs = wrapper.findAll<HTMLInputElement>("#test-text-input");
+		expect(restoredWizardInputs[0]!.element.value).toBe("first-item");
+		expect(restoredWizardInputs[1]!.element.value).toBe("second-item");
 
 		expect(check()).toStrictEqual(
 			E.success({

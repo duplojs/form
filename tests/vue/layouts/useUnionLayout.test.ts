@@ -1,7 +1,7 @@
 import { createForm, createFormField, createInput, createTemplate, useUnionLayout } from "@V";
 import { E, sleep } from "@duplojs/utils";
 import { mount } from "@vue/test-utils";
-import { h, ref } from "vue";
+import { h, ref, type Ref } from "vue";
 import TextInput from "@test-utils/TextInput.vue";
 import TextInputWithErrorExpose from "@test-utils/TextInputWithErrorExpose.vue";
 import UnionTemplateAlt from "@test-utils/templates/UnionTemplateAlt.vue";
@@ -131,7 +131,7 @@ describe("useUnionLayout", () => {
 		const useForm = createForm(testTemplates);
 		let createACount = 0;
 		const cachedField = createFormField(
-			(modelValue) => {
+			(modelValue: Ref<string>) => {
 				createACount++;
 
 				return {
@@ -218,7 +218,7 @@ describe("useUnionLayout", () => {
 	it("ignores reset writes from a cached inactive kind", async() => {
 		let inactiveReadValue: unknown = undefined;
 		const inactiveResetField = createFormField(
-			(modelValue) => ({
+			(modelValue: Ref<string>) => ({
 				check: () => E.success(modelValue.value),
 				reset: () => {
 					inactiveReadValue = modelValue.value;
@@ -230,7 +230,7 @@ describe("useUnionLayout", () => {
 			"b-default",
 		);
 		const activeField = createFormField(
-			(modelValue) => ({
+			(modelValue: Ref<string>) => ({
 				check: () => E.success(modelValue.value),
 				reset: () => undefined,
 				dispose: () => undefined,
@@ -302,7 +302,7 @@ describe("useUnionLayout", () => {
 			kind: "a",
 			value: "a-from-current-value",
 		}));
-		expect(wrapper.find("#test-text-input").element.value).toBe("a-from-current-value");
+		expect(wrapper.find<HTMLInputElement>("#test-text-input").element.value).toBe("a-from-current-value");
 
 		currentValue.value.updateKind("b", "b-from-current-value");
 		await sleep();
@@ -311,7 +311,7 @@ describe("useUnionLayout", () => {
 			kind: "b",
 			value: "b-from-current-value",
 		}));
-		expect(wrapper.find("#test-text-input").element.value).toBe("b-from-current-value");
+		expect(wrapper.find<HTMLInputElement>("#test-text-input").element.value).toBe("b-from-current-value");
 
 		currentValue.value.updateKind("a", "a-from-current-value");
 		await sleep();
@@ -320,7 +320,7 @@ describe("useUnionLayout", () => {
 			kind: "a",
 			value: "a-from-current-value",
 		}));
-		expect(wrapper.find("#test-text-input").element.value).toBe(String(currentValue.value.value));
+		expect(wrapper.find<HTMLInputElement>("#test-text-input").element.value).toBe(String(currentValue.value.value));
 	});
 
 	it("keeps the previous kind value cached when the union value is fully reassigned", async() => {
@@ -340,12 +340,12 @@ describe("useUnionLayout", () => {
 
 		currentValue.value.updateKind("a", "a-cached-before-reassign");
 		await sleep();
-		expect(wrapper.find("#test-text-input").element.value).toBe("a-cached-before-reassign");
+		expect(wrapper.find<HTMLInputElement>("#test-text-input").element.value).toBe("a-cached-before-reassign");
 
 		currentValue.value.updateKind("b", "b-from-full-reassign");
 		await sleep();
 		expect(wrapper.find("#union-current-kind").text()).toBe("b");
-		expect(wrapper.find("#test-text-input").element.value).toBe("b-from-full-reassign");
+		expect(wrapper.find<HTMLInputElement>("#test-text-input").element.value).toBe("b-from-full-reassign");
 
 		currentValue.value.updateKind("a");
 		await sleep();
@@ -357,6 +357,6 @@ describe("useUnionLayout", () => {
 			kind: "a",
 			value: "a-cached-before-reassign",
 		}));
-		expect(wrapper.find("#test-text-input").element.value).toBe("a-cached-before-reassign");
+		expect(wrapper.find<HTMLInputElement>("#test-text-input").element.value).toBe("a-cached-before-reassign");
 	});
 });

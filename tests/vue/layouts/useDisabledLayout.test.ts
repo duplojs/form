@@ -104,7 +104,7 @@ describe("useDisabledLayout", () => {
 
 		currentValue.value = "from-current-value";
 		await sleep();
-		expect(wrapper.find("#test-text-input").element.value).toBe("from-current-value");
+		expect(wrapper.find<HTMLInputElement>("#test-text-input").element.value).toBe("from-current-value");
 		expect(wrapper.find("#current-value-input").text()).toBe("from-current-value");
 
 		isDisabled.value = true;
@@ -113,6 +113,6 @@ describe("useDisabledLayout", () => {
 
 		isDisabled.value = false;
 		await sleep();
-		expect(wrapper.find("#test-text-input").element.value).toBe("from-current-value");
+		expect(wrapper.find<HTMLInputElement>("#test-text-input").element.value).toBe("from-current-value");
 	});
 });
