@@ -151,7 +151,7 @@ export function useStepLayout(
 
 			const getCurrentValue = () => modelValue.value;
 
-			const cacheFormFieldVNodes: Record<string, VNode> = {};
+			const cacheFormFieldVNodes: Record<number, VNode> = {};
 			const formFieldVNodes = formFieldInstances.map(
 				(getFormFieldInstance, index) => () => {
 					if (cacheFormFieldVNodes[index] === undefined) {

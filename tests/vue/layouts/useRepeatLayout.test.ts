@@ -67,9 +67,9 @@ describe("useRepeatLayout", () => {
 		expect(currentValue.value).toStrictEqual(["default"]);
 		currentValue.value = [undefined as never];
 		await sleep();
-		expect(wrapper.find("#test-text-input").element.value).toBe("default");
+		expect(wrapper.find("#test-text-input").element.value).toBe("");
 		expect(check()).toStrictEqual(
-			E.success(["default"]),
+			E.success([undefined]),
 		);
 
 		dispose();
@@ -113,6 +113,17 @@ describe("useRepeatLayout", () => {
 		expect(currentValue.value).toStrictEqual(["default"]);
 	});
 
+	it("defaults min to zero when omitted", () => {
+		const field = useRepeatLayout(
+			createInput(TextInput, { defaultValue: "default" })(),
+			{
+				max: 2,
+			},
+		);
+
+		expect(field.defaultValue).toStrictEqual([]);
+	});
+
 	it("disposes previous repeated instances when the list size changes", async() => {
 		const useForm = createForm(testTemplates);
 		const field = useRepeatLayout(
@@ -137,13 +148,15 @@ describe("useRepeatLayout", () => {
 		expect(currentValue.value).toStrictEqual(["kept"]);
 	});
 
-	it("ignores stale writes from disposed instances whose index is out of bounds", async() => {
+	it("does not let cached instances mutate the array when the size changes", async() => {
 		const useForm = createForm(testTemplates);
+		let inactiveReadValue: unknown = undefined;
 		const disposableField = createFormField(
 			(modelValue) => ({
 				check: () => E.success(modelValue.value),
 				reset: () => {
-					modelValue.value = "default";
+					inactiveReadValue = modelValue.value;
+					modelValue.value = "reset";
 				},
 				dispose: () => {
 					modelValue.value = "disposed";
@@ -159,15 +172,20 @@ describe("useRepeatLayout", () => {
 				max: 2,
 			},
 		);
-		const { component, currentValue } = useForm(field);
+		const { component, currentValue, reset } = useForm(field);
 		const wrapper = mount(component);
 
 		await wrapper.find("#repeat-add").trigger("click");
 		await sleep();
-		expect(currentValue.value).toStrictEqual(["disposed", "default"]);
+		expect(currentValue.value).toStrictEqual(["default", "default"]);
 
 		await wrapper.find("#repeat-remove-1").trigger("click");
 		await sleep();
-		expect(currentValue.value).toStrictEqual(["disposed"]);
+		expect(currentValue.value).toStrictEqual(["default"]);
+
+		reset();
+		await sleep();
+		expect(currentValue.value).toStrictEqual(["default"]);
+		expect(inactiveReadValue).toBe("default");
 	});
 });

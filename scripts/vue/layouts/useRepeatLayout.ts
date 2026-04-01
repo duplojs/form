@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/prefer-for-of */
-import { createFormField, type ErrorProperties, type FormField, type GetFormFieldCheckedValue, type GetFormFieldValue } from "@V/formField";
+import { createFormField, type FormFieldInstance, type ErrorProperties, type FormField, type GetFormFieldCheckedValue, type GetFormFieldValue } from "@V/formField";
 import { type Templates } from "@V/template";
 import { type VueComponent } from "@V/types";
 import { simpleClone, unwrap } from "@duplojs/utils";
 import * as EE from "@duplojs/utils/either";
 import * as AA from "@duplojs/utils/array";
-import { computed, effectScope, h, shallowRef, watch, type VNode } from "vue";
+import { computed, effectScope, h, ref, shallowRef, watch, type VNode } from "vue";
 
 export interface RepeatTemplateProperties {
 	props: {
@@ -31,81 +31,84 @@ declare module "@V/template" {
 	}
 }
 
-export interface UseRepeatLayoutParams {
+export interface UseRepeatLayoutParams<
+	GenericMin extends number = number,
+> {
 	max: number;
-	min: number;
+	min?: GenericMin;
 	template?: Templates["repeat"];
 }
 
 export function useRepeatLayout<
 	GenericFormField extends FormField,
+	GenericMin extends number = 0,
 >(
 	formField: GenericFormField,
-	params: UseRepeatLayoutParams
+	params: UseRepeatLayoutParams<GenericMin>
 ): FormField<
-	GetFormFieldValue<GenericFormField>[],
-	GetFormFieldCheckedValue<GenericFormField>[]
+	[
+		...AA.CreateTuple<GetFormFieldValue<GenericFormField>, GenericMin>,
+		...GetFormFieldValue<GenericFormField>[],
+	],
+	[
+		...AA.CreateTuple<GetFormFieldCheckedValue<GenericFormField>, GenericMin>,
+		...GetFormFieldCheckedValue<GenericFormField>[],
+	]
 >;
 
 export function useRepeatLayout(
 	formField: FormField,
 	params: UseRepeatLayoutParams,
 ): FormField<unknown[]> {
+	const minElements = params.min ?? 0;
+	const maxElements = params.max;
+
 	return createFormField(
 		(modelValue, key, templates) => {
 			const template = params?.template ?? templates.repeat;
 
+			const cacheFormFields: Record<number, FormFieldInstance> = {};
+			const getFormFieldInstance = (index: number) => {
+				if (cacheFormFields[index] === undefined) {
+					cacheFormFields[index] = formField.new(
+						computed({
+							get: () => index in modelValue.value
+								? modelValue.value[index]
+								: formField.defaultValue,
+							set: (value) => {
+								if (index >= modelValue.value.length) {
+									return;
+								}
+
+								modelValue.value[index] = value;
+							},
+						}),
+						`${key}.${index}`,
+						templates,
+					);
+				}
+
+				return cacheFormFields[index];
+			};
 			const scope = effectScope();
 			const {
 				formFieldInstances,
-				formFieldVNodes,
 			} = scope.run(() => {
-				const sizeModelValue = shallowRef(
-					Array.from({ length: modelValue.value.length }),
-				);
+				const formFieldInstances = ref<FormFieldInstance[]>([]);
 
 				watch(
 					() => modelValue.value.length,
 					(length) => {
-						sizeModelValue.value = Array.from({ length });
+						formFieldInstances.value = Array.from({ length })
+							.map(
+								(__, index) => getFormFieldInstance(index),
+							);
 					},
-				);
-
-				const formFieldInstances = computed(
-					() => sizeModelValue.value.map(
-						(__, index) => formField.new(
-							computed({
-								get: () => modelValue.value[index] ?? formField.defaultValue,
-								set: (value) => {
-									if (index >= modelValue.value.length) {
-										return;
-									}
-									modelValue.value[index] = value;
-								},
-							}),
-							`${key}.${index}`,
-							templates,
-						),
-					),
-				);
-
-				watch(
-					formFieldInstances,
-					(newValue, oldValue) => void oldValue.forEach(
-						(formFieldInstance) => void formFieldInstance.dispose(),
-					),
-				);
-
-				const formFieldVNodes = computed(
-					() => formFieldInstances.value
-						.map(
-							(formFieldInstance) => formFieldInstance.getVNode(),
-						),
+					{ immediate: true },
 				);
 
 				return {
 					formFieldInstances,
-					formFieldVNodes,
 				};
 			})!;
 
@@ -133,24 +136,33 @@ export function useRepeatLayout(
 			};
 
 			const reset = () => {
-				formFieldInstances.value.forEach(
-					(formFieldInstance) => void formFieldInstance.reset(),
+				Object.entries(cacheFormFields).forEach(
+					([, formFieldInstance]) => void formFieldInstance.reset(),
 				);
 			};
 
 			const dispose = () => {
 				scope.stop();
-				formFieldInstances.value.forEach(
-					(formFieldInstance) => void formFieldInstance.dispose(),
+				Object.entries(cacheFormFields).forEach(
+					([, formFieldInstance]) => void formFieldInstance.dispose(),
 				);
 			};
 
 			const getCurrentValue = () => modelValue.value;
 
-			const getFormFieldVNodes = () => formFieldVNodes.value;
+			const cacheFormFieldVNodes: Record<number, VNode> = {};
+			const getFormFieldVNodes = () => formFieldInstances.value.map(
+				(formFieldInstance, index) => {
+					if (cacheFormFieldVNodes[index] === undefined) {
+						cacheFormFieldVNodes[index] = formFieldInstance.getVNode();
+					}
+
+					return cacheFormFieldVNodes[index];
+				},
+			);
 
 			const onAddElement = () => {
-				if (modelValue.value.length >= params.max) {
+				if (modelValue.value.length >= maxElements) {
 					return;
 				}
 
@@ -160,7 +172,7 @@ export function useRepeatLayout(
 			};
 
 			const onRemoveElement = (index: number) => {
-				if (modelValue.value.length <= params.min) {
+				if (modelValue.value.length <= minElements) {
 					return;
 				}
 
@@ -180,8 +192,8 @@ export function useRepeatLayout(
 						fieldKey: key,
 						getFormFields: getFormFieldVNodes,
 						getCurrentValue,
-						max: params.max,
-						min: params.min,
+						max: maxElements,
+						min: minElements,
 						onAddElement,
 						onRemoveElement,
 						onResetElement,
@@ -200,7 +212,7 @@ export function useRepeatLayout(
 			};
 		},
 		Array
-			.from({ length: params.min })
+			.from({ length: minElements })
 			.fill(formField.defaultValue),
 	);
 }
