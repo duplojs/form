@@ -40,11 +40,27 @@ export function useUnionLayout<
 	formFieldUnionElements: AnyTuple<GenericFormFieldElements>,
 	params: UseUnionLayoutParams<GenericFormFieldElements[0]>
 ): FormField<
-	GenericFormFieldElements extends FormFieldUnionElement
-		? {
-			kind: GenericFormFieldElements[0];
-			value: GetFormFieldValue<GenericFormFieldElements[1]>;
-		}
+	Extract<GenericFormFieldElements, any> extends infer InferredFormFieldElements extends FormFieldUnionElement
+		? GenericFormFieldElements extends FormFieldUnionElement
+			? {
+				readonly kind: GenericFormFieldElements[0];
+				value: GetFormFieldValue<GenericFormFieldElements[1]>;
+				updateKind(
+					kind: InferredFormFieldElements[0],
+				): void;
+				updateKind<
+					GenericKind extends InferredFormFieldElements[0],
+				>(
+					kind: GenericKind,
+					value: GetFormFieldValue<
+						Extract<
+							InferredFormFieldElements,
+							[GenericKind, any]
+						>[1]
+					>,
+				): void;
+			}
+			: never
 		: never,
 	GenericFormFieldElements extends FormFieldUnionElement
 		? {
@@ -61,6 +77,7 @@ export function useUnionLayout(
 		{
 			kind: string;
 			value: unknown;
+			updateKind(kind: string, value?: unknown): void;
 		},
 		{
 			kind: string;
@@ -75,7 +92,6 @@ export function useUnionLayout(
 		(modelValue, key, templates) => {
 			const template = params?.template ?? templates.union;
 
-			let skipNextWatch = false;
 			let cacheValue: Record<string, unknown> = {};
 			const cacheFormFields: Record<string, FormFieldInstance> = {};
 			const scope = effectScope();
@@ -83,20 +99,30 @@ export function useUnionLayout(
 				formFieldInstances,
 			} = scope.run(() => {
 				watch(
-					() => modelValue.value.kind,
-					(kind, oldKind) => {
-						if (skipNextWatch === true) {
-							skipNextWatch = false;
-							return;
-						}
+					modelValue,
+					() => {
+						modelValue.value.updateKind = (kind, ...args) => {
+							cacheValue[modelValue.value.kind] = modelValue.value.value;
 
-						cacheValue[oldKind] = modelValue.value.value;
+							const newValue = (() => {
+								if (args.length === 1) {
+									return args[0];
+								} else if (kind in cacheValue) {
+									return cacheValue[kind];
+								} else {
+									return simpleClone(
+										formFieldUnionMapper[kind]!.defaultValue,
+									);
+								}
+							})();
 
-						modelValue.value.value = kind in cacheValue
-							? cacheValue[kind]
-							: simpleClone(
-								formFieldUnionMapper[kind]!.defaultValue,
-							);
+							modelValue.value.kind = kind;
+							modelValue.value.value = newValue;
+						};
+					},
+					{
+						flush: "sync",
+						immediate: true,
 					},
 				);
 
@@ -149,7 +175,6 @@ export function useUnionLayout(
 
 			const reset = () => {
 				cacheValue = {};
-				skipNextWatch = true;
 				Object.entries(cacheFormFields).forEach(
 					([, formFieldInstance]) => void formFieldInstance.reset(),
 				);
@@ -191,7 +216,7 @@ export function useUnionLayout(
 					return;
 				}
 
-				modelValue.value.kind = value;
+				modelValue.value.updateKind(value);
 			};
 
 			const getVNode = () => h(
@@ -219,6 +244,7 @@ export function useUnionLayout(
 		{
 			kind: params.defaultKind,
 			value: formFieldUnionMapper[params.defaultKind]!.defaultValue,
+			updateKind: () => {},
 		},
 	);
 }

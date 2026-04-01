@@ -188,4 +188,32 @@ describe("useRepeatLayout", () => {
 		expect(currentValue.value).toStrictEqual(["default"]);
 		expect(inactiveReadValue).toBe("default");
 	});
+
+	it("updates the dom when currentValue changes directly", async() => {
+		const useForm = createForm(testTemplates);
+		const { component, currentValue } = useForm(
+			useRepeatLayout(
+				createInput(TextInput, { defaultValue: "default" })(),
+				{
+					min: 1,
+					max: 3,
+				},
+			),
+		);
+		const wrapper = mount(component);
+
+		currentValue.value = ["first", "second"];
+		await sleep();
+		expect(wrapper.find("#repeat-current-value").text()).toBe(JSON.stringify(["first", "second"]));
+		expect(wrapper.find("#repeat-form-fields-count").text()).toBe("2");
+		expect(wrapper.findAll("#test-text-input")[0]!.element.value).toBe("first");
+		expect(wrapper.findAll("#test-text-input")[1]!.element.value).toBe("second");
+
+		currentValue.value = ["only-one"];
+		await sleep();
+		expect(wrapper.find("#repeat-current-value").text()).toBe(JSON.stringify(["only-one"]));
+		expect(wrapper.find("#repeat-form-fields-count").text()).toBe("1");
+		expect(wrapper.findAll("#test-text-input")).toHaveLength(1);
+		expect(wrapper.find("#test-text-input").element.value).toBe("only-one");
+	});
 });

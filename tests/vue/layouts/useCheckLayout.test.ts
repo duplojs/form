@@ -149,4 +149,29 @@ describe("useCheckLayout", () => {
 		await sleep();
 		expect(wrapper.find("#check-error-message").text()).toBe("Error");
 	});
+
+	it("updates the dom when currentValue changes directly", async() => {
+		const useForm = createForm(testTemplates);
+		const { component, currentValue } = useForm(
+			useCheckLayout(
+				createInput(TextInput, {
+					defaultValue: "default",
+				})(),
+				{
+					dataParser: DP.coerce.number({ errorMessage: "Need number" }),
+				},
+			),
+		);
+		const wrapper = mount(component);
+
+		currentValue.value = "41";
+		await sleep();
+		expect(wrapper.find("#test-text-input").element.value).toBe("41");
+		expect(wrapper.find("#check-current-value").text()).toBe("41");
+
+		currentValue.value = "not-a-number";
+		await sleep();
+		expect(wrapper.find("#test-text-input").element.value).toBe("not-a-number");
+		expect(wrapper.find("#check-current-value").text()).toBe("not-a-number");
+	});
 });

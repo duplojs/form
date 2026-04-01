@@ -120,4 +120,27 @@ describe("useMultiLayout", () => {
 		await sleep();
 		expect(wrapper.find("#text-input-with-expose-disposed").exists()).toBe(true);
 	});
+
+	it("updates the dom when currentValue changes directly", async() => {
+		const useForm = createForm(testTemplates);
+		const { component, currentValue } = useForm(
+			useMultiLayout({
+				first: createInput(TextInput, { defaultValue: "first-default" })(),
+				second: createInput(TextInput, { defaultValue: "second-default" })(),
+			}),
+		);
+		const wrapper = mount(component);
+
+		currentValue.value = {
+			first: "first-from-current-value",
+			second: "second-from-current-value",
+		};
+		await sleep();
+		expect(wrapper.find("#multi-current-value").text()).toBe(JSON.stringify({
+			first: "first-from-current-value",
+			second: "second-from-current-value",
+		}));
+		expect(wrapper.findAll("#test-text-input")[0]!.element.value).toBe("first-from-current-value");
+		expect(wrapper.findAll("#test-text-input")[1]!.element.value).toBe("second-from-current-value");
+	});
 });

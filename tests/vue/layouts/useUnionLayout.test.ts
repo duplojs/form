@@ -22,10 +22,12 @@ describe("useUnionLayout", () => {
 		const { component, currentValue, check, reset, dispose } = useForm(field);
 		const wrapper = mount(component);
 
-		expect(field.defaultValue).toStrictEqual({
+		expect(field.defaultValue).toMatchObject({
 			kind: "a",
 			value: "a-default",
 		});
+		expect(typeof field.defaultValue.updateKind).toBe("function");
+		expect(() => field.defaultValue.updateKind("b")).not.toThrow();
 		expect(wrapper.find("#union-field-key").text()).toBe("root");
 		expect(wrapper.find("#union-current-kind").text()).toBe("a");
 		expect(wrapper.find("#union-current-value").text()).toBe(JSON.stringify({
@@ -40,14 +42,14 @@ describe("useUnionLayout", () => {
 		);
 
 		await wrapper.find("#test-text-input").setValue("a-value");
-		expect(currentValue.value).toStrictEqual({
+		expect(currentValue.value).toMatchObject({
 			kind: "a",
 			value: "a-value",
 		});
 
 		await wrapper.find("#union-kind-select").setValue("b");
 		await sleep();
-		expect(currentValue.value).toStrictEqual({
+		expect(currentValue.value).toMatchObject({
 			kind: "b",
 			value: "b-default",
 		});
@@ -63,19 +65,19 @@ describe("useUnionLayout", () => {
 
 		await wrapper.find("#union-kind-select").setValue("a");
 		await sleep();
-		expect(currentValue.value).toStrictEqual({
+		expect(currentValue.value).toMatchObject({
 			kind: "a",
 			value: "a-value",
 		});
 
 		reset();
-		expect(currentValue.value).toStrictEqual({
+		expect(currentValue.value).toMatchObject({
 			kind: "a",
 			value: "a-default",
 		});
 
 		dispose();
-		expect(currentValue.value).toStrictEqual({
+		expect(currentValue.value).toMatchObject({
 			kind: "a",
 			value: "a-default",
 		});
@@ -102,14 +104,14 @@ describe("useUnionLayout", () => {
 
 		await wrapper.find("#local-union-invalid-kind").trigger("click");
 		await sleep();
-		expect(currentValue.value).toStrictEqual({
+		expect(currentValue.value).toMatchObject({
 			kind: "a",
 			value: "a-default",
 		});
 
 		await wrapper.find("#local-union-kind-b").trigger("click");
 		await sleep();
-		expect(currentValue.value).toStrictEqual({
+		expect(currentValue.value).toMatchObject({
 			kind: "b",
 			value: "b-default",
 		});
@@ -119,7 +121,7 @@ describe("useUnionLayout", () => {
 		);
 
 		dispose();
-		expect(currentValue.value).toStrictEqual({
+		expect(currentValue.value).toMatchObject({
 			kind: "b",
 			value: "b-default",
 		});
@@ -165,14 +167,14 @@ describe("useUnionLayout", () => {
 		currentValue.value.value = "a-cached";
 		await wrapper.find("#union-kind-select").setValue("b");
 		await sleep();
-		expect(currentValue.value).toStrictEqual({
+		expect(currentValue.value).toMatchObject({
 			kind: "b",
 			value: "b-default",
 		});
 
 		await wrapper.find("#union-kind-select").setValue("a");
 		await sleep();
-		expect(currentValue.value).toStrictEqual({
+		expect(currentValue.value).toMatchObject({
 			kind: "a",
 			value: "a-cached",
 		});
@@ -200,14 +202,14 @@ describe("useUnionLayout", () => {
 
 		reset();
 		await sleep();
-		expect(currentValue.value).toStrictEqual({
+		expect(currentValue.value).toMatchObject({
 			kind: "a",
 			value: "a-default",
 		});
 
 		await wrapper.find("#union-kind-select").setValue("b");
 		await sleep();
-		expect(currentValue.value).toStrictEqual({
+		expect(currentValue.value).toMatchObject({
 			kind: "b",
 			value: "b-default",
 		});
@@ -248,6 +250,7 @@ describe("useUnionLayout", () => {
 		const modelValue = ref({
 			kind: "a" as "a" | "b",
 			value: "a-default",
+			updateKind: (arg: string) => {},
 		});
 		const instance = field.new(modelValue, "root", testTemplates);
 
@@ -258,7 +261,7 @@ describe("useUnionLayout", () => {
 			}),
 		);
 
-		modelValue.value.kind = "b";
+		modelValue.value.updateKind("b");
 		await sleep();
 		expect(instance.check()).toStrictEqual(
 			E.success({
@@ -267,13 +270,93 @@ describe("useUnionLayout", () => {
 			}),
 		);
 
-		modelValue.value.kind = "a";
+		modelValue.value.updateKind("a");
 		await sleep();
 		instance.reset();
-		expect(modelValue.value).toStrictEqual({
+		expect(modelValue.value).toMatchObject({
 			kind: "a",
 			value: "a-default",
 		});
 		expect(inactiveReadValue).toBe("b-default");
+	});
+
+	it("updates the dom when currentValue changes directly", async() => {
+		const useForm = createForm(testTemplates);
+		const { component, currentValue } = useForm(
+			useUnionLayout(
+				[
+					["a", createInput(TextInput, { defaultValue: "a-default" })()],
+					["b", createInput(TextInput, { defaultValue: "b-default" })()],
+				] as const,
+				{
+					defaultKind: "a",
+				},
+			),
+		);
+		const wrapper = mount(component);
+
+		currentValue.value.value = "a-from-current-value";
+		await sleep();
+		expect(wrapper.find("#union-current-kind").text()).toBe("a");
+		expect(wrapper.find("#union-current-value").text()).toBe(JSON.stringify({
+			kind: "a",
+			value: "a-from-current-value",
+		}));
+		expect(wrapper.find("#test-text-input").element.value).toBe("a-from-current-value");
+
+		currentValue.value.updateKind("b", "b-from-current-value");
+		await sleep();
+		expect(wrapper.find("#union-current-kind").text()).toBe("b");
+		expect(wrapper.find("#union-current-value").text()).toBe(JSON.stringify({
+			kind: "b",
+			value: "b-from-current-value",
+		}));
+		expect(wrapper.find("#test-text-input").element.value).toBe("b-from-current-value");
+
+		currentValue.value.updateKind("a", "a-from-current-value");
+		await sleep();
+		expect(wrapper.find("#union-current-kind").text()).toBe("a");
+		expect(wrapper.find("#union-current-value").text()).toBe(JSON.stringify({
+			kind: "a",
+			value: "a-from-current-value",
+		}));
+		expect(wrapper.find("#test-text-input").element.value).toBe(String(currentValue.value.value));
+	});
+
+	it("keeps the previous kind value cached when the union value is fully reassigned", async() => {
+		const useForm = createForm(testTemplates);
+		const { component, currentValue } = useForm(
+			useUnionLayout(
+				[
+					["a", createInput(TextInput, { defaultValue: "a-default" })()],
+					["b", createInput(TextInput, { defaultValue: "b-default" })()],
+				] as const,
+				{
+					defaultKind: "a",
+				},
+			),
+		);
+		const wrapper = mount(component);
+
+		currentValue.value.updateKind("a", "a-cached-before-reassign");
+		await sleep();
+		expect(wrapper.find("#test-text-input").element.value).toBe("a-cached-before-reassign");
+
+		currentValue.value.updateKind("b", "b-from-full-reassign");
+		await sleep();
+		expect(wrapper.find("#union-current-kind").text()).toBe("b");
+		expect(wrapper.find("#test-text-input").element.value).toBe("b-from-full-reassign");
+
+		currentValue.value.updateKind("a");
+		await sleep();
+		expect(currentValue.value).toMatchObject({
+			kind: "a",
+			value: "a-cached-before-reassign",
+		});
+		expect(wrapper.find("#union-current-value").text()).toBe(JSON.stringify({
+			kind: "a",
+			value: "a-cached-before-reassign",
+		}));
+		expect(wrapper.find("#test-text-input").element.value).toBe("a-cached-before-reassign");
 	});
 });

@@ -43,7 +43,7 @@ describe("useDisabledLayout", () => {
 
 		reset();
 		expect(currentValue.value).toBe("default");
-		expect(() => dispose()).not.toThrow();
+		expect(() => void dispose()).not.toThrow();
 	});
 
 	it("show field again and keep delegating reset and dispose when re-enabled", async() => {
@@ -87,5 +87,32 @@ describe("useDisabledLayout", () => {
 		expect(currentValue.value).toBe("reset");
 		await sleep();
 		expect(wrapper.find("#text-input-with-expose-disposed").exists()).toBe(true);
+	});
+
+	it("updates the dom when currentValue changes directly", async() => {
+		const isDisabled = ref(false);
+		const useForm = createForm(testTemplates);
+		const { component, currentValue } = useForm(
+			useDisabledLayout(
+				createInput(TextInput, { defaultValue: "default" })(),
+				{
+					isDisabled: () => isDisabled.value,
+				},
+			),
+		);
+		const wrapper = mount(component);
+
+		currentValue.value = "from-current-value";
+		await sleep();
+		expect(wrapper.find("#test-text-input").element.value).toBe("from-current-value");
+		expect(wrapper.find("#current-value-input").text()).toBe("from-current-value");
+
+		isDisabled.value = true;
+		await sleep();
+		expect(wrapper.find("#test-text-input").exists()).toBe(false);
+
+		isDisabled.value = false;
+		await sleep();
+		expect(wrapper.find("#test-text-input").element.value).toBe("from-current-value");
 	});
 });

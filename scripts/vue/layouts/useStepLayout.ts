@@ -52,7 +52,9 @@ export function useStepLayout<
 			? InferredStep
 			: never;
 		steps: {
-			[Prop in keyof GenericFormFields]: GetFormFieldValue<GenericFormFields[Prop]>
+			-readonly [Prop in Exclude<keyof GenericFormFields, keyof any[]>]: GetFormFieldValue<
+				Extract<GenericFormFields[Prop], FormField>
+			>
 		};
 	},
 	{
