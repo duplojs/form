@@ -1,9 +1,9 @@
-import { createFormField, type FormField, type GetFormFieldCheckedValue, type GetFormFieldValue } from "@V/formField";
+import { createFormField, type FormFieldInstance, type FormField, type GetFormFieldCheckedValue, type GetFormFieldValue } from "@V/formField";
 import { type Templates } from "@V/template";
 import { type VueComponent } from "@V/types";
 import { simpleClone, unwrap, type AnyTuple } from "@duplojs/utils";
 import * as EE from "@duplojs/utils/either";
-import { computed, effectScope, h, watch } from "vue";
+import { computed, effectScope, h, type VNode, watch } from "vue";
 
 export interface UnionTemplateProperties {
 	props: {
@@ -75,57 +75,68 @@ export function useUnionLayout(
 		(modelValue, key, templates) => {
 			const template = params?.template ?? templates.union;
 
+			let skipNextWatch = false;
+			let cacheValue: Record<string, unknown> = {};
+			const cacheFormFields: Record<string, FormFieldInstance> = {};
 			const scope = effectScope();
 			const {
-				formFieldInstance,
-				formFieldVNode,
+				formFieldInstances,
 			} = scope.run(() => {
 				watch(
 					() => modelValue.value.kind,
-					(kind) => {
-						modelValue.value.value = simpleClone(
-							formFieldUnionMapper[kind]!.defaultValue,
-						);
+					(kind, oldKind) => {
+						if (skipNextWatch === true) {
+							skipNextWatch = false;
+							return;
+						}
+
+						cacheValue[oldKind] = modelValue.value.value;
+
+						modelValue.value.value = kind in cacheValue
+							? cacheValue[kind]
+							: simpleClone(
+								formFieldUnionMapper[kind]!.defaultValue,
+							);
 					},
 				);
 
-				const formFieldInstance = computed(
-					() => {
-						const currentKind = modelValue.value.kind;
-
-						return formFieldUnionMapper[currentKind]!.new(
-							computed({
-								get: () => currentKind === modelValue.value.kind
-									? modelValue.value.value
-									: formFieldUnionMapper[currentKind]!.defaultValue,
-								set: (value) => {
-									if (currentKind !== modelValue.value.kind) {
-										return;
+				const formFieldInstances = Object.fromEntries(
+					formFieldUnionElements
+						.map(
+							([kind, formField]) => [
+								kind,
+								() => {
+									if (cacheFormFields[kind] === undefined) {
+										cacheFormFields[kind] = formField.new(
+											computed({
+												get: () => kind === modelValue.value.kind
+													? modelValue.value.value
+													: formFieldUnionMapper[kind]!.defaultValue,
+												set: (value) => {
+													if (kind !== modelValue.value.kind) {
+														return;
+													}
+													modelValue.value.value = value;
+												},
+											}),
+											key,
+											templates,
+										);
 									}
-									modelValue.value.value = value;
+
+									return cacheFormFields[kind];
 								},
-							}),
-							key,
-							templates,
-						);
-					},
+							],
+						),
 				);
-
-				watch(
-					formFieldInstance,
-					(newValue, oldValue) => void oldValue.dispose(),
-				);
-
-				const formFieldVNode = computed(() => formFieldInstance.value.getVNode());
 
 				return {
-					formFieldInstance,
-					formFieldVNode,
+					formFieldInstances,
 				};
 			})!;
 
 			const check = () => {
-				const checkResult = formFieldInstance.value.check();
+				const checkResult = formFieldInstances[modelValue.value.kind]!().check();
 				if (EE.isLeft(checkResult)) {
 					return checkResult;
 				}
@@ -137,17 +148,41 @@ export function useUnionLayout(
 			};
 
 			const reset = () => {
-				formFieldInstance.value.reset();
+				cacheValue = {};
+				skipNextWatch = true;
+				Object.entries(cacheFormFields).forEach(
+					([, formFieldInstance]) => void formFieldInstance.reset(),
+				);
 			};
 
 			const dispose = () => {
 				scope.stop();
-				formFieldInstance.value.dispose();
+				Object.entries(cacheFormFields).forEach(
+					([, formFieldInstance]) => void formFieldInstance.dispose(),
+				);
 			};
 
 			const getCurrentValue = () => modelValue.value;
 
-			const getFieldVNode = () => formFieldVNode.value;
+			const cacheFormFieldVNodes: Record<string, VNode> = {};
+			const formFieldVNodes = Object.fromEntries(
+				Object
+					.entries(formFieldInstances)
+					.map(
+						([kind, getFormFieldInstance]) => [
+							kind,
+							() => {
+								if (cacheFormFieldVNodes[kind] === undefined) {
+									cacheFormFieldVNodes[kind] = getFormFieldInstance().getVNode();
+								}
+
+								return cacheFormFieldVNodes[kind];
+							},
+						],
+					),
+			);
+
+			const getFieldVNode = () => formFieldVNodes[modelValue.value.kind]!();
 
 			const getCurrentKind = () => modelValue.value.kind;
 

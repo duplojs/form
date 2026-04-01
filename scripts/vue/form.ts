@@ -28,6 +28,7 @@ export interface FormProperties<
 	check: FormFieldInstance<GetFormFieldCheckedValue<GenericFormField>>["check"];
 	currentValue: Ref<GetFormFieldValue<GenericFormField>>;
 	reset(): void;
+	dispose(): void;
 	component: FunctionalComponent<
 		HTMLAttributes,
 		{},
@@ -49,7 +50,7 @@ export type UseForm = <
 export function createForm(templates: Templates): UseForm;
 
 export function createForm(templates: Templates) {
-	return (formField: FormField, params: UseFormParams = {}) => {
+	return (formField: FormField, params: UseFormParams = {}): FormProperties => {
 		const templateForm = params.template ?? templates.form;
 
 		const currentValue = ref(simpleClone(formField.defaultValue));
@@ -66,6 +67,8 @@ export function createForm(templates: Templates) {
 			formFieldInstance.reset();
 			currentValue.value = simpleClone(formField.defaultValue);
 		};
+
+		const dispose = () => void formFieldInstance.dispose();
 
 		const getCurrentValue = () => currentValue.value;
 
@@ -89,6 +92,7 @@ export function createForm(templates: Templates) {
 			currentValue,
 			component,
 			reset,
+			dispose,
 			check,
 		};
 	};

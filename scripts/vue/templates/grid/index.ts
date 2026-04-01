@@ -1,4 +1,4 @@
-import { createTemplate } from "@V/template";
+import { createTemplate, Templates } from "@V/template";
 
 import "./styles.scss";
 import GridFormTemplate from "./GridFormTemplate.vue";

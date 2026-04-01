@@ -1,8 +1,16 @@
 import { defineConfig } from "vitest/config";
 import tsconfigPaths from 'vite-tsconfig-paths'
+import vue from "@vitejs/plugin-vue";
+import { Path } from "@duplojs/utils";
 
 export default defineConfig({
+	resolve: {
+		alias: {
+			"@V": Path.resolveRelative([import.meta.dirname, "scripts/vue"]),
+		},
+	},
 	test: {
+		environment: 'jsdom',
 		watch: false,
 		globals: true,
 		include: [
@@ -34,5 +42,5 @@ export default defineConfig({
 			]
 		}
 	},
-	plugins: [tsconfigPaths()],
+	plugins: [vue(), tsconfigPaths()],
 });

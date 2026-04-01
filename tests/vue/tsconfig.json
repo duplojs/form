@@ -4,7 +4,16 @@
     "baseUrl": "./",
     "paths": {
 	  "@V/*": ["../../scripts/vue/*"],
+	  "@V": ["../../scripts/vue/index.ts"],
+	  "@test-utils/*": ["../_utils/*"],
     },
+	"types": ["vitest/globals"]
   },
-  "include": ["**/*.ts", "../../scripts/vue/**/*.ts", "../../scripts/vue/**/*.vue"],
+  "include": [
+	"**/*.ts", 
+	"../../scripts/vue/**/*.ts", 
+	"../../scripts/vue/**/*.vue", 
+	"../_utils/**/*.ts",
+	"../_utils/**/*.vue",
+  ],
 }

@@ -1,4 +1,4 @@
-import { type MayBeGetter, type AnyFunction, type SimplifyTopLevel, type Unwrap, justReturn } from "@duplojs/utils";
+import { type MayBeGetter, type AnyFunction, type SimplifyTopLevel, type Unwrap } from "@duplojs/utils";
 import * as EE from "@duplojs/utils/either";
 import { createFormField, type FormFieldInstance, type FormField } from "./formField";
 import { type VueComponent } from "./types";
@@ -11,6 +11,11 @@ export interface InputTemplateProperties {
 	};
 	slots: {
 		input(): any;
+	};
+	expose: {
+		check?: FormFieldInstance["check"];
+		reset?: FormFieldInstance["reset"];
+		dispose?: FormFieldInstance["dispose"];
 	};
 }
 declare module "./template" {
@@ -26,11 +31,7 @@ export type VueInputComponent = VueComponent<{
 	emits: {
 		"update:modelValue"(value: any): any;
 	};
-	expose: {
-		check?: FormFieldInstance["check"];
-		reset?: FormFieldInstance["reset"];
-		dispose?: FormFieldInstance["dispose"];
-	};
+	expose: InputTemplateProperties["expose"];
 }>;
 
 export type GetVueInputComponentValue<
@@ -137,12 +138,13 @@ export function createInput(
 		})();
 
 		const getLocalProps = typeof params.props === "function"
-			? params.props()
-			: justReturn(params.props);
+			? params.props
+			: () => params.props;
 
 		return createFormField(
 			(modelValue, key, templates) => {
 				const template = params?.template ?? defaultParams.template ?? templates.input;
+				let isDispose = false;
 
 				const componentRef = ref<
 					InstanceType<VueInputComponent> | null
@@ -161,6 +163,7 @@ export function createInput(
 				};
 
 				const dispose = () => {
+					isDispose = true;
 					componentRef.value?.dispose?.();
 				};
 
@@ -174,6 +177,10 @@ export function createInput(
 							...getLocalProps(),
 							modelValue: modelValue.value,
 							"onUpdate:modelValue": (value: any) => {
+								if (isDispose) {
+									return;
+								}
+
 								modelValue.value = value;
 							},
 							id: key,
