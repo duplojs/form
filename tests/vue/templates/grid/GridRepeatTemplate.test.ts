@@ -41,8 +41,8 @@ describe("GridRepeatTemplate", () => {
 		expect(rootContainer.attributes("style")).toContain("--gap: 14px");
 		expect(repeatTemplate.findAll(".DFV-grid-repeat-element")).toHaveLength(1);
 		expect(repeatTemplate.findAll("button[type=\"button\"]")).toHaveLength(3);
-		expect(repeatTemplate.text()).toContain("reset");
-		expect(repeatTemplate.text()).toContain("x");
+		expect(repeatTemplate.text()).toContain("Reset");
+		expect(repeatTemplate.text()).toContain("×");
 		expect(repeatTemplate.text()).toContain("+");
 
 		await repeatTemplate.findAll("button[type=\"button\"]").at(-1)!.trigger("click");

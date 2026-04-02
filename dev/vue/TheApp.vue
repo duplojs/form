@@ -8,8 +8,8 @@ import { DPE } from "@duplojs/utils";
 const useInput = createInput(
 	TheTextInput,
 	{
-		defaultValue: () => "test",
-		props: { test: "" },
+		defaultValue: () => "Default value",
+		props: { text: "" },
 	},
 );
 
@@ -35,18 +35,18 @@ const { component: Form, currentValue, check } = useForm(
 							"one",
 							useMultiLayout({
 								name: useRepeatLayout(
-									useInput({ defaultValue: "tt" }),
+									useInput({ defaultValue: "Default value" }),
 									{
 										max: 10,
 										min: 2,
 									},
 								),
 								age: useCheckLayout(
-									useInput({ defaultValue: "198" }),
+									useInput({ defaultValue: "26" }),
 									{
 										dataParser: DPE.coerce.number(),
 										template: useGridCheckTemplate({
-											label: "test",
+											label: "Check age",
 											columns: 2,
 											hideEmptyMessageError: true,
 										}),
@@ -56,7 +56,7 @@ const { component: Form, currentValue, check } = useForm(
 						],
 						[
 							"two",
-							useInput({ defaultValue: "ooo" }),
+							useInput({ defaultValue: "Another default value" }),
 						],
 					],
 					{ defaultKind: "one" },
@@ -73,10 +73,8 @@ const { component: Form, currentValue, check } = useForm(
 <template>
 	<div>
 		<Form @submit="console.log(check())">
-			<button
-				type="submit"
-			>
-				test
+			<button type="submit">
+				Submit
 			</button>
 		</Form>
 

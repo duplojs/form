@@ -68,12 +68,14 @@ const selfStyles = computed(() => ({
 		class="DFV-grid-element"
 		:style="selfStyles"
 	>
-		<component
-			:is="props.selectKind"
-			:field-key="props.fieldKey"
-			:options
-			v-model="modelValue"
-		/>
+		<div class="duplojs-form-vue-grid-union-select">
+			<component
+				:is="props.selectKind"
+				:field-key="props.fieldKey"
+				:options
+				v-model="modelValue"
+			/>
+		</div>
 
 		<div
 			class="DFV-grid-container"

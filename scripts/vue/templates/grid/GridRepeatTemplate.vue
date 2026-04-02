@@ -63,15 +63,17 @@ const repeatElementContainerStyles = computed(() => ({
 				:key="index"
 				:style="repeatElementStyles"
 			>
-				<component
-					:is="props.resetButton"
-					@click="emit('resetElement', index)"
-				/>
+				<div class="duplojs-form-vue-grid-repeat-actions">
+					<component
+						:is="props.resetButton"
+						@click="emit('resetElement', index)"
+					/>
 
-				<component
-					:is="props.removeButton"
-					@click="emit('removeElement', index)"
-				/>
+					<component
+						:is="props.removeButton"
+						@click="emit('removeElement', index)"
+					/>
+				</div>
 
 				<div
 					class="DFV-grid-container DFV-grid-repeat-container"
@@ -82,9 +84,11 @@ const repeatElementContainerStyles = computed(() => ({
 			</div>
 		</div>
 
-		<component
-			:is="props.addButton"
-			@click="emit('addElement')"
-		/>
+		<div class="duplojs-form-vue-grid-repeat-add">
+			<component
+				:is="props.addButton"
+				@click="emit('addElement')"
+			/>
+		</div>
 	</div>
 </template>
