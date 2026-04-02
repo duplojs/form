@@ -22,7 +22,7 @@ describe("useCheckLayout", () => {
 		const wrapper = mount(component);
 
 		expect(wrapper.find("#test-text-input").exists()).toBe(true);
-		expect(wrapper.find("#check-field-key").text()).toBe("root");
+		expect(wrapper.find("#check-field-key").text()).toBe("form-field");
 		expect(wrapper.find("#check-current-value").text()).toBe("default");
 		expect(wrapper.find("#check-error-message").text()).toBe("");
 
@@ -30,7 +30,7 @@ describe("useCheckLayout", () => {
 		expect(E.isLeft(firstCheck)).toBe(true);
 		expect(unwrap(firstCheck)).toMatchObject([
 			{
-				key: "root",
+				key: "form-field",
 				dataParserError: {
 					issues: [
 						{
@@ -80,7 +80,7 @@ describe("useCheckLayout", () => {
 
 	it("uses the local template override and returns the inner field error without parsing", async() => {
 		const useForm = createForm(testTemplates);
-		const localCheckTemplate = createTemplate(CheckTemplateAlt)();
+		const localCheckTemplate = createTemplate("check", CheckTemplateAlt)();
 		const useInput = createInput(TextInputWithErrorExpose, {
 			defaultValue: "default",
 		});
@@ -99,7 +99,7 @@ describe("useCheckLayout", () => {
 		const wrapper = mount(component);
 
 		expect(wrapper.find("#local-check-template").exists()).toBe(true);
-		expect(wrapper.find("#local-check-field-key").text()).toBe("root");
+		expect(wrapper.find("#local-check-field-key").text()).toBe("form-field");
 		expect(wrapper.find("#test-text-input").exists()).toBe(true);
 
 		await wrapper.find("#test-text-input").setValue("value");

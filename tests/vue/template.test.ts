@@ -4,7 +4,7 @@ import { createTemplate } from "@V";
 describe("createTemplate", () => {
 	test("creates a template whose vnode uses the provided component, props and slots", () => {
 		const templateComponent = { name: "TemplateComponent" } as any;
-		const useTemplate = createTemplate(templateComponent);
+		const useTemplate = createTemplate("check", templateComponent);
 		const template = useTemplate();
 		const slots = {
 			default: () => "slot-content",
@@ -27,6 +27,7 @@ describe("createTemplate", () => {
 	test("merges default props, local props and runtime props in that order", () => {
 		const templateComponent = { name: "TemplateComponent" } as any;
 		const useTemplate = createTemplate(
+			"check",
 			templateComponent,
 			{
 				props: {

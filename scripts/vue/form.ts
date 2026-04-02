@@ -58,7 +58,7 @@ export function createForm(templates: Templates) {
 
 		const formFieldInstance = formField.new(
 			currentValue,
-			"form.field",
+			"form-field",
 			templates,
 		);
 

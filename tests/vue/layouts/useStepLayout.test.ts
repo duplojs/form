@@ -35,7 +35,7 @@ describe("useStepLayout", () => {
 		expect(wrapper.find("#step-form-fields-count").text()).toBe("2");
 
 		expect(check()).toStrictEqual(
-			E.error([{ key: "root" }]),
+			E.error([{ key: "form-field" }]),
 		);
 		await sleep();
 		expect(wrapper.find("#step-error-message").text()).toBe("Go to the end");
@@ -82,7 +82,7 @@ describe("useStepLayout", () => {
 
 	it("uses the local template override and blocks next step when the current step check fails", async() => {
 		const useForm = createForm(testTemplates);
-		const localTemplate = createTemplate(StepTemplateAlt)();
+		const localTemplate = createTemplate("step", StepTemplateAlt)();
 		const field = useStepLayout(
 			[
 				createInput(TextInputWithErrorExpose, { defaultValue: "first-default" })(),

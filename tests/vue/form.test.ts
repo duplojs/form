@@ -47,7 +47,7 @@ describe("form", () => {
 
 	it("use local template override and delegate check reset dispose to the field instance", async() => {
 		const useForm = createForm(testTemplates);
-		const localTemplate = createTemplate(FormTemplate)();
+		const localTemplate = createTemplate("form", FormTemplate)();
 		const defaultTemplateSpy = vi.spyOn(testTemplates.form, "getVNode");
 		const localTemplateSpy = vi.spyOn(localTemplate, "getVNode");
 		const onSubmit = vi.fn();

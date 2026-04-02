@@ -21,7 +21,7 @@ describe("useMultiLayout", () => {
 			first: "first-default",
 			second: "second-default",
 		});
-		expect(wrapper.find("#multi-field-key").text()).toBe("root");
+		expect(wrapper.find("#multi-field-key").text()).toBe("form-field");
 		expect(wrapper.find("#multi-current-value").text()).toBe(JSON.stringify({
 			first: "first-default",
 			second: "second-default",
@@ -71,7 +71,7 @@ describe("useMultiLayout", () => {
 
 	it("supports entry arrays, local template override, and aggregates child errors while preserving partial successes", async() => {
 		const useForm = createForm(testTemplates);
-		const localTemplate = createTemplate(MultiTemplateAlt)();
+		const localTemplate = createTemplate("multi", MultiTemplateAlt)();
 		const formField = useMultiLayout(
 			[
 				["success", createInput(TextInputWithExpose, { defaultValue: "success-default" })()],
@@ -85,7 +85,7 @@ describe("useMultiLayout", () => {
 		const wrapper = mount(component);
 
 		expect(wrapper.find("#local-multi-template").exists()).toBe(true);
-		expect(wrapper.find("#local-multi-field-key").text()).toBe("root");
+		expect(wrapper.find("#local-multi-field-key").text()).toBe("form-field");
 		expect(wrapper.find("#local-multi-current-value").text()).toBe(JSON.stringify({
 			success: "success-default",
 			failure: "failure-default",

@@ -184,7 +184,7 @@ export function createInput(
 								modelValue.value = value;
 							},
 							id: key,
-							key: key,
+							key,
 							ref: componentRef,
 						},
 					),
@@ -195,6 +195,7 @@ export function createInput(
 				const getVNode = () => h(
 					() => template.getVNode(
 						{
+							fieldKey: key,
 							getCurrentValue,
 						},
 						{

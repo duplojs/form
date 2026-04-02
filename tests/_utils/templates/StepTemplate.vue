@@ -23,7 +23,9 @@ defineSlots<StepTemplateProperties["slots"]>();
 		</label>
 
 		<small id="step-is-last">{{ props.isLastStep() }}</small>
+
 		<small id="step-current-value">{{ JSON.stringify(props.getCurrentValue()) }}</small>
+
 		<small id="step-form-fields-count">{{ props.getFormFields().length }}</small>
 
 		<slot name="formField" />

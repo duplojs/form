@@ -27,8 +27,8 @@ describe("useUnionLayout", () => {
 			value: "a-default",
 		});
 		expect(typeof field.defaultValue.updateKind).toBe("function");
-		expect(() => field.defaultValue.updateKind("b")).not.toThrow();
-		expect(wrapper.find("#union-field-key").text()).toBe("root");
+		expect(() => void field.defaultValue.updateKind("b")).not.toThrow();
+		expect(wrapper.find("#union-field-key").text()).toBe("form-field");
 		expect(wrapper.find("#union-current-kind").text()).toBe("a");
 		expect(wrapper.find("#union-current-value").text()).toBe(JSON.stringify({
 			kind: "a",
@@ -85,7 +85,7 @@ describe("useUnionLayout", () => {
 
 	it("uses the local template override, ignores invalid kinds, and propagates current field errors", async() => {
 		const useForm = createForm(testTemplates);
-		const localTemplate = createTemplate(UnionTemplateAlt)();
+		const localTemplate = createTemplate("union", UnionTemplateAlt)();
 		const field = useUnionLayout(
 			[
 				["a", createInput(TextInput, { defaultValue: "a-default" })()],
