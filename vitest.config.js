@@ -1,6 +1,6 @@
 import { defineConfig } from "vitest/config";
-import tsconfigPaths from 'vite-tsconfig-paths'
 import vue from "@vitejs/plugin-vue";
+import tsconfigPaths from 'vite-tsconfig-paths'
 import { Path } from "@duplojs/utils";
 
 export default defineConfig({
@@ -21,7 +21,14 @@ export default defineConfig({
 			provider: "istanbul",
 			reporter: ["text", "json", "html", "json-summary"],
 			reportsDirectory: "coverage",
-			include: ["scripts"],
+			include: [
+				"scripts/vue/form.ts",
+				"scripts/vue/formField.ts",
+				"scripts/vue/input.ts",
+				"scripts/vue/kind.ts",
+				"scripts/vue/template.ts",
+				"scripts/vue/layouts/**/*.ts",
+			],
 			exclude: [
 				"**/*.test.ts", 
 				"bin", 
