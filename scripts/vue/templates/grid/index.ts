@@ -1,4 +1,4 @@
-import { createTemplate, Templates } from "@V/template";
+import { createTemplate, type Templates } from "@V/template";
 
 import "./styles.scss";
 import GridFormTemplate from "./GridFormTemplate.vue";
@@ -8,6 +8,7 @@ import GridCheckTemplate from "./GridCheckTemplate.vue";
 import GridRepeatTemplate from "./GridRepeatTemplate.vue";
 import GridUnionTemplate from "./GridUnionTemplate.vue";
 import GridStepByStepTemplate from "./GridStepByStepTemplate.vue";
+import { useCheckLayout } from "@V/layouts";
 
 export * from "./types";
 export { default as GridFormTemplate } from "./GridFormTemplate.vue";
@@ -52,3 +53,13 @@ export const useGridStepByStepTemplate = createTemplate(
 	"step",
 	GridStepByStepTemplate,
 );
+
+export const defaultGridTemplates: Templates = {
+	check: useGridCheckTemplate(),
+	form: useGridFormTemplate(),
+	input: useGridInputTemplate(),
+	multi: useGridMultiTemplate(),
+	repeat: useGridRepeatTemplate(),
+	step: useGridStepByStepTemplate(),
+	union: useGridUnionTemplate(),
+};

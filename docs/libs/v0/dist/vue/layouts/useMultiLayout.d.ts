@@ -1,0 +1,37 @@
+import { type GetFormFieldCheckedValue, type GetFormFieldValue, type FormField } from "../formField";
+import { type VNode } from "vue";
+import { type VueComponent } from "../types";
+import { type Templates } from "../template";
+export interface MultiTemplateProperties {
+    props: {
+        fieldKey: string;
+        getCurrentValue(): unknown;
+        getFormFields(): VNode[];
+    };
+    slots: {
+        formField(): any;
+    };
+}
+declare module "../template" {
+    interface AllowedTemplateComponents {
+        multi: VueComponent<MultiTemplateProperties>;
+    }
+}
+export type FormFieldWrapper = Record<string, FormField>;
+export type FormFieldEntry = [
+    string,
+    FormField
+];
+export interface UseMultiFieldLayoutParams {
+    template?: Templates["multi"];
+}
+export declare function useMultiLayout<GenericFormFieldWrapper extends FormFieldWrapper>(formFieldWrapper: GenericFormFieldWrapper, params?: UseMultiFieldLayoutParams): FormField<{
+    [Prop in keyof GenericFormFieldWrapper]: GetFormFieldValue<GenericFormFieldWrapper[Prop]>;
+}, {
+    [Prop in keyof GenericFormFieldWrapper]: GetFormFieldCheckedValue<GenericFormFieldWrapper[Prop]>;
+}>;
+export declare function useMultiLayout<GenericFormFieldEntry extends FormFieldEntry>(formFieldEntries: GenericFormFieldEntry[], params?: UseMultiFieldLayoutParams): FormField<{
+    [Entry in GenericFormFieldEntry as string]: GetFormFieldValue<Entry[1]>;
+}, {
+    [Entry in GenericFormFieldEntry as string]: GetFormFieldCheckedValue<Entry[1]>;
+}>;

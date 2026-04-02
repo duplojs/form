@@ -1,0 +1,26 @@
+{
+  "name": "v0",
+  "type": "module",
+  "exports": {
+    "./vue": {
+      "import": "./dist/vue/index.js",
+      "require": "./dist/vue/index.cjs",
+      "types": "./dist/vue/index.d.ts"
+    },
+    "./vue/grid": {
+      "import": "./dist/vue/grid.js",
+      "require": "./dist/vue/grid.cjs",
+      "types": "./dist/vue/templates/grid/index.d.ts"
+    },
+    "./vue/grid.css": "./dist/vue/grid.css",
+    "./vue/designSystem": {
+      "import": "./dist/vue/designSystem.js",
+      "require": "./dist/vue/designSystem.cjs",
+      "types": "./dist/vue/designSystem/index.d.ts"
+    }
+  },
+  "peerDependencies": {
+    "@duplojs/utils": ">=1.6.1 <2.0.0",
+    "vue": ">=3.5.30 <4.0.0"
+  }
+}

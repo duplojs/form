@@ -1,0 +1,14 @@
+{
+  "extends": "../tsconfig.app.json",
+  "compilerOptions": {
+	"baseUrl": "./",
+	"paths": {
+		"@duplojs/form/vue": ["../node_modules/@form/v0/dist/vue"],
+		"@duplojs/form/vue/grid": ["../node_modules/@form/v0/dist/vue/templates/grid"],
+		"@duplojs/form/vue/grid.css": ["../node_modules/@form/v0/dist/vue/templates/grid"],
+		"@duplojs/form/vue/designSystem": ["../node_modules/@form/v0/dist/vue/designSystem"],
+	},
+	"types": ["web"]
+  },
+  "include": ["examples/v0/**/*.ts", "libs/v0/**/*.d.ts"],
+}
