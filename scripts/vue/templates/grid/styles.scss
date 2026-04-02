@@ -25,16 +25,25 @@
 
 	&-element {
 		grid-column: span var(--columns)  / span var(--columns);
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
 	}
 
 	&-form {
 		display: flex;
 		flex-direction: column;
+		gap: 0.75rem;
 	}
 
 	&-input {
 		display: flex;
 		flex-direction: column;
+		gap: 0.35rem;
+	}
+
+	&-repeat-actions {
+		display: flex;
 		gap: 0.35rem;
 	}
 }
@@ -52,4 +61,78 @@
 			min-height: 1.2em;
 		}
 	} 
+}
+
+.DFV-step {
+	&-root {
+		display: flex;
+		flex-direction: column;
+		gap: 0.65rem;
+		padding: 0.75rem;
+		border: 1px solid #e2e8f0;
+		border-radius: 0.625rem;
+		background: #ffffff;
+	}
+
+	&-head {
+		display: flex;
+		justify-content: flex-end;
+	}
+
+	&-indicator {
+		display: flex;
+		flex-direction: column;
+		gap: 0.35rem;
+		min-width: 9rem;
+
+		&-meta {
+			display: flex;
+			justify-content: flex-end;
+			align-items: baseline;
+			gap: 0.16rem;
+			font-size: 0.75rem;
+			line-height: 1;
+			color: #64748b;
+
+			strong {
+				font-size: 0.8rem;
+				font-weight: 700;
+				color: #334155;
+			}
+		}
+
+		&-track {
+			position: relative;
+			overflow: hidden;
+			height: 0.38rem;
+			border-radius: 999px;
+			background: #e2e8f0;
+		}
+
+		&-fill {
+			display: block;
+			height: 100%;
+			border-radius: 999px;
+			background: linear-gradient(90deg, #d4ac24 0%, #e1bc3f 100%);
+			transition: width 180ms ease;
+		}
+	}
+
+	&-content {
+		align-items: start;
+	}
+
+	&-error {
+		display: inline-block;
+		font-size: 0.75rem;
+		line-height: 1.2;
+		color: #b42318;
+	}
+
+	&-actions {
+		display: flex;
+		justify-content: flex-end;
+		gap: 0.5rem;
+		flex-wrap: wrap;
+	}
 }
