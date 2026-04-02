@@ -58,7 +58,7 @@ const repeatElementContainerStyles = computed(() => ({
 			:style="containerStyles"
 		>
 			<div
-				class="DFV-grid-element"
+				class="DFV-grid-element DFV-grid-repeat-element"
 				v-for="(formField, index) in getFormFields()"
 				:key="index"
 				:style="repeatElementStyles"
@@ -74,7 +74,7 @@ const repeatElementContainerStyles = computed(() => ({
 				/>
 
 				<div
-					class="DFV-grid-container"
+					class="DFV-grid-container DFV-grid-repeat-container"
 					:style="repeatElementContainerStyles"
 				>
 					<component :is="formField" />
