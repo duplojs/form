@@ -19,29 +19,36 @@ export { default as GridUnionTemplate } from "./GridUnionTemplate.vue";
 export { default as GridStepByStepTemplate } from "./GridStepByStepTemplate.vue";
 
 export const useGridFormTemplate = createTemplate(
+	"form",
 	GridFormTemplate,
 );
 
 export const useGridInputTemplate = createTemplate(
+	"input",
 	GridInputTemplate,
 );
 
 export const useGridMultiTemplate = createTemplate(
+	"multi",
 	GridMultiTemplate,
 );
 
 export const useGridCheckTemplate = createTemplate(
+	"check",
 	GridCheckTemplate,
 );
 
 export const useGridRepeatTemplate = createTemplate(
+	"repeat",
 	GridRepeatTemplate,
 );
 
 export const useGridUnionTemplate = createTemplate(
+	"union",
 	GridUnionTemplate,
 );
 
 export const useGridStepByStepTemplate = createTemplate(
+	"step",
 	GridStepByStepTemplate,
 );

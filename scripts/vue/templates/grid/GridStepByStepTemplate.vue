@@ -30,10 +30,10 @@ defineSlots<StepTemplateProperties["slots"]>();
 </script>
 
 <template>
-	<div class="duplojs-form-vue-grid-self">
+	<div class="DFV-grid-element">
 		<label>{{ props.getCurrentStep() + 1 }}/{{ props.stepQuantity }}</label>
 
-		<div class="duplojs-form-vue-grid-container">
+		<div class="DFV-grid-container">
 			<slot name="formField" />
 		</div>
 

@@ -6,6 +6,7 @@ import { type VueComponent } from "./types";
 
 export interface FormTemplateProperties {
 	props: {
+		fieldKey: string;
 		getCurrentValue(): unknown;
 	};
 	emits: {
@@ -57,7 +58,7 @@ export function createForm(templates: Templates) {
 
 		const formFieldInstance = formField.new(
 			currentValue,
-			"root",
+			"form.field",
 			templates,
 		);
 
@@ -78,6 +79,7 @@ export function createForm(templates: Templates) {
 			() => templateForm.getVNode(
 				{
 					...props,
+					fieldKey: "form",
 					onSubmit: () => {},
 					getCurrentValue,
 				},

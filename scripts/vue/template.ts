@@ -1,7 +1,7 @@
 import { type SimplifyTopLevel, type Kind, type AnyFunction } from "@duplojs/utils";
 import { createVueFormKind } from "./kind";
 import { type VueComponent } from "./types";
-import { h, type VNode } from "vue";
+import { h, normalizeClass, type VNode } from "vue";
 import type * as OO from "@duplojs/utils/object";
 
 export const templateKind = createVueFormKind("template");
@@ -34,6 +34,7 @@ export interface Template<
 	getVNode(
 		props: (
 			& GenericComponentInstance["$props"]
+			& { fieldKey: string }
 			& object
 		),
 		slots: GenericComponentInstance["$slots"]
@@ -61,9 +62,11 @@ export type GetTemplateComponentSystemProp<
 }[keyof AllowedTemplateComponents]>;
 
 export function createTemplate<
-	GenericComponent extends AllowedTemplateComponents[keyof AllowedTemplateComponents],
+	GenericTemplate extends keyof AllowedTemplateComponents,
+	GenericComponent extends AllowedTemplateComponents[GenericTemplate],
 	GenericComponentInstance extends InstanceType<GenericComponent>,
 >(
+	template: GenericTemplate,
 	templateComponent: GenericComponent,
 	...args: CreateTemplateParams<
 		GenericComponentInstance,
@@ -79,12 +82,16 @@ export function createTemplate<
 >;
 
 export function createTemplate(
+	template: string,
 	templateComponent: VueComponent,
 	params?: CreateTemplateParams<any, any>,
 ): UseTemplate {
 	return (localParams) => templateKind.setTo({
 		getVNode: (
-			props: object,
+			props: (
+				& object
+				& { fieldKey: string }
+			),
 			slots: Record<string, AnyFunction>,
 		) => h(
 			templateComponent,
@@ -92,6 +99,11 @@ export function createTemplate(
 				...params?.props,
 				...localParams,
 				...props,
+				class: normalizeClass([
+					(params?.props as any)?.class,
+					(localParams as any)?.class,
+					`DFV-template_${template} DFV-deep_${props.fieldKey}`,
+				]),
 			},
 			slots,
 		),

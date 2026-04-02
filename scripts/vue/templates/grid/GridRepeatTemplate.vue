@@ -9,8 +9,8 @@ export type Props = (
 	& RepeatTemplateProperties["props"]
 	& GridTemplateLayoutContainerProps
 	& {
-		elementColumn?: number;
-		elementMaxColumn?: number;
+		repeatElementColumn?: number;
+		repeatElementMaxColumn?: number;
 		removeButton?: VueComponent | (() => VNode);
 		addButton?: VueComponent | (() => VNode);
 		resetButton?: VueComponent | (() => VNode);
@@ -39,29 +39,29 @@ const containerStyles = computed(() => ({
 	"--gap": props.gap !== undefined ? `${props.gap}px` : undefined,
 }));
 
-const subElementSelfStyles = computed(() => ({
-	"--columns": props.elementColumn,
+const repeatElementStyles = computed(() => ({
+	"--columns": props.repeatElementColumn,
 }));
 
-const subElementContainerStyles = computed(() => ({
-	"--max-columns": props.elementMaxColumn,
+const repeatElementContainerStyles = computed(() => ({
+	"--max-columns": props.repeatElementMaxColumn,
 }));
 </script>
 
 <template>
 	<div
-		class="duplojs-form-vue-grid-self"
+		class="DFV-grid-element"
 		:style="selfStyles"
 	>
 		<div
-			class="duplojs-form-vue-grid-container"
+			class="DFV-grid-container"
 			:style="containerStyles"
 		>
 			<div
-				class="duplojs-form-vue-grid-self"
+				class="DFV-grid-element"
 				v-for="(formField, index) in getFormFields()"
 				:key="index"
-				:style="subElementSelfStyles"
+				:style="repeatElementStyles"
 			>
 				<component
 					:is="props.resetButton"
@@ -74,8 +74,8 @@ const subElementContainerStyles = computed(() => ({
 				/>
 
 				<div
-					class="duplojs-form-vue-grid-container"
-					:style="subElementContainerStyles"
+					class="DFV-grid-container"
+					:style="repeatElementContainerStyles"
 				>
 					<component :is="formField" />
 				</div>

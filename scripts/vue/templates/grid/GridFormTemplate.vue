@@ -33,10 +33,10 @@ const containerStyles = computed(() => ({
 <template>
 	<form
 		@submit="submit"
-		class="duplojs-form-vue-grid-form"
+		class="DFV-grid-form"
 	>
 		<div
-			class="duplojs-form-vue-grid-container"
+			class="DFV-grid-container"
 			:style="containerStyles"
 		>
 			<slot name="formField" />

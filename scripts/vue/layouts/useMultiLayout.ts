@@ -93,7 +93,7 @@ export function useMultiLayout(
 										modelValue.value[subKey] = value;
 									},
 								}),
-								`${key}.${subKey}`,
+								`${key}-${subKey}`,
 								templates,
 							),
 						] as const,

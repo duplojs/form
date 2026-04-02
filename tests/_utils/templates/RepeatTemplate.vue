@@ -29,7 +29,7 @@ defineSlots<RepeatTemplateProperties["slots"]>();
 		<small id="repeat-max">{{ props.max }}</small>
 
 		<div
-			class="duplojs-form-vue-grid-self"
+			class="DFV-grid-element"
 			v-for="(formField, index) in props.getFormFields()"
 			:key="index"
 		>

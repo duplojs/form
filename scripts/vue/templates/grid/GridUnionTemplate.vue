@@ -65,7 +65,7 @@ const selfStyles = computed(() => ({
 
 <template>
 	<div
-		class="duplojs-form-vue-grid-self"
+		class="DFV-grid-element"
 		:style="selfStyles"
 	>
 		<component
@@ -76,7 +76,7 @@ const selfStyles = computed(() => ({
 		/>
 
 		<div
-			class="duplojs-form-vue-grid-container"
+			class="DFV-grid-container"
 			:style="containerStyles"
 		>
 			<slot name="formField" />

@@ -25,7 +25,7 @@ const containerStyles = computed(() => ({
 
 <template>
 	<div
-		class="duplojs-form-vue-grid-container duplojs-form-vue-grid-self"
+		class="DFV-grid-container DFV-grid-element"
 		:style="containerStyles"
 	>
 		<slot name="formField" />

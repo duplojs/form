@@ -83,7 +83,7 @@ export function useRepeatLayout(
 								modelValue.value[index] = value;
 							},
 						}),
-						`${key}.${index}`,
+						`${key}-${index}`,
 						templates,
 					);
 				}

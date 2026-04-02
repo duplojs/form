@@ -94,7 +94,7 @@ export function useStepLayout(
 											modelValue.value.steps[index] = value;
 										},
 									}),
-									`${key}.${index}`,
+									`${key}-${index}`,
 									templates,
 								);
 							}

@@ -145,7 +145,7 @@ export function useUnionLayout(
 													modelValue.value.value = value;
 												},
 											}),
-											key,
+											`${key}-${kind}`,
 											templates,
 										);
 									}

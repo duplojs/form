@@ -28,28 +28,24 @@ const containerStyles = computed(() => ({
 
 <template>
 	<div
-		class="duplojs-form-vue-grid-self duplojs-form-vue-grid-check-container"
+		class="DFV-grid-element"
 		:style="selfStyles"
 	>
 		<label
 			v-if="props.label"
 			:for="props.fieldKey"
-			class="duplojs-form-vue-grid-check-label"
 		>
 			{{ props.label }}
 		</label>
 
 		<div
-			class="duplojs-form-vue-grid-container"
+			class="DFV-grid-container"
 			:style="containerStyles"
 		>
 			<slot name="formField" />
 		</div>
 
-		<small
-			v-if="props.getErrorMessage() !== null || props.hideEmptyMessageError !== true"
-			class="duplojs-form-vue-grid-check-small"
-		>
+		<small v-if="props.getErrorMessage() !== null || props.hideEmptyMessageError !== true">
 			{{ props.getErrorMessage() }}
 		</small>
 	</div>
