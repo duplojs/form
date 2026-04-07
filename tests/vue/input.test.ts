@@ -1,4 +1,5 @@
 import { createInput, createForm } from "@V";
+import { useGridInputTemplate } from "@V/templates/grid";
 import { mount } from "@vue/test-utils";
 import TextInput from "@test-utils/TextInput.vue";
 import { testTemplates } from "@test-utils/templates";
@@ -103,5 +104,23 @@ describe("input", () => {
 		expect(currentValue.value).toBe("reset");
 		await sleep();
 		expect(wrapper.find("#text-input-with-expose-disposed").exists()).toBe(true);
+	});
+
+	it("renders label when provided", () => {
+		const useInput = createInput(TextInput, {
+			defaultValue: "default",
+		});
+		const { component } = useForm(
+			useInput({
+				label: "Age",
+				template: useGridInputTemplate(),
+			}),
+		);
+		const wrapper = mount(component);
+
+		const label = wrapper.find("label");
+		expect(label.exists()).toBe(true);
+		expect(label.text()).toBe("Age");
+		expect(label.attributes("for")).toBe("form-field");
 	});
 });

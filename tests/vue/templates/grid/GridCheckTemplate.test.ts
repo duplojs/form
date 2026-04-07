@@ -18,7 +18,6 @@ describe("GridCheckTemplate", () => {
 						columns: 6,
 						maxColumns: 8,
 						gap: 12,
-						label: "Age",
 					}),
 					dataParser: DP.coerce.number({ errorMessage: "Need number" }),
 				},
@@ -35,10 +34,6 @@ describe("GridCheckTemplate", () => {
 			]),
 		);
 		expect(checkTemplate.attributes("style")).toContain("--columns: 6");
-
-		const label = checkTemplate.get("label");
-		expect(label.text()).toBe("Age");
-		expect(label.attributes("for")).toBe("form-field");
 
 		const container = checkTemplate.get(".DFV-grid-container");
 		expect(container.attributes("style")).toContain("--max-columns: 8");
