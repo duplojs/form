@@ -6,7 +6,6 @@ interface Props {
 defineProps<Props>();
 
 const model = defineModel<string>();
-
 </script>
 
 <template>
