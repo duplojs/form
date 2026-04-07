@@ -9,7 +9,7 @@ defineProps<Props>();
 
 <template>
 	<button
-		class="duplo-repeat-reset-button"
+		class="DFV-repeat-reset-button"
 		type="button"
 		aria-label="Reset element"
 	>
@@ -18,13 +18,13 @@ defineProps<Props>();
 </template>
 
 <style lang="scss" scoped>
-.duplo-repeat-reset-button {
-	--button-bg: var(--duplo-color-neutral-50);
-	--button-fg: var(--duplo-color-text-muted);
-	--button-border: var(--duplo-color-neutral-200);
-	--button-hover-bg: var(--duplo-color-neutral-100);
-	--button-active-bg: var(--duplo-color-neutral-150);
-	--button-focus: var(--duplo-color-neutral-300);
+.DFV-repeat-reset-button {
+	--button-bg: var(--DFV-color-neutral-50);
+	--button-fg: var(--DFV-color-text-muted);
+	--button-border: var(--DFV-color-neutral-200);
+	--button-hover-bg: var(--DFV-color-neutral-100);
+	--button-active-bg: var(--DFV-color-neutral-150);
+	--button-focus: var(--DFV-color-neutral-300);
 
 	display: inline-flex;
 	align-items: center;
@@ -32,21 +32,21 @@ defineProps<Props>();
 	height: 2rem;
 	padding: 0 0.75rem;
 	border: 1px solid var(--button-border);
-	border-radius: var(--duplo-radius-sm);
+	border-radius: var(--DFV-radius-sm);
 	background: var(--button-bg);
 	color: var(--button-fg);
 	font-size: 0.875rem;
 	font-weight: 600;
 	cursor: pointer;
 	transition:
-		background-color var(--duplo-transition-fast),
-		border-color var(--duplo-transition-fast),
-		box-shadow var(--duplo-transition-fast),
-		transform var(--duplo-transition-fast);
+		background-color var(--DFV-transition-fast),
+		border-color var(--DFV-transition-fast),
+		box-shadow var(--DFV-transition-fast),
+		transform var(--DFV-transition-fast);
 
 	&:hover {
 		background: var(--button-hover-bg);
-		border-color: var(--duplo-color-neutral-300);
+		border-color: var(--DFV-color-neutral-300);
 	}
 
 	&:focus-visible {

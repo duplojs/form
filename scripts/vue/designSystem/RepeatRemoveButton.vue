@@ -9,7 +9,7 @@ defineProps<Props>();
 
 <template>
 	<button
-		class="duplo-repeat-remove-button"
+		class="DFV-repeat-remove-button"
 		type="button"
 		aria-label="Remove element"
 	>
@@ -18,13 +18,13 @@ defineProps<Props>();
 </template>
 
 <style lang="scss" scoped>
-.duplo-repeat-remove-button {
-	--button-bg: var(--duplo-color-danger-600);
-	--button-fg: var(--duplo-color-white);
-	--button-border: var(--duplo-color-danger-700);
-	--button-hover-bg: var(--duplo-color-danger-700);
-	--button-active-bg: var(--duplo-color-danger-800);
-	--button-focus: var(--duplo-color-danger-focus);
+.DFV-repeat-remove-button {
+	--button-bg: var(--DFV-color-danger-600);
+	--button-fg: var(--DFV-color-white);
+	--button-border: var(--DFV-color-danger-700);
+	--button-hover-bg: var(--DFV-color-danger-700);
+	--button-active-bg: var(--DFV-color-danger-800);
+	--button-focus: var(--DFV-color-danger-focus);
 
 	display: inline-flex;
 	align-items: center;
@@ -33,17 +33,17 @@ defineProps<Props>();
 	height: 2rem;
 	padding: 0;
 	border: 1px solid var(--button-border);
-	border-radius: var(--duplo-radius-sm);
+	border-radius: var(--DFV-radius-sm);
 	background: var(--button-bg);
 	color: var(--button-fg);
 	font-size: 1rem;
 	font-weight: 600;
 	cursor: pointer;
 	transition:
-		background-color var(--duplo-transition-fast),
-		border-color var(--duplo-transition-fast),
-		box-shadow var(--duplo-transition-fast),
-		transform var(--duplo-transition-fast);
+		background-color var(--DFV-transition-fast),
+		border-color var(--DFV-transition-fast),
+		box-shadow var(--DFV-transition-fast),
+		transform var(--DFV-transition-fast);
 
 	&:hover {
 		background: var(--button-hover-bg);
