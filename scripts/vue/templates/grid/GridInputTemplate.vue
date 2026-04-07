@@ -22,6 +22,13 @@ const selfStyles = computed(() => ({
 		class="DFV-grid-element DFV-grid-input"
 		:style="selfStyles"
 	>
+		<label
+			v-if="props.getLabel"
+			:for="props.fieldKey"
+		>
+			{{ props.getLabel() }}
+		</label>
+
 		<slot name="input" />
 	</div>
 </template>

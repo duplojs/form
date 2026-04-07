@@ -7,7 +7,9 @@ import { type Templates } from "@V/template";
 
 export interface InputTemplateProperties {
 	props: {
+		getLabel?(): string;
 		getCurrentValue(): unknown;
+		fieldKey: string;
 	};
 	slots: {
 		input(): any;
@@ -88,6 +90,7 @@ export type CreateInputParams<
 export interface UseInputParams<
 	GenericInputComponentInstance extends InstanceType<VueInputComponent> = InstanceType<VueInputComponent>,
 > {
+	label?: MayBeGetter<string>;
 	defaultValue?: (
 		| Exclude<
 			GetVueInputComponentValue<GenericInputComponentInstance>,
@@ -140,6 +143,11 @@ export function createInput(
 		const getLocalProps = typeof params.props === "function"
 			? params.props
 			: () => params.props;
+
+		const peparedLabel = params.label;
+		const getLabel = typeof peparedLabel === "string"
+			? () => peparedLabel
+			: peparedLabel;
 
 		return createFormField(
 			(modelValue, key, templates) => {
@@ -195,6 +203,7 @@ export function createInput(
 				const getVNode = () => h(
 					() => template.getVNode(
 						{
+							getLabel,
 							fieldKey: key,
 							getCurrentValue,
 						},

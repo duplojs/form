@@ -7,7 +7,6 @@ export type Props = (
 	& CheckTemplateProperties["props"]
 	& GridTemplateLayoutContainerProps
 	& {
-		label?: string;
 		hideEmptyMessageError?: boolean;
 	}
 );
@@ -31,13 +30,6 @@ const containerStyles = computed(() => ({
 		class="DFV-grid-element"
 		:style="selfStyles"
 	>
-		<label
-			v-if="props.label"
-			:for="props.fieldKey"
-		>
-			{{ props.label }}
-		</label>
-
 		<div
 			class="DFV-grid-container"
 			:style="containerStyles"
