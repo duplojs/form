@@ -2,7 +2,6 @@
 import Checkbox from "./TheCheckbox.vue";
 
 export interface Props {
-	id?: string;
 	title: string;
 	description?: string;
 	required?: boolean;
@@ -18,7 +17,6 @@ const model = defineModel<boolean>({ default: false });
 	<div class="DFV-checkbox-policy">
 		<Checkbox
 			v-model="model"
-			:id="props.id"
 			:disabled="props.disabled"
 		>
 			<span class="DFV-checkbox-policy-title">

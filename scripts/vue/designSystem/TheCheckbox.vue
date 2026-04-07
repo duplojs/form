@@ -1,6 +1,5 @@
 <script setup lang="ts">
 export interface Props {
-	id?: string;
 	disabled?: boolean;
 	ariaLabel?: string;
 }
@@ -19,7 +18,6 @@ const model = defineModel<boolean>({ default: false });
 			class="DFV-checkbox-input"
 			v-model="model"
 			type="checkbox"
-			:id="props.id"
 			:disabled="props.disabled"
 			:aria-label="props.ariaLabel"
 		/>
@@ -71,7 +69,7 @@ const model = defineModel<boolean>({ default: false });
 		background: var(--DFV-color-white);
 	}
 
-	&:hover {
+	&:hover:not(:disabled) {
 		border-color: var(--DFV-color-primary-600);
 	}
 

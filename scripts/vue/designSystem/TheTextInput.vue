@@ -1,9 +1,10 @@
 <script setup lang="ts">
 export interface Props {
-	text: string;
+	placeholder?: string;
+	disabled?: boolean;
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
 
 const model = defineModel<string>();
 </script>
@@ -13,6 +14,8 @@ const model = defineModel<string>();
 		class="DFV-text-input"
 		v-model="model"
 		type="text"
+		:placeholder="props.placeholder"
+		:disabled="props.disabled"
 	/>
 </template>
 

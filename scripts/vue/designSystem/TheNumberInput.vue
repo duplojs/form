@@ -4,6 +4,7 @@ export interface Props {
 	min?: number;
 	max?: number;
 	step?: number;
+	disabled?: boolean;
 }
 
 const props = defineProps<Props>();
@@ -20,6 +21,7 @@ const model = defineModel<number | undefined>();
 		:min="props.min"
 		:max="props.max"
 		:step="props.step"
+		:disabled="props.disabled"
 	/>
 </template>
 
