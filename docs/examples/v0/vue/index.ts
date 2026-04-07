@@ -4,13 +4,13 @@ import "@duplojs/form/vue/grid.css";
 
 const useForm = createForm(defaultGridTemplates);
 
-function useMyCustomForm() {
+function useMyCustomForm(formField: Parameters<typeof useForm>[0]) {
 	const {
 		component,
 		check,
 		currentValue,
 		reset,
-	} = useForm();
+	} = useForm(formField);
 
 	return {
 		TheForm: component,

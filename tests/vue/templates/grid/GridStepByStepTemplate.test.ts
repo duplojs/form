@@ -1,6 +1,5 @@
 import { createForm, createInput, createTemplate, useStepLayout } from "@V";
-import { E } from "@duplojs/utils";
-import { sleep } from "@duplojs/utils";
+import { E, sleep } from "@duplojs/utils";
 import { mount } from "@vue/test-utils";
 import TextInput from "@test-utils/TextInput.vue";
 import { testTemplates } from "@test-utils/templates";
@@ -31,12 +30,13 @@ describe("GridStepByStepTemplate", () => {
 				"DFV-grid-element",
 			]),
 		);
-		expect(stepTemplate.get("label").text()).toBe("1/2");
+		expect(stepTemplate.get(".DFV-step-indicator-meta").text()).toContain("Step 1");
+		expect(stepTemplate.get(".DFV-step-indicator-meta").text()).toContain("on 2");
 		expect(stepTemplate.get(".DFV-grid-container").element.className).toContain("DFV-grid-container");
 		expect(stepTemplate.findAll("button[type=\"button\"]")).toHaveLength(3);
-		expect(stepTemplate.text()).toContain("previous");
-		expect(stepTemplate.text()).toContain("reset");
-		expect(stepTemplate.text()).toContain("next");
+		expect(stepTemplate.text()).toContain("Previous");
+		expect(stepTemplate.text()).toContain("Reset");
+		expect(stepTemplate.text()).toContain("Next");
 
 		expect(E.isLeft(check())).toBe(true);
 		await sleep();
@@ -45,7 +45,8 @@ describe("GridStepByStepTemplate", () => {
 		await stepTemplate.findAll("button[type=\"button\"]")[2]!.trigger("click");
 		await sleep();
 		expect(currentValue.value.currentStep).toBe(1);
-		expect(stepTemplate.get("label").text()).toBe("2/2");
+		expect(stepTemplate.get(".DFV-step-indicator-meta").text()).toContain("Step 2");
+		expect(stepTemplate.get(".DFV-step-indicator-meta").text()).toContain("on 2");
 	});
 
 	it("wires previous and reset actions through the template buttons", async() => {

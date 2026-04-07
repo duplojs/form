@@ -4,7 +4,7 @@ import StepPreviousButton from "@V/designSystem/StepPreviousButton.vue";
 import StepResetButton from "@V/designSystem/StepResetButton.vue";
 import { type StepTemplateProperties } from "@V/layouts";
 import { type VueComponent } from "@V/types";
-import { type VNode } from "vue";
+import { computed, type VNode } from "vue";
 
 export type Props = (
 	& StepTemplateProperties["props"]
@@ -27,31 +27,63 @@ const props = withDefaults(
 const emit = defineEmits<StepTemplateProperties["emits"]>();
 
 defineSlots<StepTemplateProperties["slots"]>();
+
+const currentStep = computed(() => props.getCurrentStep() + 1);
+
+const progressPercent = computed(() => {
+	if (props.stepQuantity <= 1) {
+		return 100;
+	}
+
+	return Math.round((currentStep.value / props.stepQuantity) * 100);
+});
 </script>
 
 <template>
-	<div class="DFV-grid-element">
-		<label>{{ props.getCurrentStep() + 1 }}/{{ props.stepQuantity }}</label>
+	<div class="DFV-grid-element DFV-step-root">
+		<div class="DFV-step-head">
+			<div class="DFV-step-indicator">
+				<div class="DFV-step-indicator-meta">
+					<strong>Step {{ currentStep }}</strong>
 
-		<div class="DFV-grid-container">
+					<span>on {{ props.stepQuantity }}</span>
+				</div>
+
+				<div class="DFV-step-indicator-track">
+					<span
+						class="DFV-step-indicator-fill"
+						:style="{ width: `${progressPercent}%` }"
+					/>
+				</div>
+			</div>
+		</div>
+
+		<div class="DFV-grid-container DFV-step-content">
 			<slot name="formField" />
 		</div>
 
-		{{ props.getErrorMessageNotAtLastStep() }}
+		<small
+			class="DFV-step-error"
+			v-if="props.getErrorMessageNotAtLastStep()"
+		>
+			{{ props.getErrorMessageNotAtLastStep() }}
+		</small>
 
-		<component
-			:is="props.previousButton"
-			@click="emit('previousStep')"
-		/>
+		<div class="DFV-step-actions">
+			<component
+				:is="props.previousButton"
+				@click="emit('previousStep')"
+			/>
 
-		<component
-			:is="props.resetButton"
-			@click="emit('resetStep')"
-		/>
+			<component
+				:is="props.resetButton"
+				@click="emit('resetStep')"
+			/>
 
-		<component
-			:is="props.nextButton"
-			@click="emit('nextStep')"
-		/>
+			<component
+				:is="props.nextButton"
+				@click="emit('nextStep')"
+			/>
+		</div>
 	</div>
 </template>

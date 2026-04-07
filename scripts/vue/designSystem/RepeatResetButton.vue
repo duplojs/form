@@ -11,7 +11,7 @@ defineProps<Props>();
 	<button
 		class="duplo-repeat-reset-button"
 		type="button"
-		aria-label="Reinitialiser l element"
+		aria-label="Reset element"
 	>
 		Reset
 	</button>
@@ -37,7 +37,6 @@ defineProps<Props>();
 	color: var(--button-fg);
 	font-size: 0.875rem;
 	font-weight: 600;
-	line-height: 1;
 	cursor: pointer;
 	transition:
 		background-color var(--duplo-transition-fast),

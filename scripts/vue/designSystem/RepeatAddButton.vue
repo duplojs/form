@@ -11,7 +11,7 @@ defineProps<Props>();
 	<button
 		class="duplo-repeat-add-button"
 		type="button"
-		aria-label="Ajouter un element"
+		aria-label="Add element"
 	>
 		+
 	</button>
@@ -38,7 +38,6 @@ defineProps<Props>();
 	color: var(--button-fg);
 	font-size: 1rem;
 	font-weight: 600;
-	line-height: 1;
 	cursor: pointer;
 	transition:
 		background-color var(--duplo-transition-fast),
