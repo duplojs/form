@@ -1,6 +1,6 @@
 <script setup lang="ts">
 export interface Props {
-
+	label?: string;
 }
 
 defineProps<Props>();
@@ -9,39 +9,39 @@ defineProps<Props>();
 
 <template>
 	<button
-		class="duplo-step-next-button"
+		class="DFV-step-next-button"
 		type="button"
-		aria-label="Next step"
+		:aria-label="label"
 	>
-		Next
+		{{ label }}
 	</button>
 </template>
 
 <style lang="scss" scoped>
-.duplo-step-next-button {
-	--button-bg: var(--duplo-color-primary-500);
-	--button-fg: var(--duplo-color-white);
-	--button-border: var(--duplo-color-primary-600);
-	--button-hover-bg: var(--duplo-color-primary-400);
-	--button-active-bg: var(--duplo-color-primary-700);
-	--button-focus: var(--duplo-color-primary-focus);
+.DFV-step-next-button {
+	--button-bg: var(--DFV-color-primary-500);
+	--button-fg: var(--DFV-color-white);
+	--button-border: var(--DFV-color-primary-600);
+	--button-hover-bg: var(--DFV-color-primary-400);
+	--button-active-bg: var(--DFV-color-primary-700);
+	--button-focus: var(--DFV-color-primary-focus);
 
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
 	padding: 0.5rem 1rem;
 	border: 1px solid var(--button-border);
-	border-radius: var(--duplo-radius-sm);
+	border-radius: var(--DFV-radius-sm);
 	background: var(--button-bg);
 	color: var(--button-fg);
 	font-size: 0.875rem;
 	font-weight: 600;
 	cursor: pointer;
 	transition:
-		background-color var(--duplo-transition-fast),
-		border-color var(--duplo-transition-fast),
-		box-shadow var(--duplo-transition-fast),
-		transform var(--duplo-transition-fast);
+		background-color var(--DFV-transition-fast),
+		border-color var(--DFV-transition-fast),
+		box-shadow var(--DFV-transition-fast),
+		transform var(--DFV-transition-fast);
 
 	&:hover {
 		background: var(--button-hover-bg);

@@ -10,7 +10,9 @@ export type Props = (
 	& StepTemplateProperties["props"]
 	& {
 		nextButton?: VueComponent | (() => VNode)[];
+		nextLabel?: string;
 		previousButton?: VueComponent | (() => VNode)[];
+		previousLabel?: string;
 		resetButton?: VueComponent | (() => VNode)[];
 	}
 );
@@ -19,7 +21,9 @@ const props = withDefaults(
 	defineProps<Props>(),
 	{
 		nextButton: StepNextButton,
+		nextLabel: "Next",
 		previousButton: StepPreviousButton,
+		previousLabel: "Previous",
 		resetButton: StepResetButton,
 	},
 );
@@ -72,6 +76,7 @@ const progressPercent = computed(() => {
 		<div class="DFV-step-actions">
 			<component
 				:is="props.previousButton"
+				:label="props.previousLabel"
 				@click="emit('previousStep')"
 			/>
 
@@ -82,6 +87,7 @@ const progressPercent = computed(() => {
 
 			<component
 				:is="props.nextButton"
+				:label="props.nextLabel"
 				@click="emit('nextStep')"
 			/>
 		</div>
