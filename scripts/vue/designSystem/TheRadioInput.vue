@@ -3,6 +3,7 @@ export interface Props {
 	id: string;
 	name: string;
 	value: string;
+	description?: string;
 	disabled?: boolean;
 }
 
@@ -28,9 +29,18 @@ const model = defineModel<string | undefined>();
 
 		<span
 			v-if="$slots.default"
-			class="DFV-radio-label"
+			class="DFV-radio-content"
 		>
-			<slot />
+			<span class="DFV-radio-label">
+				<slot />
+			</span>
+
+			<small
+				v-if="props.description"
+				class="DFV-radio-description"
+			>
+				{{ props.description }}
+			</small>
 		</span>
 	</label>
 </template>
@@ -96,10 +106,22 @@ const model = defineModel<string | undefined>();
 	}
 }
 
+.DFV-radio-content {
+	display: flex;
+	flex-direction: column;
+	gap: 0.15rem;
+}
+
 .DFV-radio-label {
 	font-size: 0.875rem;
 	line-height: 1.2;
 	font-weight: 500;
 	color: var(--DFV-color-text-strong);
+}
+
+.DFV-radio-description {
+	font-size: 0.75rem;
+	line-height: 1.2;
+	color: var(--DFV-color-text-muted);
 }
 </style>
