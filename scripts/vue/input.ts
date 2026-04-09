@@ -45,9 +45,11 @@ export type GetVueInputComponentValue<
 
 export type GetVueInputComponentProps<
 	GenericInputComponentInstance extends InstanceType<VueInputComponent>,
-> = Omit<
-	GenericInputComponentInstance["$props"],
-	"modelValue" | "onUpdate:modelValue"
+> = SimplifyTopLevel<
+	Omit<
+		GenericInputComponentInstance["$props"],
+		"modelValue" | "onUpdate:modelValue" | "id" | "ref" | "key"
+	>
 >;
 
 export type GetVueInputComponentCheckedValue<

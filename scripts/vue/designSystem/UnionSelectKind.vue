@@ -34,8 +34,8 @@ const modelValue = defineModel<string>({ required: true });
 	--select-fg: var(--DFV-color-text-strong);
 	--select-border: var(--DFV-color-neutral-200);
 	--select-hover-border: var(--DFV-color-neutral-300);
-	--select-focus-border: var(--DFV-color-primary-500);
-	--select-focus-shadow: var(--DFV-color-primary-focus);
+	--select-focus-border: var(--DFV-color-neutral-500);
+	--select-focus-shadow: var(--DFV-color-neutral-focus);
 	--select-chevron: var(--DFV-color-neutral-300);
 
 	min-height: 2.25rem;

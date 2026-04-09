@@ -24,8 +24,8 @@ const model = defineModel<string>();
 	--input-fg: var(--DFV-color-text-strong);
 	--input-border: var(--DFV-color-neutral-200);
 	--input-hover-border: var(--DFV-color-neutral-300);
-	--input-focus-border: var(--DFV-color-primary-500);
-	--input-focus-shadow: var(--DFV-color-primary-focus);
+	--input-focus-border: var(--DFV-color-neutral-500);
+	--input-focus-shadow: var(--DFV-color-neutral-focus);
 	--input-placeholder: var(--DFV-color-neutral-300);
 
 	min-height: 6rem;

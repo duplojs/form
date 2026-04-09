@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import IconPrevious from "./icons/IconPrevious.vue";
+
 export interface Props {
 	label: string;
 }
@@ -12,6 +14,8 @@ defineProps<Props>();
 		type="button"
 		:aria-label="label"
 	>
+		<IconPrevious size="lg" />
+
 		{{ label }}
 	</button>
 </template>
@@ -19,7 +23,7 @@ defineProps<Props>();
 <style lang="scss" scoped>
 .DFV-step-previous-button {
 	--button-bg: var(--DFV-color-neutral-50);
-	--button-fg: var(--DFV-color-text-muted);
+	--button-fg: var(--DFV-color-neutral-400);
 	--button-border: var(--DFV-color-neutral-200);
 	--button-hover-bg: var(--DFV-color-neutral-100);
 	--button-active-bg: var(--DFV-color-neutral-150);
@@ -27,6 +31,7 @@ defineProps<Props>();
 
 	display: inline-flex;
 	align-items: center;
+	gap: 0.45rem;
 	justify-content: center;
 	min-height: 2.25rem;
 	padding: 0.5rem 1rem;

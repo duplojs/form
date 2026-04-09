@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import IconPlus from "./icons/IconPlus.vue";
+
 export interface Props {
 	label: string;
 }
@@ -10,23 +12,26 @@ defineProps<Props>();
 	<button
 		class="DFV-repeat-add-button"
 		type="button"
-		aria-label="Add element"
+		:aria-label="label"
 	>
-		{{ label }}
+		<IconPlus size="lg" />
+
+		<span>{{ label }}</span>
 	</button>
 </template>
 
 <style lang="scss" scoped>
 .DFV-repeat-add-button {
-	--button-bg: var(--DFV-color-primary-500);
+	--button-bg: var(--DFV-color-neutral-500);
 	--button-fg: var(--DFV-color-white);
-	--button-border: var(--DFV-color-primary-600);
-	--button-hover-bg: var(--DFV-color-primary-400);
-	--button-active-bg: var(--DFV-color-primary-700);
-	--button-focus: var(--DFV-color-primary-focus);
+	--button-border: var(--DFV-color-neutral-600);
+	--button-hover-bg: var(--DFV-color-neutral-400);
+	--button-active-bg: var(--DFV-color-neutral-700);
+	--button-focus: var(--DFV-color-neutral-focus);
 
 	display: inline-flex;
 	align-items: center;
+	gap: 0.45rem;
 	justify-content: center;
 	height: 2rem;
 	padding: 0 0.75rem;

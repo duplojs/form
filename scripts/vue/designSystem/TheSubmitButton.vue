@@ -1,47 +1,50 @@
 <script setup lang="ts">
-import IconRemove from "./icons/IconRemove.vue";
-
 export interface Props {
-	label: string;
+	label?: string;
+	disabled?: boolean;
 }
 
-defineProps<Props>();
-
+const props = withDefaults(
+	defineProps<Props>(),
+	{
+		label: "Submit",
+		disabled: false,
+	},
+);
 </script>
 
 <template>
 	<button
-		class="DFV-repeat-remove-button"
-		type="button"
-		:aria-label="label"
+		class="DFV-submit-button"
+		type="submit"
+		:aria-label="props.label"
+		:disabled="props.disabled"
 	>
-		<IconRemove size="lg" />
-
-		<span>{{ label }}</span>
+		{{ props.label }}
 	</button>
 </template>
 
 <style lang="scss" scoped>
-.DFV-repeat-remove-button {
-	--button-bg: var(--DFV-color-danger-600);
+.DFV-submit-button {
+	--button-bg: var(--DFV-color-neutral-500);
 	--button-fg: var(--DFV-color-white);
-	--button-border: var(--DFV-color-danger-700);
-	--button-hover-bg: var(--DFV-color-danger-700);
-	--button-active-bg: var(--DFV-color-danger-800);
-	--button-focus: var(--DFV-color-danger-focus);
+	--button-border: var(--DFV-color-neutral-600);
+	--button-hover-bg: var(--DFV-color-neutral-400);
+	--button-active-bg: var(--DFV-color-neutral-700);
+	--button-focus: var(--DFV-color-neutral-focus);
 
 	display: inline-flex;
 	align-items: center;
-	gap: 0.45rem;
 	justify-content: center;
-	height: 2rem;
-	padding: 0 0.75rem;
+	min-height: 2.25rem;
+	padding: 0.5rem 1rem;
 	border: 1px solid var(--button-border);
 	border-radius: var(--DFV-radius-sm);
 	background: var(--button-bg);
 	color: var(--button-fg);
 	font-size: 0.875rem;
 	font-weight: 600;
+	line-height: 1.1;
 	cursor: pointer;
 	transition:
 		background-color var(--DFV-transition-fast),

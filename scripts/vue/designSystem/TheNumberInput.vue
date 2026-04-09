@@ -31,8 +31,8 @@ const model = defineModel<number | undefined>();
 	--input-fg: var(--DFV-color-text-strong);
 	--input-border: var(--DFV-color-neutral-200);
 	--input-hover-border: var(--DFV-color-neutral-300);
-	--input-focus-border: var(--DFV-color-primary-500);
-	--input-focus-shadow: var(--DFV-color-primary-focus);
+	--input-focus-border: var(--DFV-color-neutral-500);
+	--input-focus-shadow: var(--DFV-color-neutral-focus);
 	--input-placeholder: var(--DFV-color-neutral-300);
 
 	padding: 0.5rem 0.75rem;

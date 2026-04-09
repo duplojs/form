@@ -1,9 +1,9 @@
-import { createForm, createInput, createTemplate, useStepLayout } from "@V";
+import { createForm, createInput, useStepLayout } from "@V";
 import { E, sleep } from "@duplojs/utils";
 import { mount } from "@vue/test-utils";
 import TextInput from "@test-utils/TextInput.vue";
 import { testTemplates } from "@test-utils/templates";
-import { GridStepByStepTemplate } from "@V/templates/grid";
+import { useGridStepByStepTemplate } from "@V/templates/grid";
 
 describe("GridStepByStepTemplate", () => {
 	it("renders a real step layout with the default design-system buttons", async() => {
@@ -16,7 +16,7 @@ describe("GridStepByStepTemplate", () => {
 				] as const,
 				{
 					errorMessageNotAtLastStep: "Go to the end",
-					template: createTemplate("step", GridStepByStepTemplate)(),
+					template: useGridStepByStepTemplate(),
 				},
 			),
 		);
@@ -59,7 +59,7 @@ describe("GridStepByStepTemplate", () => {
 				] as const,
 				{
 					errorMessageNotAtLastStep: "Go to the end",
-					template: createTemplate("step", GridStepByStepTemplate)(),
+					template: useGridStepByStepTemplate(),
 				},
 			),
 		);

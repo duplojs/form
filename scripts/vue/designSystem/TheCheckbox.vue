@@ -72,17 +72,17 @@ const model = defineModel<boolean>({ default: false });
 	}
 
 	&:hover:not(:disabled) {
-		border-color: var(--DFV-color-primary-600);
+		border-color: var(--DFV-color-neutral-600);
 	}
 
 	&:focus-visible {
 		outline: none;
-		box-shadow: 0 0 0 2px var(--DFV-color-primary-focus);
+		box-shadow: 0 0 0 2px var(--DFV-color-neutral-focus);
 	}
 
 	&:checked {
-		background: var(--DFV-color-primary-500);
-		border-color: var(--DFV-color-primary-600);
+		background: var(--DFV-color-neutral-500);
+		border-color: var(--DFV-color-neutral-600);
 	}
 
 	&:checked::after {

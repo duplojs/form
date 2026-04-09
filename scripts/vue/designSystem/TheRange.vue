@@ -42,10 +42,10 @@ const progressPercent = computed(() => {
 <style lang="scss" scoped>
 .DFV-range {
 	--range-track: var(--DFV-color-neutral-200);
-	--range-track-active: var(--DFV-color-primary-500);
-	--range-thumb: var(--DFV-color-primary-500);
-	--range-thumb-border: var(--DFV-color-primary-600);
-	--range-focus: var(--DFV-color-primary-focus);
+	--range-track-active: var(--DFV-color-neutral-500);
+	--range-thumb: var(--DFV-color-neutral-500);
+	--range-thumb-border: var(--DFV-color-neutral-600);
+	--range-focus: var(--DFV-color-neutral-focus);
 	--range-track-hover: var(--DFV-color-neutral-300);
 	--range-progress: 0%;
 
@@ -77,16 +77,6 @@ const progressPercent = computed(() => {
 			var(--range-track) 100%
 		);
 		transition: background-color var(--DFV-transition-fast);
-	}
-
-	&:hover::-webkit-slider-runnable-track {
-		background: linear-gradient(
-			to right,
-			var(--range-track-active) 0,
-			var(--range-track-active) var(--range-progress),
-			var(--range-track-hover) var(--range-progress),
-			var(--range-track-hover) 100%
-		);
 	}
 
 	&::-webkit-slider-thumb {

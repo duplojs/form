@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import IconReset from "./icons/IconReset.vue";
+
 export interface Props {
 	label?: string;
 }
@@ -17,6 +19,8 @@ const props = withDefaults(
 		type="button"
 		aria-label="Reset steps"
 	>
+		<IconReset size="lg" />
+
 		{{ props.label }}
 	</button>
 </template>
@@ -32,6 +36,7 @@ const props = withDefaults(
 
 	display: inline-flex;
 	align-items: center;
+	gap: 0.45rem;
 	justify-content: center;
 	min-height: 2.25rem;
 	padding: 0.5rem 1rem;

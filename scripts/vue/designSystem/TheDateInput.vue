@@ -1,50 +1,47 @@
 <script setup lang="ts">
 export interface Props {
-	placeholder?: string;
+	min?: string;
+	max?: string;
 	disabled?: boolean;
 }
 
 const props = defineProps<Props>();
 
-const model = defineModel<string>();
+const model = defineModel<string | undefined>();
 </script>
 
 <template>
 	<input
-		class="DFV-text-input"
+		class="DFV-date-input"
 		v-model="model"
-		type="text"
-		:placeholder="props.placeholder"
+		type="date"
+		:min="props.min"
+		:max="props.max"
 		:disabled="props.disabled"
 	/>
 </template>
 
 <style lang="scss" scoped>
-.DFV-text-input {
+.DFV-date-input {
 	--input-bg: var(--DFV-color-white);
 	--input-fg: var(--DFV-color-text-strong);
 	--input-border: var(--DFV-color-neutral-200);
 	--input-hover-border: var(--DFV-color-neutral-300);
 	--input-focus-border: var(--DFV-color-neutral-500);
 	--input-focus-shadow: var(--DFV-color-neutral-focus);
-	--input-placeholder: var(--DFV-color-neutral-300);
 
 	padding: 0.5rem 0.75rem;
 	border: 1px solid var(--input-border);
-	border-radius: 0.5rem;
+	border-radius: var(--DFV-radius-sm);
 	background: var(--input-bg);
 	color: var(--input-fg);
 	font-size: 0.875rem;
 	font-weight: 500;
 	line-height: 1.2;
 	transition:
-		border-color 140ms ease,
-		box-shadow 140ms ease,
-		background-color 140ms ease;
-
-	&::placeholder {
-		color: var(--input-placeholder);
-	}
+		border-color var(--DFV-transition-fast),
+		box-shadow var(--DFV-transition-fast),
+		background-color var(--DFV-transition-fast);
 
 	&:hover {
 		border-color: var(--input-hover-border);

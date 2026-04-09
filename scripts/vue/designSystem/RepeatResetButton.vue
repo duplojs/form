@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import IconReset from "./icons/IconReset.vue";
+
 export interface Props {
 	label: string;
 }
@@ -11,16 +13,18 @@ defineProps<Props>();
 	<button
 		class="DFV-repeat-reset-button"
 		type="button"
-		aria-label="Reset element"
+		:aria-label="label"
 	>
-		{{ label }}
+		<IconReset size="lg" />
+
+		<span>{{ label }}</span>
 	</button>
 </template>
 
 <style lang="scss" scoped>
 .DFV-repeat-reset-button {
 	--button-bg: var(--DFV-color-neutral-50);
-	--button-fg: var(--DFV-color-text-muted);
+	--button-fg: var(--DFV-color-neutral-400);
 	--button-border: var(--DFV-color-neutral-200);
 	--button-hover-bg: var(--DFV-color-neutral-100);
 	--button-active-bg: var(--DFV-color-neutral-150);
@@ -28,6 +32,7 @@ defineProps<Props>();
 
 	display: inline-flex;
 	align-items: center;
+	gap: 0.45rem;
 	justify-content: center;
 	height: 2rem;
 	padding: 0 0.75rem;

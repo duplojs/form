@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { createInput, useDisabledLayout, createForm, useMultiLayout, useCheckLayout, useRepeatLayout, useUnionLayout, useStepLayout } from "@V";
-import { useGridFormTemplate, useGridCheckTemplate, useGridRepeatTemplate, useGridUnionTemplate, useGridMultiTemplate, useGridInputTemplate, useGridStepByStepTemplate } from "@V/templates/grid";
-import { TheCheckbox, TheCheckboxPolicy, TheNumberInput, TheRadioGroup, TheRange, TheTextArea, TheTextInput } from "@V/designSystem";
+import { createInput, useDisabledLayout, createForm, useMultiLayout, useCheckLayout, useRepeatLayout, useUnionLayout, useStepLayout, useSectionLayout } from "@V";
+import { useGridFormTemplate, useGridCheckTemplate, useGridRepeatTemplate, useGridUnionTemplate, useGridMultiTemplate, useGridInputTemplate, useGridStepByStepTemplate, useGridSectionTemplate } from "@V/templates/grid";
+import { TheCheckbox, TheCheckboxPolicy, TheDateInput, TheFileInput, TheNumberInput, TheRadioGroup, TheRange, TheSubmitButton, TheTextArea, TheTextInput, TheTimeInput } from "@V/designSystem";
 import { ref } from "vue";
 import { DPE } from "@duplojs/utils";
 
@@ -31,7 +31,6 @@ const useCheckbox = createInput(
 	{
 		defaultValue: () => false,
 		props: {
-			id: "checkbox-default",
 			name: "newsletter",
 		},
 	},
@@ -44,7 +43,6 @@ const useCheckboxPolicy = createInput(
 		props: {
 			title: "I accept the terms",
 			description: "Required to continue the process.",
-			id: "checkbox-policy",
 			name: "policy",
 			required: true,
 		},
@@ -90,6 +88,40 @@ const useRangeInput = createInput(
 	},
 );
 
+const useDateInput = createInput(
+	TheDateInput,
+	{
+		defaultValue: () => "2026-04-09",
+		props: {
+			min: "1900-01-01",
+			max: "2100-12-31",
+		},
+	},
+);
+
+const useTimeInput = createInput(
+	TheTimeInput,
+	{
+		defaultValue: () => "09:30",
+		props: {
+			min: "08:00",
+			max: "20:00",
+			step: 300,
+		},
+	},
+);
+
+const useFileInput = createInput(
+	TheFileInput,
+	{
+		defaultValue: () => [] as File[],
+		props: {
+			accept: ".pdf,.png,.jpg",
+			multiple: true,
+		},
+	},
+);
+
 const disabled = ref(false);
 
 const useForm = createForm({
@@ -97,7 +129,17 @@ const useForm = createForm({
 	input: useGridInputTemplate(),
 	multi: useGridMultiTemplate(),
 	check: useGridCheckTemplate(),
-	repeat: useGridRepeatTemplate(),
+	section: useGridSectionTemplate({
+		columns: 12,
+		maxColumns: 12,
+		gap: 12,
+	}),
+	repeat: useGridRepeatTemplate(
+		{
+			addLabel: "Add another item",
+			removeLabel: "Remove this item",
+		},
+	),
 	union: useGridUnionTemplate(),
 	step: useGridStepByStepTemplate({
 		nextLabel: "Continue",
@@ -108,76 +150,91 @@ const useForm = createForm({
 const { component: Form, currentValue, check } = useForm(
 	useStepLayout(
 		[
-			useDisabledLayout(
-				useUnionLayout(
-					[
+			useSectionLayout(
+				useDisabledLayout(
+					useUnionLayout(
 						[
-							"Choice one",
-							useMultiLayout({
-								name: useRepeatLayout(
-									useTextInput({
-										label: "Name",
-										defaultValue: "Default value",
-									}),
-									{
-										max: 10,
-										min: 2,
-									},
-								),
-								age: useCheckLayout(
-									useNumberInput({
-										label: "Age",
-										defaultValue: 26,
-									}),
-									{
-										dataParser: DPE.coerce.number(),
-										template: useGridCheckTemplate({
-											columns: 2,
-											hideEmptyMessageError: true,
+							[
+								"Choice one",
+								useMultiLayout({
+									name: useRepeatLayout(
+										useTextInput({
+											label: "Name",
+											defaultValue: "Default value",
 										}),
-									},
-								),
-								bio: useTextArea({
-									label: "Bio",
+										{
+											max: 10,
+											min: 2,
+										},
+									),
+									age: useCheckLayout(
+										useNumberInput({
+											label: "Age",
+											defaultValue: 26,
+										}),
+										{
+											dataParser: DPE.coerce.number(),
+											template: useGridCheckTemplate({
+												columns: 2,
+												hideEmptyMessageError: true,
+											}),
+										},
+									),
+									bio: useTextArea({
+										label: "Bio",
+									}),
+									score: useRangeInput({
+										label: "Score",
+									}),
 								}),
-								score: useRangeInput({
-									label: "Score",
+							],
+							[
+								"Choice two",
+								useMultiLayout({
+									comment: useTextArea({
+										label: "Comment",
+										defaultValue: "Another default value",
+									}),
+									subscribe: useCheckbox({
+										label: "Newsletter",
+									}),
+									policy: useCheckboxPolicy({
+										label: "Policy",
+									}),
+									notificationFrequency: useRadioGroup({
+										label: "Frequency",
+									}),
+									attachments: useFileInput({
+										label: "Attachments",
+									}),
 								}),
-							}),
+							],
 						],
-						[
-							"Choice two",
-							useMultiLayout({
-								comment: useTextArea({
-									label: "Comment",
-									defaultValue: "Another default value",
-								}),
-								subscribe: useCheckbox({
-									label: "Newsletter",
-								}),
-								policy: useCheckboxPolicy({
-									label: "Policy",
-								}),
-								notificationFrequency: useRadioGroup({
-									label: "Frequency",
-								}),
-							}),
-						],
-					],
-					{ defaultKind: "Choice one" },
+						{ defaultKind: "Choice one" },
+					),
+					{ isDisabled: () => disabled.value },
 				),
-				{ isDisabled: () => disabled.value },
+				{ title: "Profile details" },
 			),
-			useMultiLayout({
-				stepTitle: useTextInput({
-					label: "Step title",
-					defaultValue: "Step 2",
+			useSectionLayout(
+				useMultiLayout({
+					stepTitle: useTextInput({
+						label: "Step title",
+						defaultValue: "Step 2",
+					}),
+					stepDate: useDateInput({
+						label: "Step date",
+					}),
+					stepTime: useTimeInput({
+						label: "Step time",
+					}),
+					stepLevel: useNumberInput({
+						label: "Priority",
+						defaultValue: 2,
+					}),
 				}),
-				stepLevel: useNumberInput({
-					label: "Priority",
-					defaultValue: 2,
-				}),
-			}),
+				{ title: "Scheduling" },
+			),
 		],
 		{ errorMessageNotAtLastStep: "Form not fully completed" },
 	),
@@ -187,12 +244,7 @@ const { component: Form, currentValue, check } = useForm(
 <template>
 	<div class="playground">
 		<Form @submit="console.log(check())">
-			<button
-				type="submit"
-				class="playground-submit"
-			>
-				Submit
-			</button>
+			<TheSubmitButton label="Submit" />
 		</Form>
 
 		<button
@@ -214,7 +266,6 @@ const { component: Form, currentValue, check } = useForm(
 	padding: 1rem;
 }
 
-.playground-submit,
 .playground-disabled-toggle {
 	display: inline-flex;
 	align-items: center;
@@ -232,27 +283,6 @@ const { component: Form, currentValue, check } = useForm(
 		box-shadow 140ms ease,
 		transform 140ms ease;
 }
-
-.playground-submit {
-	border: 1px solid #b38f1f;
-	background: #d4ac24;
-	color: #ffffff;
-
-	&:hover {
-		background: #e1bc3f;
-	}
-
-	&:focus-visible {
-		outline: none;
-		box-shadow: 0 0 0 2px #f2dc92;
-	}
-
-	&:active {
-		background: #c29b1d;
-		transform: translateY(1px);
-	}
-}
-
 .playground-disabled-toggle {
 	border: 1px solid #cbd5e1;
 	background: #f8fafc;

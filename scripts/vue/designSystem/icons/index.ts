@@ -1,0 +1,15 @@
+export { default as IconNext } from "./IconNext.vue";
+export { default as IconPlus } from "./IconPlus.vue";
+export { default as IconPrevious } from "./IconPrevious.vue";
+export { default as IconRemove } from "./IconRemove.vue";
+export { default as IconReset } from "./IconReset.vue";
+
+export const DFV_ICON_SIZES = {
+	sm: "0.875rem",
+	md: "1rem",
+	lg: "1.125rem",
+	xl: "1.25rem",
+	"2xl": "1.5rem",
+} as const;
+
+export type DfvIconSize = keyof typeof DFV_ICON_SIZES;
