@@ -1,25 +1,94 @@
 <script setup lang="ts">
 import { createInput, useDisabledLayout, createForm, useMultiLayout, useCheckLayout, useRepeatLayout, useUnionLayout, useStepLayout } from "@V";
 import { useGridFormTemplate, useGridCheckTemplate, useGridRepeatTemplate, useGridUnionTemplate, useGridMultiTemplate, useGridInputTemplate, useGridStepByStepTemplate } from "@V/templates/grid";
-import { TheCheckbox, TheCheckboxPolicy, TheNumberInput, TheRadioInput, TheRange, TheTextArea, TheTextInput } from "@V/designSystem";
+import { TheCheckbox, TheCheckboxPolicy, TheNumberInput, TheRadioGroup, TheRange, TheTextArea, TheTextInput } from "@V/designSystem";
 import { ref } from "vue";
 import { DPE } from "@duplojs/utils";
 
-const useInput = createInput(
+const useTextInput = createInput(
 	TheTextInput,
 	{
 		defaultValue: () => "Default value",
 	},
 );
 
+const useNumberInput = createInput(
+	TheNumberInput,
+	{
+		defaultValue: () => 42,
+	},
+);
+
+const useTextArea = createInput(
+	TheTextArea,
+	{
+		defaultValue: () => "Default value",
+	},
+);
+
+const useCheckbox = createInput(
+	TheCheckbox,
+	{
+		defaultValue: () => false,
+		props: {
+			id: "checkbox-default",
+			name: "newsletter",
+		},
+	},
+);
+
+const useCheckboxPolicy = createInput(
+	TheCheckboxPolicy,
+	{
+		defaultValue: () => false,
+		props: {
+			title: "I accept the terms",
+			description: "Required to continue the process.",
+			required: true,
+		},
+	},
+);
+
+const useRadioGroup = createInput(
+	TheRadioGroup,
+	{
+		defaultValue: () => "weekly",
+		props: {
+			name: "frequency",
+			options: [
+				{
+					value: "daily",
+					label: "Daily updates",
+					description: "Immediate notifications",
+				},
+				{
+					value: "weekly",
+					label: "Weekly digest",
+					description: "One summary per week",
+				},
+				{
+					value: "never",
+					label: "No notifications",
+					description: "Only essential account emails",
+				},
+			],
+		},
+	},
+);
+
+const useRangeInput = createInput(
+	TheRange,
+	{
+		defaultValue: () => 35,
+		props: {
+			min: 0,
+			max: 100,
+			step: 5,
+		},
+	},
+);
+
 const disabled = ref(false);
-const demoText = ref("Design system text");
-const demoNumber = ref<number | undefined>(42);
-const demoMessage = ref("Hello from TextArea");
-const demoCheckbox = ref(true);
-const demoPolicy = ref(false);
-const demoRange = ref<number | undefined>(35);
-const demoRadio = ref<string | undefined>("weekly");
 
 const useForm = createForm({
 	form: useGridFormTemplate(),
@@ -41,10 +110,10 @@ const { component: Form, currentValue, check } = useForm(
 				useUnionLayout(
 					[
 						[
-							"one",
+							"Choice one",
 							useMultiLayout({
 								name: useRepeatLayout(
-									useInput({
+									useTextInput({
 										label: "Name",
 										defaultValue: "Default value",
 									}),
@@ -54,9 +123,9 @@ const { component: Form, currentValue, check } = useForm(
 									},
 								),
 								age: useCheckLayout(
-									useInput({
+									useNumberInput({
 										label: "Age",
-										defaultValue: "26",
+										defaultValue: 26,
 									}),
 									{
 										dataParser: DPE.coerce.number(),
@@ -66,18 +135,47 @@ const { component: Form, currentValue, check } = useForm(
 										}),
 									},
 								),
+								bio: useTextArea({
+									label: "Bio",
+								}),
+								score: useRangeInput({
+									label: "Score",
+								}),
 							}),
 						],
 						[
-							"two",
-							useInput({ defaultValue: "Another default value" }),
+							"Choice two",
+							useMultiLayout({
+								comment: useTextArea({
+									label: "Comment",
+									defaultValue: "Another default value",
+								}),
+								subscribe: useCheckbox({
+									label: "Newsletter",
+								}),
+								policy: useCheckboxPolicy({
+									label: "Policy",
+								}),
+								notificationFrequency: useRadioGroup({
+									label: "Frequency",
+								}),
+							}),
 						],
 					],
-					{ defaultKind: "one" },
+					{ defaultKind: "Choice one" },
 				),
 				{ isDisabled: () => disabled.value },
 			),
-			useInput({ defaultValue: "Step 2" }),
+			useMultiLayout({
+				stepTitle: useTextInput({
+					label: "Step title",
+					defaultValue: "Step 2",
+				}),
+				stepLevel: useNumberInput({
+					label: "Priority",
+					defaultValue: 2,
+				}),
+			}),
 		],
 		{ errorMessageNotAtLastStep: "Form not fully completed" },
 	),
@@ -101,83 +199,6 @@ const { component: Form, currentValue, check } = useForm(
 		>
 			{{ disabled ? "Enable" : "Disable" }}
 		</button>
-
-		<section class="playground-demo">
-			<h3 class="playground-demo-title">
-				Design System Demo
-			</h3>
-
-			<div class="playground-demo-grid">
-				<TheTextInput v-model="demoText" />
-
-				<TheNumberInput
-					v-model="demoNumber"
-					placeholder="Your age"
-					:min="0"
-					:max="120"
-				/>
-
-				<TheTextArea
-					v-model="demoMessage"
-					placeholder="Write something..."
-				/>
-
-				<TheCheckbox
-					v-model="demoCheckbox"
-					id="checkbox-newsletter"
-					name="newsletter"
-				>
-					Receive newsletters
-				</TheCheckbox>
-
-				<TheCheckboxPolicy
-					v-model="demoPolicy"
-					title="I accept the privacy policy"
-					description="You can revoke your consent at any time."
-					required
-				/>
-
-				<div class="playground-demo-inline-options">
-					<TheRadioInput
-						v-model="demoRadio"
-						id="radio-daily"
-						name="news-frequency"
-						value="daily"
-					>
-						Daily updates
-					</TheRadioInput>
-
-					<TheRadioInput
-						v-model="demoRadio"
-						id="radio-weekly"
-						name="news-frequency"
-						value="weekly"
-					>
-						Weekly digest
-					</TheRadioInput>
-
-					<TheRadioInput
-						v-model="demoRadio"
-						id="radio-never"
-						name="news-frequency"
-						value="never"
-					>
-						No notifications
-					</TheRadioInput>
-				</div>
-
-				<div class="playground-demo-range">
-					<TheRange
-						v-model="demoRange"
-						:min="0"
-						:max="100"
-						:step="5"
-					/>
-
-					<span class="playground-demo-range-value">{{ demoRange }}%</span>
-				</div>
-			</div>
-		</section>
 
 		<pre class="playground-output">{{ currentValue }}</pre>
 	</div>
@@ -261,69 +282,5 @@ const { component: Form, currentValue, check } = useForm(
 	line-height: 1.25;
 	white-space: pre-wrap;
 	word-break: break-word;
-}
-
-.playground-demo {
-	display: flex;
-	flex-direction: column;
-	gap: 0.6rem;
-	padding: 0.75rem;
-	border: 1px solid #e2e8f0;
-	border-radius: 0.5rem;
-	background: #ffffff;
-}
-
-.playground-demo-title {
-	margin: 0;
-	font-size: 0.9rem;
-	font-weight: 700;
-	color: #334155;
-}
-
-.playground-demo-grid {
-	display: grid;
-	grid-template-columns: repeat(2, minmax(0, 1fr));
-	gap: 0.6rem;
-
-	> :nth-child(3),
-	> :nth-child(5),
-	> :nth-child(6),
-	> :nth-child(7) {
-		grid-column: 1 / -1;
-	}
-}
-
-.playground-demo-inline-options {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 0.75rem 1rem;
-}
-
-.playground-demo-range {
-	display: grid;
-	grid-template-columns: 1fr auto;
-	align-items: center;
-	gap: 0.6rem;
-}
-
-.playground-demo-range-value {
-	font-size: 0.8rem;
-	font-weight: 600;
-	color: #334155;
-}
-
-@media (max-width: 640px) {
-	.playground-demo-grid {
-		grid-template-columns: 1fr;
-
-		> * {
-			grid-column: 1 / -1;
-		}
-	}
-
-	.playground-demo-range {
-		grid-template-columns: 1fr;
-		align-items: start;
-	}
 }
 </style>
