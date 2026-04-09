@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { createInput, useDisabledLayout, createForm, useMultiLayout, useCheckLayout, useRepeatLayout, useUnionLayout, useStepLayout } from "@V";
 import { useGridFormTemplate, useGridCheckTemplate, useGridRepeatTemplate, useGridUnionTemplate, useGridMultiTemplate, useGridInputTemplate, useGridStepByStepTemplate } from "@V/templates/grid";
-import { TheCheckbox, TheCheckboxPolicy, TheNumberInput, TheTextArea, TheTextInput } from "@V/designSystem";
+import { TheCheckbox, TheCheckboxPolicy, TheNumberInput, TheRadioInput, TheRange, TheTextArea, TheTextInput } from "@V/designSystem";
 import { ref } from "vue";
 import { DPE } from "@duplojs/utils";
 
@@ -18,6 +18,8 @@ const demoNumber = ref<number | undefined>(42);
 const demoMessage = ref("Hello from TextArea");
 const demoCheckbox = ref(true);
 const demoPolicy = ref(false);
+const demoRange = ref<number | undefined>(35);
+const demoRadio = ref<string | undefined>("weekly");
 
 const useForm = createForm({
 	form: useGridFormTemplate(),
@@ -120,7 +122,11 @@ const { component: Form, currentValue, check } = useForm(
 					placeholder="Write something..."
 				/>
 
-				<TheCheckbox v-model="demoCheckbox">
+				<TheCheckbox
+					v-model="demoCheckbox"
+					id="checkbox-newsletter"
+					name="newsletter"
+				>
 					Receive newsletters
 				</TheCheckbox>
 
@@ -130,6 +136,46 @@ const { component: Form, currentValue, check } = useForm(
 					description="You can revoke your consent at any time."
 					required
 				/>
+
+				<div class="playground-demo-inline-options">
+					<TheRadioInput
+						v-model="demoRadio"
+						id="radio-daily"
+						name="news-frequency"
+						value="daily"
+					>
+						Daily updates
+					</TheRadioInput>
+
+					<TheRadioInput
+						v-model="demoRadio"
+						id="radio-weekly"
+						name="news-frequency"
+						value="weekly"
+					>
+						Weekly digest
+					</TheRadioInput>
+
+					<TheRadioInput
+						v-model="demoRadio"
+						id="radio-never"
+						name="news-frequency"
+						value="never"
+					>
+						No notifications
+					</TheRadioInput>
+				</div>
+
+				<div class="playground-demo-range">
+					<TheRange
+						v-model="demoRange"
+						:min="0"
+						:max="100"
+						:step="5"
+					/>
+
+					<span class="playground-demo-range-value">{{ demoRange }}%</span>
+				</div>
 			</div>
 		</section>
 
@@ -240,9 +286,30 @@ const { component: Form, currentValue, check } = useForm(
 	gap: 0.6rem;
 
 	> :nth-child(3),
-	> :nth-child(5) {
+	> :nth-child(5),
+	> :nth-child(6),
+	> :nth-child(7) {
 		grid-column: 1 / -1;
 	}
+}
+
+.playground-demo-inline-options {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem 1rem;
+}
+
+.playground-demo-range {
+	display: grid;
+	grid-template-columns: 1fr auto;
+	align-items: center;
+	gap: 0.6rem;
+}
+
+.playground-demo-range-value {
+	font-size: 0.8rem;
+	font-weight: 600;
+	color: #334155;
 }
 
 @media (max-width: 640px) {
@@ -252,6 +319,11 @@ const { component: Form, currentValue, check } = useForm(
 		> * {
 			grid-column: 1 / -1;
 		}
+	}
+
+	.playground-demo-range {
+		grid-template-columns: 1fr;
+		align-items: start;
 	}
 }
 </style>

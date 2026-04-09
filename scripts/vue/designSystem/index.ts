@@ -9,6 +9,8 @@ export { default as StepResetButton } from "./StepResetButton.vue";
 export { default as TheCheckbox } from "./TheCheckbox.vue";
 export { default as TheCheckboxPolicy } from "./TheCheckboxPolicy.vue";
 export { default as TheNumberInput } from "./TheNumberInput.vue";
+export { default as TheRadioInput } from "./TheRadioInput.vue";
+export { default as TheRange } from "./TheRange.vue";
 export { default as TheTextInput } from "./TheTextInput.vue";
 export { default as TheTextArea } from "./TheTextArea.vue";
 export { default as UnionSelectKind } from "./UnionSelectKind.vue";

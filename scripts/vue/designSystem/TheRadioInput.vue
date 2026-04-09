@@ -2,31 +2,33 @@
 export interface Props {
 	id: string;
 	name: string;
+	value: string;
 	disabled?: boolean;
 }
 
 const props = defineProps<Props>();
 
-const model = defineModel<boolean>({ default: false });
+const model = defineModel<string | undefined>();
 </script>
 
 <template>
 	<label
-		class="DFV-checkbox"
+		class="DFV-radio"
 		:class="{ 'is-disabled': props.disabled }"
 	>
 		<input
-			class="DFV-checkbox-input"
+			class="DFV-radio-input"
 			v-model="model"
-			type="checkbox"
+			type="radio"
 			:id="props.id"
 			:name="props.name"
+			:value="props.value"
 			:disabled="props.disabled"
 		/>
 
 		<span
 			v-if="$slots.default"
-			class="DFV-checkbox-label"
+			class="DFV-radio-label"
 		>
 			<slot />
 		</span>
@@ -34,7 +36,7 @@ const model = defineModel<boolean>({ default: false });
 </template>
 
 <style lang="scss" scoped>
-.DFV-checkbox {
+.DFV-radio {
 	display: inline-flex;
 	align-items: center;
 	gap: 0.55rem;
@@ -46,13 +48,13 @@ const model = defineModel<boolean>({ default: false });
 	}
 }
 
-.DFV-checkbox-input {
+.DFV-radio-input {
 	appearance: none;
 	width: 1rem;
 	height: 1rem;
 	margin: 0;
 	border: 1px solid var(--DFV-color-neutral-300);
-	border-radius: 0.25rem;
+	border-radius: 999px;
 	background: var(--DFV-color-white);
 	display: inline-grid;
 	place-content: center;
@@ -65,7 +67,7 @@ const model = defineModel<boolean>({ default: false });
 		content: "";
 		width: 0.45rem;
 		height: 0.45rem;
-		border-radius: 0.1rem;
+		border-radius: 999px;
 		transform: scale(0);
 		transition: transform var(--DFV-transition-fast);
 		background: var(--DFV-color-white);
@@ -94,7 +96,7 @@ const model = defineModel<boolean>({ default: false });
 	}
 }
 
-.DFV-checkbox-label {
+.DFV-radio-label {
 	font-size: 0.875rem;
 	line-height: 1.2;
 	font-weight: 500;
