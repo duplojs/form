@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import Checkbox from "./TheCheckbox.vue";
+import TheCheckbox from "./TheCheckbox.vue";
 
 export interface Props {
+	id: string;
+	name: string;
 	title: string;
 	description?: string;
 	required?: boolean;
@@ -15,8 +17,10 @@ const model = defineModel<boolean>({ default: false });
 
 <template>
 	<div class="DFV-checkbox-policy">
-		<Checkbox
+		<TheCheckbox
 			v-model="model"
+			:id="props.id"
+			:name="props.name"
 			:disabled="props.disabled"
 		>
 			<span class="DFV-checkbox-policy-title">
@@ -28,7 +32,7 @@ const model = defineModel<boolean>({ default: false });
 					*
 				</span>
 			</span>
-		</Checkbox>
+		</TheCheckbox>
 
 		<p
 			v-if="props.description"

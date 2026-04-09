@@ -44,6 +44,8 @@ const useCheckboxPolicy = createInput(
 		props: {
 			title: "I accept the terms",
 			description: "Required to continue the process.",
+			id: "checkbox-policy",
+			name: "policy",
 			required: true,
 		},
 	},
