@@ -1,6 +1,6 @@
 <script setup lang="ts">
 export interface Props {
-
+	label: string;
 }
 
 defineProps<Props>();
@@ -13,7 +13,7 @@ defineProps<Props>();
 		type="button"
 		aria-label="Reset element"
 	>
-		Reset
+		{{ label }}
 	</button>
 </template>
 

@@ -12,8 +12,11 @@ export type Props = (
 		repeatElementColumn?: number;
 		repeatElementMaxColumn?: number;
 		removeButton?: VueComponent | (() => VNode);
+		removeLabel?: string;
 		addButton?: VueComponent | (() => VNode);
+		addLabel?: string;
 		resetButton?: VueComponent | (() => VNode);
+		resetLabel?: string;
 	}
 );
 
@@ -21,8 +24,11 @@ const props = withDefaults(
 	defineProps<Props>(),
 	{
 		addButton: RepeatAddButton,
+		addLabel: "Add",
 		removeButton: RepeatRemoveButton,
+		removeLabel: "Remove",
 		resetButton: RepeatResetButton,
+		resetLabel: "Reset",
 	},
 );
 
@@ -66,11 +72,13 @@ const repeatElementContainerStyles = computed(() => ({
 				<div class="DFV-grid-repeat-actions">
 					<component
 						:is="props.resetButton"
+						:label="props.resetLabel"
 						@click="emit('resetElement', index)"
 					/>
 
 					<component
 						:is="props.removeButton"
+						:label="props.removeLabel"
 						@click="emit('removeElement', index)"
 					/>
 				</div>
@@ -87,6 +95,7 @@ const repeatElementContainerStyles = computed(() => ({
 		<div class="DFV-grid-repeat-add">
 			<component
 				:is="props.addButton"
+				:label="props.addLabel"
 				@click="emit('addElement')"
 			/>
 		</div>

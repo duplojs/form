@@ -1,6 +1,6 @@
 <script setup lang="ts">
 export interface Props {
-
+	label: string;
 }
 
 defineProps<Props>();
@@ -13,7 +13,7 @@ defineProps<Props>();
 		type="button"
 		aria-label="Remove element"
 	>
-		×
+		{{ label }}
 	</button>
 </template>
 
@@ -29,14 +29,13 @@ defineProps<Props>();
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	width: 2rem;
 	height: 2rem;
-	padding: 0;
+	padding: 0 0.75rem;
 	border: 1px solid var(--button-border);
 	border-radius: var(--DFV-radius-sm);
 	background: var(--button-bg);
 	color: var(--button-fg);
-	font-size: 1rem;
+	font-size: 0.875rem;
 	font-weight: 600;
 	cursor: pointer;
 	transition:
