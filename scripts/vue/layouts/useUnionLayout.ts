@@ -119,6 +119,7 @@ export function useUnionLayout(
 							modelValue.value.kind = kind;
 							modelValue.value.value = newValue;
 						};
+						cacheValue = {};
 					},
 					{
 						flush: "sync",
