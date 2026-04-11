@@ -86,7 +86,7 @@ export function useCheckLayout(
 
 				if (EE.isLeft(result)) {
 					const dataParserError = unwrap(result);
-					errorMessage.value = dataParserError.issues[0]?.source.definition.errorMessage ?? "Error";
+					errorMessage.value = dataParserError.issues[0]?.message ?? "Error";
 
 					return EE.error(
 						[
