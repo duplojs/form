@@ -6,6 +6,7 @@ import { h } from "vue";
 export interface SectionTemplateProperties {
 	props: {
 		fieldKey: string;
+		getCurrentValue(): unknown;
 		title?: string;
 	};
 	slots: {
@@ -61,10 +62,13 @@ export function useSectionLayout(
 
 			const getFormFieldVNode = () => formFieldVNode;
 
+			const getCurrentValue = () => modelValue.value;
+
 			const getVNode = () => h(
 				() => template.getVNode(
 					{
 						fieldKey: key,
+						getCurrentValue,
 						title: params?.title,
 					},
 					{

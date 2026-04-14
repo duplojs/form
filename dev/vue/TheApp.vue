@@ -3,7 +3,7 @@ import { createInput, useDisabledLayout, createForm, useMultiLayout, useCheckLay
 import { useGridFormTemplate, useGridCheckTemplate, useGridRepeatTemplate, useGridUnionTemplate, useGridMultiTemplate, useGridInputTemplate, useGridStepByStepTemplate, useGridSectionTemplate } from "@V/templates/grid";
 import { TheCheckbox, TheCheckboxPolicy, TheDateInput, TheFileInput, TheNumberInput, TheRadioGroup, TheRange, TheSubmitButton, TheTextArea, TheTextInput, TheTimeInput } from "@V/designSystem";
 import { ref } from "vue";
-import { DPE } from "@duplojs/utils";
+import { D, DPE } from "@duplojs/utils";
 
 const useTextInput = createInput(
 	TheTextInput,
@@ -91,10 +91,10 @@ const useRangeInput = createInput(
 const useDateInput = createInput(
 	TheDateInput,
 	{
-		defaultValue: () => "2026-04-09",
+		defaultValue: () => D.now(),
 		props: {
-			min: "1900-01-01",
-			max: "2100-12-31",
+			min: D.create("1900-01-01"),
+			max: D.create("2100-12-31"),
 		},
 	},
 );
@@ -102,10 +102,10 @@ const useDateInput = createInput(
 const useTimeInput = createInput(
 	TheTimeInput,
 	{
-		defaultValue: () => "09:30",
+		defaultValue: () => D.createTime(9.5, "hour"),
 		props: {
-			min: "08:00",
-			max: "20:00",
+			min: D.createTime(8, "hour"),
+			max: D.createTime(20, "hour"),
 			step: 300,
 		},
 	},
@@ -129,17 +129,11 @@ const useForm = createForm({
 	input: useGridInputTemplate(),
 	multi: useGridMultiTemplate(),
 	check: useGridCheckTemplate(),
-	section: useGridSectionTemplate({
-		columns: 12,
-		maxColumns: 12,
-		gap: 12,
+	section: useGridSectionTemplate(),
+	repeat: useGridRepeatTemplate({
+		addLabel: "Add another item",
+		removeLabel: "Remove this item",
 	}),
-	repeat: useGridRepeatTemplate(
-		{
-			addLabel: "Add another item",
-			removeLabel: "Remove this item",
-		},
-	),
 	union: useGridUnionTemplate(),
 	step: useGridStepByStepTemplate({
 		nextLabel: "Continue",

@@ -3,7 +3,7 @@ import { DP, sleep } from "@duplojs/utils";
 import { mount } from "@vue/test-utils";
 import TextInput from "@test-utils/TextInput.vue";
 import { testTemplates } from "@test-utils/templates";
-import GridCheckTemplate from "../../../../scripts/vue/templates/grid/GridCheckTemplate.vue";
+import { GridCheckTemplate } from "@V/templates/grid";
 
 describe("GridCheckTemplate", () => {
 	it("renders the grid check template inside a real form with the expected classes, styles and parser error", async() => {

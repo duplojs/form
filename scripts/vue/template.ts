@@ -32,11 +32,11 @@ export interface Template<
 	GenericComponentInstance extends AllowedTemplateComponentInstances = AllowedTemplateComponentInstances,
 > extends Kind<typeof templateKind.definition> {
 	getVNode(
-		props: (
+		props: SimplifyTopLevel<
 			& GenericComponentInstance["$props"]
 			& { fieldKey: string }
-			& object
-		),
+			& { [key: string]: unknown }
+		>,
 		slots: GenericComponentInstance["$slots"]
 	): VNode;
 }
@@ -86,28 +86,30 @@ export function createTemplate(
 	templateComponent: VueComponent,
 	params?: CreateTemplateParams<any, any>,
 ): UseTemplate {
-	return (localParams) => templateKind.setTo({
-		getVNode: (
-			props: (
-				& object
-				& { fieldKey: string }
+	return (localParams) => templateKind.setTo(
+		{
+			getVNode: (
+				props: (
+					& object
+					& { fieldKey: string }
+				),
+				slots: Record<string, AnyFunction>,
+			) => h(
+				templateComponent,
+				{
+					...params?.props,
+					...localParams,
+					...props,
+					class: normalizeClass([
+						(params?.props as any)?.class,
+						(localParams as any)?.class,
+						`DFV-template_${template} DFV-deep_${props.fieldKey}`,
+					]),
+				},
+				slots,
 			),
-			slots: Record<string, AnyFunction>,
-		) => h(
-			templateComponent,
-			{
-				...params?.props,
-				...localParams,
-				...props,
-				class: normalizeClass([
-					(params?.props as any)?.class,
-					(localParams as any)?.class,
-					`DFV-template_${template} DFV-deep_${props.fieldKey}`,
-				]),
-			},
-			slots,
-		),
-	});
+		},
+	);
 }
 
 export type Templates = {

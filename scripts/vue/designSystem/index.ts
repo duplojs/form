@@ -1,22 +1,59 @@
-import "./styles.scss";
+import { createInput } from "@V/input";
+import { TheCheckbox, TheCheckboxPolicy, TheDateInput, TheFileInput, TheNumberInput, TheRadioGroup, TheRange, TheTextArea, TheTextInput, TheTimeInput } from "./components";
 
-export { default as RepeatAddButton } from "./RepeatAddButton.vue";
-export { default as RepeatRemoveButton } from "./RepeatRemoveButton.vue";
-export { default as RepeatResetButton } from "./RepeatResetButton.vue";
-export { default as StepNextButton } from "./StepNextButton.vue";
-export { default as StepPreviousButton } from "./StepPreviousButton.vue";
-export { default as StepResetButton } from "./StepResetButton.vue";
-export { default as TheCheckbox } from "./TheCheckbox.vue";
-export { default as TheCheckboxPolicy } from "./TheCheckboxPolicy.vue";
-export { default as TheDateInput } from "./TheDateInput.vue";
-export { default as TheFileInput } from "./TheFileInput.vue";
-export { default as TheNumberInput } from "./TheNumberInput.vue";
-export { default as TheRadioInput } from "./TheRadioInput.vue";
-export { default as TheRadioGroup } from "./TheRadioGroup.vue";
-export { default as TheRange } from "./TheRange.vue";
-export { default as TheSubmitButton } from "./TheSubmitButton.vue";
-export { default as TheTextInput } from "./TheTextInput.vue";
-export { default as TheTextArea } from "./TheTextArea.vue";
-export { default as TheTimeInput } from "./TheTimeInput.vue";
-export * from "./icons/index";
-export { default as UnionSelectKind } from "./UnionSelectKind.vue";
+import "./designSystem.scss";
+
+export * from "./components";
+
+export const useTextInput = createInput(
+	TheTextInput,
+	{ defaultValue: "" },
+);
+
+export const useNumberInput = createInput(
+	TheNumberInput,
+	{ defaultValue: 0 },
+);
+
+export const useCheckBoxInput = createInput(
+	TheCheckbox,
+	{ defaultValue: false },
+);
+
+export const useCheckBoxPolicyInput = createInput(
+	TheCheckboxPolicy,
+	{ defaultValue: false },
+);
+
+export const useDateInput = createInput(
+	TheDateInput,
+	{ defaultValue: null },
+);
+
+export const useTextAreaInput = createInput(
+	TheTextArea,
+	{ defaultValue: "" },
+);
+
+export const useTimeInput = createInput(
+	TheTimeInput,
+	{ defaultValue: null },
+);
+
+export const useFileInput = createInput(
+	TheFileInput,
+	{ defaultValue: null },
+);
+
+export const useRadioGroupInput = createInput(
+	TheRadioGroup,
+	{
+		defaultValue: null,
+		props: { options: [] },
+	},
+);
+
+export const useRangeInput = createInput(
+	TheRange,
+	{ defaultValue: 0 },
+);

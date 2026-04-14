@@ -94,16 +94,16 @@ export default pipe(
 							({ namedGroups }) => A.join(
 								[
 									"// @filename: @duplojs/form/vue.ts",
-									`export * from "@v${namedGroups?.version ?? ""}/vue";`,
+									`export * from "@form/v${namedGroups?.version ?? ""}/vue";`,
 
 									"// @filename: @duplojs/form/vue/grid.ts",
-									`export * from "@v${namedGroups?.version ?? ""}/vue/grid";`,
+									`export * from "@form/v${namedGroups?.version ?? ""}/vue/grid";`,
 
 									"// @filename: @duplojs/form/vue/grid.css.ts",
-									`export * from "@v${namedGroups?.version ?? ""}/vue/grid.css";`,
+									`export * from "@form/v${namedGroups?.version ?? ""}/vue/grid.css";`,
 
 									"// @filename: @duplojs/form/vue/designSystem.ts",
-									`export * from "@v${namedGroups?.version ?? ""}/vue/designSystem";`,
+									`export * from "@form/v${namedGroups?.version ?? ""}/vue/designSystem";`,
 
 									"// @filename: index.ts",
 									"// ---cut---",
@@ -124,12 +124,6 @@ export default pipe(
 							moduleResolution: ModuleResolutionKind.Bundler,
 							moduleDetection: ModuleDetectionKind.Force,
 							types: ["@types/web"],
-							paths: {
-								"@v0/vue": ["../node_modules/@form/v0/dist/vue"],
-								"@v0/vue/grid": ["../node_modules/@form/v0/dist/vue/templates/grid"],
-								"@v0/vue/grid.css": ["../node_modules/@form/v0/dist/vue/templates/grid"],
-								"@v0/vue/designSystem": ["../node_modules/@form/v0/dist/vue/designSystem"],
-							},
 						},
 					},
 				}),

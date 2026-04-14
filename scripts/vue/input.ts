@@ -14,16 +14,17 @@ export interface InputTemplateProperties {
 	slots: {
 		input(): any;
 	};
-	expose: {
-		check?: FormFieldInstance["check"];
-		reset?: FormFieldInstance["reset"];
-		dispose?: FormFieldInstance["dispose"];
-	};
 }
 declare module "./template" {
 	interface AllowedTemplateComponents {
 		input: VueComponent<InputTemplateProperties>;
 	}
+}
+
+export interface ExposeInputProperties {
+	check?: FormFieldInstance["check"];
+	reset?: FormFieldInstance["reset"];
+	dispose?: FormFieldInstance["dispose"];
 }
 
 export type VueInputComponent = VueComponent<{
@@ -33,7 +34,7 @@ export type VueInputComponent = VueComponent<{
 	emits: {
 		"update:modelValue"(value: any): any;
 	};
-	expose: InputTemplateProperties["expose"];
+	expose: ExposeInputProperties;
 }>;
 
 export type GetVueInputComponentValue<
@@ -146,10 +147,10 @@ export function createInput(
 			? params.props
 			: () => params.props;
 
-		const peparedLabel = params.label;
-		const getLabel = typeof peparedLabel === "string"
-			? () => peparedLabel
-			: peparedLabel;
+		const preparedLabel = params.label;
+		const getLabel = typeof preparedLabel === "string"
+			? () => preparedLabel
+			: preparedLabel;
 
 		return createFormField(
 			(modelValue, key, templates) => {

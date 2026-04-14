@@ -3,7 +3,7 @@ import { sleep } from "@duplojs/utils";
 import { mount } from "@vue/test-utils";
 import TextInput from "@test-utils/TextInput.vue";
 import { testTemplates } from "@test-utils/templates";
-import GridRepeatTemplate from "@V/templates/grid/GridRepeatTemplate.vue";
+import { GridRepeatTemplate } from "@V/templates/grid";
 
 describe("GridRepeatTemplate", () => {
 	it("renders a real repeat layout with grid wrappers and default design-system buttons", async() => {

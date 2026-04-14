@@ -1,0 +1,813 @@
+:root {
+	--DFV-radius-sm: 0.5rem;
+	--DFV-transition-fast: 140ms ease;
+
+	--DFV-color-white: #ffffff;
+	--DFV-color-text-strong: #1f2937;
+	--DFV-color-text-muted: #64748b;
+
+	--DFV-color-neutral-50: #f8fafc;
+	--DFV-color-neutral-100: #f1f5f9;
+	--DFV-color-neutral-150: #e2e8f0;
+	--DFV-color-neutral-200: #cbd5e1;
+	--DFV-color-neutral-300: #94a3b8;
+	--DFV-color-neutral-400: #64748b;
+	--DFV-color-neutral-500: #475569;
+	--DFV-color-neutral-600: #334155;
+	--DFV-color-neutral-700: #1e293b;
+	--DFV-color-neutral-800: #0f172a;
+	--DFV-color-neutral-900: #020617;
+	--DFV-color-neutral-focus: #cbd5e1;
+
+	--DFV-color-danger-50: #fef2f2;
+	--DFV-color-danger-100: #fee2e2;
+	--DFV-color-danger-150: #fecaca;
+	--DFV-color-danger-200: #fca5a5;
+	--DFV-color-danger-300: #f87171;
+	--DFV-color-danger-400: #ef4444;
+	--DFV-color-danger-500: #dc2626;
+	--DFV-color-danger-600: #b42318;
+	--DFV-color-danger-700: #9f1d15;
+	--DFV-color-danger-800: #7f1d1d;
+	--DFV-color-danger-900: #4f1d1d;
+	--DFV-color-danger-focus: #fda4af;
+}
+
+
+@mixin button {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.45rem;
+	justify-content: center;
+	height: var(--button-height, auto);
+	padding: var(--button-padding, 0.5rem 1rem);
+	border: 1px solid var(--button-border);
+	border-radius: var(--DFV-radius-sm);
+	background: var(--button-bg);
+	color: var(--button-fg);
+	font-size: 0.875rem;
+	font-weight: 600;
+	cursor: pointer;
+	transition:
+		background-color var(--DFV-transition-fast),
+		border-color var(--DFV-transition-fast),
+		box-shadow var(--DFV-transition-fast),
+		transform var(--DFV-transition-fast);
+
+	&:hover {
+		background: var(--button-hover-bg);
+		border-color: var(--button-hover-border, var(--button-border));
+	}
+
+	&:focus-visible {
+		outline: none;
+		box-shadow: 0 0 0 2px var(--button-focus);
+	}
+
+	&:active {
+		background: var(--button-active-bg);
+		transform: translateY(1px);
+	}
+
+	&:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+}
+
+@mixin button-repeat {
+	@include button();
+
+	--button-height: 2rem;
+	--button-padding: 0 0.75rem;
+}
+
+.DFV-button-repeat {
+	&-add {
+		--button-bg: var(--DFV-color-neutral-500);
+		--button-fg: var(--DFV-color-white);
+		--button-border: var(--DFV-color-neutral-600);
+		--button-hover-bg: var(--DFV-color-neutral-400);
+		--button-active-bg: var(--DFV-color-neutral-700);
+		--button-focus: var(--DFV-color-neutral-focus);
+
+		@include button-repeat();
+	}
+
+	&-remove {
+		--button-bg: var(--DFV-color-danger-600);
+		--button-fg: var(--DFV-color-white);
+		--button-border: var(--DFV-color-danger-700);
+		--button-hover-bg: var(--DFV-color-danger-700);
+		--button-active-bg: var(--DFV-color-danger-800);
+		--button-focus: var(--DFV-color-danger-focus);
+
+		@include button-repeat();
+	}
+
+	&-reset {
+		--button-bg: var(--DFV-color-neutral-50);
+		--button-fg: var(--DFV-color-neutral-400);
+		--button-border: var(--DFV-color-neutral-200);
+		--button-hover-bg: var(--DFV-color-neutral-100);
+		--button-hover-border: var(--DFV-color-neutral-300);
+		--button-active-bg: var(--DFV-color-neutral-150);
+		--button-focus: var(--DFV-color-neutral-300);
+
+		@include button-repeat();
+	}
+} 
+
+@mixin button-step {
+	@include button();
+
+	--button-padding: 0.5rem 1rem;
+}
+
+.DFV-button-step {
+	&-next {
+		--button-bg: var(--DFV-color-neutral-500);
+		--button-fg: var(--DFV-color-white);
+		--button-border: var(--DFV-color-neutral-600);
+		--button-hover-bg: var(--DFV-color-neutral-400);
+		--button-active-bg: var(--DFV-color-neutral-700);
+		--button-focus: var(--DFV-color-neutral-focus);
+
+		@include button-repeat();
+	} 
+
+	&-previous {
+		--button-bg: var(--DFV-color-neutral-50);
+		--button-fg: var(--DFV-color-neutral-400);
+		--button-border: var(--DFV-color-neutral-200);
+		--button-hover-bg: var(--DFV-color-neutral-100);
+		--button-hover-border: var(--DFV-color-neutral-300);
+		--button-active-bg: var(--DFV-color-neutral-150);
+		--button-focus: var(--DFV-color-neutral-300);
+
+		@include button-repeat();
+	}
+
+	&-reset {
+		--button-bg: var(--DFV-color-danger-600);
+		--button-fg: var(--DFV-color-white);
+		--button-border: var(--DFV-color-danger-700);
+		--button-hover-bg: var(--DFV-color-danger-700);
+		--button-active-bg: var(--DFV-color-danger-800);
+		--button-focus: var(--DFV-color-danger-focus);
+
+		@include button-repeat();
+	}
+}
+
+/* Source: TheCheckbox.vue */
+.DFV-checkbox {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.55rem;
+	cursor: pointer;
+
+	&.is-disabled {
+		opacity: 0.55;
+		cursor: not-allowed;
+	}
+}
+
+.DFV-checkbox-input {
+	appearance: none;
+	width: 1rem;
+	height: 1rem;
+	margin: 0;
+	border: 1px solid var(--DFV-color-neutral-300);
+	border-radius: 0.25rem;
+	background: var(--DFV-color-white);
+	display: inline-grid;
+	place-content: center;
+	transition:
+		background-color var(--DFV-transition-fast),
+		border-color var(--DFV-transition-fast),
+		box-shadow var(--DFV-transition-fast);
+
+	&::after {
+		content: "";
+		width: 0.45rem;
+		height: 0.45rem;
+		border-radius: 0.1rem;
+		transform: scale(0);
+		transition: transform var(--DFV-transition-fast);
+		background: var(--DFV-color-white);
+	}
+
+	&:hover:not(:disabled) {
+		border-color: var(--DFV-color-neutral-600);
+	}
+
+	&:focus-visible {
+		outline: none;
+		box-shadow: 0 0 0 2px var(--DFV-color-neutral-focus);
+	}
+
+	&:checked {
+		background: var(--DFV-color-neutral-500);
+		border-color: var(--DFV-color-neutral-600);
+	}
+
+	&:checked::after {
+		transform: scale(1);
+	}
+
+	&:disabled {
+		cursor: not-allowed;
+	}
+}
+
+.DFV-checkbox-label {
+	font-size: 0.875rem;
+	line-height: 1.2;
+	font-weight: 500;
+	color: var(--DFV-color-text-strong);
+}
+
+/* Source: TheCheckboxPolicy.vue */
+.DFV-checkbox-policy {
+	display: flex;
+	flex-direction: column;
+	gap: 0.35rem;
+	padding: 0.65rem 0.75rem;
+	border: 1px solid var(--DFV-color-neutral-200);
+	border-radius: var(--DFV-radius-sm);
+	background: var(--DFV-color-white);
+}
+
+.DFV-checkbox-policy-title {
+	font-weight: 600;
+}
+
+.DFV-checkbox-policy-required {
+	margin-left: 0.2rem;
+	color: var(--DFV-color-danger-600);
+}
+
+.DFV-checkbox-policy-description,
+.DFV-checkbox-policy-content {
+	margin: 0;
+	font-size: 0.8rem;
+	line-height: 1.3;
+	color: var(--DFV-color-text-muted);
+}
+
+/* Source: TheDateInput.vue */
+.DFV-date-input {
+	--input-bg: var(--DFV-color-white);
+	--input-fg: var(--DFV-color-text-strong);
+	--input-border: var(--DFV-color-neutral-200);
+	--input-hover-border: var(--DFV-color-neutral-300);
+	--input-focus-border: var(--DFV-color-neutral-500);
+	--input-focus-shadow: var(--DFV-color-neutral-focus);
+
+	padding: 0.5rem 0.75rem;
+	border: 1px solid var(--input-border);
+	border-radius: var(--DFV-radius-sm);
+	background: var(--input-bg);
+	color: var(--input-fg);
+	font-size: 0.875rem;
+	font-weight: 500;
+	line-height: 1.2;
+	transition:
+		border-color var(--DFV-transition-fast),
+		box-shadow var(--DFV-transition-fast),
+		background-color var(--DFV-transition-fast);
+
+	&:hover {
+		border-color: var(--input-hover-border);
+	}
+
+	&:focus-visible {
+		outline: none;
+		border-color: var(--input-focus-border);
+		box-shadow: 0 0 0 2px var(--input-focus-shadow);
+	}
+
+	&:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+}
+
+/* Source: TheFileInput.vue */
+.DFV-file-input {
+	--input-bg: var(--DFV-color-white);
+	--input-fg: var(--DFV-color-text-strong);
+	--input-border: var(--DFV-color-neutral-200);
+	--input-hover-border: var(--DFV-color-neutral-300);
+	--input-focus-border: var(--DFV-color-neutral-500);
+	--input-focus-shadow: var(--DFV-color-neutral-focus);
+	--button-bg: var(--DFV-color-neutral-50);
+	--button-border: var(--DFV-color-neutral-200);
+	--button-hover-bg: var(--DFV-color-neutral-100);
+	--button-fg: var(--DFV-color-neutral-400);
+
+	padding: 0.35rem;
+	border: 1px solid var(--input-border);
+	border-radius: var(--DFV-radius-sm);
+	background: var(--input-bg);
+	color: var(--input-fg);
+	font-size: 0.875rem;
+	font-weight: 500;
+	line-height: 1.2;
+	transition:
+		border-color var(--DFV-transition-fast),
+		box-shadow var(--DFV-transition-fast),
+		background-color var(--DFV-transition-fast);
+
+	&:hover {
+		border-color: var(--input-hover-border);
+	}
+
+	&:focus-visible {
+		outline: none;
+		border-color: var(--input-focus-border);
+		box-shadow: 0 0 0 2px var(--input-focus-shadow);
+	}
+
+	&:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+
+	&::file-selector-button {
+		margin-right: 0.65rem;
+		padding: 0.45rem 0.7rem;
+		border: 1px solid var(--button-border);
+		border-radius: calc(var(--DFV-radius-sm) - 2px);
+		background: var(--button-bg);
+		color: var(--button-fg);
+		font-size: 0.8rem;
+		font-weight: 600;
+		cursor: pointer;
+		transition:
+			background-color var(--DFV-transition-fast),
+			border-color var(--DFV-transition-fast);
+	}
+
+	&:hover::file-selector-button {
+		background: var(--button-hover-bg);
+		border-color: var(--input-hover-border);
+	}
+}
+
+/* Source: TheNumberInput.vue */
+.DFV-number-input {
+	--input-bg: var(--DFV-color-white);
+	--input-fg: var(--DFV-color-text-strong);
+	--input-border: var(--DFV-color-neutral-200);
+	--input-hover-border: var(--DFV-color-neutral-300);
+	--input-focus-border: var(--DFV-color-neutral-500);
+	--input-focus-shadow: var(--DFV-color-neutral-focus);
+	--input-placeholder: var(--DFV-color-neutral-300);
+
+	padding: 0.5rem 0.75rem;
+	border: 1px solid var(--input-border);
+	border-radius: var(--DFV-radius-sm);
+	background: var(--input-bg);
+	color: var(--input-fg);
+	font-size: 0.875rem;
+	font-weight: 500;
+	line-height: 1.2;
+	transition:
+		border-color var(--DFV-transition-fast),
+		box-shadow var(--DFV-transition-fast),
+		background-color var(--DFV-transition-fast);
+
+	&::placeholder {
+		color: var(--input-placeholder);
+	}
+
+	&:hover {
+		border-color: var(--input-hover-border);
+	}
+
+	&:focus-visible {
+		outline: none;
+		border-color: var(--input-focus-border);
+		box-shadow: 0 0 0 2px var(--input-focus-shadow);
+	}
+
+	&:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+}
+
+/* Source: TheRadioGroup.vue */
+.DFV-radio-group {
+	display: flex;
+	flex-direction: column;
+	gap: 0.45rem;
+}
+
+/* Source: TheRadioInput.vue */
+.DFV-radio {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.55rem;
+	cursor: pointer;
+
+	&.is-disabled {
+		opacity: 0.55;
+		cursor: not-allowed;
+	}
+}
+
+.DFV-radio-input {
+	appearance: none;
+	width: 1rem;
+	height: 1rem;
+	margin: 0;
+	border: 1px solid var(--DFV-color-neutral-300);
+	border-radius: 999px;
+	background: var(--DFV-color-white);
+	display: inline-grid;
+	place-content: center;
+	transition:
+		background-color var(--DFV-transition-fast),
+		border-color var(--DFV-transition-fast),
+		box-shadow var(--DFV-transition-fast);
+
+	&::after {
+		content: "";
+		width: 0.45rem;
+		height: 0.45rem;
+		border-radius: 999px;
+		transform: scale(0);
+		transition: transform var(--DFV-transition-fast);
+		background: var(--DFV-color-white);
+	}
+
+	&:hover:not(:disabled) {
+		border-color: var(--DFV-color-neutral-600);
+	}
+
+	&:focus-visible {
+		outline: none;
+		box-shadow: 0 0 0 2px var(--DFV-color-neutral-focus);
+	}
+
+	&:checked {
+		background: var(--DFV-color-neutral-500);
+		border-color: var(--DFV-color-neutral-600);
+	}
+
+	&:checked::after {
+		transform: scale(1);
+	}
+
+	&:disabled {
+		cursor: not-allowed;
+	}
+}
+
+.DFV-radio-content {
+	display: flex;
+	flex-direction: column;
+	gap: 0.15rem;
+}
+
+.DFV-radio-label {
+	font-size: 0.875rem;
+	line-height: 1.2;
+	font-weight: 500;
+	color: var(--DFV-color-text-strong);
+}
+
+.DFV-radio-description {
+	font-size: 0.75rem;
+	line-height: 1.2;
+	color: var(--DFV-color-text-muted);
+}
+
+/* Source: TheRange.vue */
+.DFV-range {
+	--range-track: var(--DFV-color-neutral-200);
+	--range-track-active: var(--DFV-color-neutral-500);
+	--range-thumb: var(--DFV-color-neutral-500);
+	--range-thumb-border: var(--DFV-color-neutral-600);
+	--range-focus: var(--DFV-color-neutral-focus);
+	--range-track-hover: var(--DFV-color-neutral-300);
+	--range-progress: 0%;
+
+	width: 100%;
+	height: 1.35rem;
+	margin: 0;
+	padding: 0;
+	appearance: none;
+	background: transparent;
+	cursor: pointer;
+
+	&:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+
+	&:focus-visible {
+		outline: none;
+	}
+
+	&::-webkit-slider-runnable-track {
+		height: 0.35rem;
+		border-radius: 999px;
+		background: linear-gradient(
+			to right,
+			var(--range-track-active) 0,
+			var(--range-track-active) var(--range-progress),
+			var(--range-track) var(--range-progress),
+			var(--range-track) 100%
+		);
+		transition: background-color var(--DFV-transition-fast);
+	}
+
+	&::-webkit-slider-thumb {
+		appearance: none;
+		width: 1rem;
+		height: 1rem;
+		margin-top: -0.325rem;
+		border: 1px solid var(--range-thumb-border);
+		border-radius: 999px;
+		background: var(--range-thumb);
+		transition:
+			transform var(--DFV-transition-fast),
+			box-shadow var(--DFV-transition-fast);
+	}
+
+	&:hover::-webkit-slider-thumb {
+		transform: scale(1.04);
+	}
+
+	&:focus-visible::-webkit-slider-thumb {
+		box-shadow: 0 0 0 3px var(--range-focus);
+	}
+
+	&::-moz-range-track {
+		height: 0.35rem;
+		border: 0;
+		border-radius: 999px;
+		background: var(--range-track);
+		transition: background-color var(--DFV-transition-fast);
+	}
+
+	&:hover::-moz-range-track {
+		background: var(--range-track-hover);
+	}
+
+	&::-moz-range-progress {
+		height: 0.35rem;
+		border-radius: 999px;
+		background: var(--range-track-active);
+	}
+
+	&::-moz-range-thumb {
+		width: 1rem;
+		height: 1rem;
+		border: 1px solid var(--range-thumb-border);
+		border-radius: 999px;
+		background: var(--range-thumb);
+		transition:
+			transform var(--DFV-transition-fast),
+			box-shadow var(--DFV-transition-fast);
+	}
+
+	&:hover::-moz-range-thumb {
+		transform: scale(1.04);
+	}
+
+	&:focus-visible::-moz-range-thumb {
+		box-shadow: 0 0 0 3px var(--range-focus);
+	}
+}
+
+/* Source: TheSubmitButton.vue */
+.DFV-submit-button {
+	--button-bg: var(--DFV-color-neutral-500);
+	--button-fg: var(--DFV-color-white);
+	--button-border: var(--DFV-color-neutral-600);
+	--button-hover-bg: var(--DFV-color-neutral-400);
+	--button-active-bg: var(--DFV-color-neutral-700);
+	--button-focus: var(--DFV-color-neutral-focus);
+
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 2.25rem;
+	padding: 0.5rem 1rem;
+	border: 1px solid var(--button-border);
+	border-radius: var(--DFV-radius-sm);
+	background: var(--button-bg);
+	color: var(--button-fg);
+	font-size: 0.875rem;
+	font-weight: 600;
+	line-height: 1.1;
+	cursor: pointer;
+	transition:
+		background-color var(--DFV-transition-fast),
+		border-color var(--DFV-transition-fast),
+		box-shadow var(--DFV-transition-fast),
+		transform var(--DFV-transition-fast);
+
+	&:hover {
+		background: var(--button-hover-bg);
+		border-color: var(--button-border);
+	}
+
+	&:focus-visible {
+		outline: none;
+		box-shadow: 0 0 0 2px var(--button-focus);
+	}
+
+	&:active {
+		background: var(--button-active-bg);
+		transform: translateY(1px);
+	}
+
+	&:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+}
+
+/* Source: TheTextArea.vue */
+.DFV-text-area {
+	--input-bg: var(--DFV-color-white);
+	--input-fg: var(--DFV-color-text-strong);
+	--input-border: var(--DFV-color-neutral-200);
+	--input-hover-border: var(--DFV-color-neutral-300);
+	--input-focus-border: var(--DFV-color-neutral-500);
+	--input-focus-shadow: var(--DFV-color-neutral-focus);
+	--input-placeholder: var(--DFV-color-neutral-300);
+
+	min-height: 6rem;
+	padding: 0.625rem 0.75rem;
+	border: 1px solid var(--input-border);
+	border-radius: var(--DFV-radius-sm);
+	background: var(--input-bg);
+	color: var(--input-fg);
+	font-size: 0.875rem;
+	font-weight: 500;
+	line-height: 1.35;
+	resize: vertical;
+	transition:
+		border-color var(--DFV-transition-fast),
+		box-shadow var(--DFV-transition-fast),
+		background-color var(--DFV-transition-fast);
+
+	&::placeholder {
+		color: var(--input-placeholder);
+	}
+
+	&:hover {
+		border-color: var(--input-hover-border);
+	}
+
+	&:focus-visible {
+		outline: none;
+		border-color: var(--input-focus-border);
+		box-shadow: 0 0 0 2px var(--input-focus-shadow);
+	}
+
+	&:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+}
+
+/* Source: TheTextInput.vue */
+.DFV-text-input {
+	--input-bg: var(--DFV-color-white);
+	--input-fg: var(--DFV-color-text-strong);
+	--input-border: var(--DFV-color-neutral-200);
+	--input-hover-border: var(--DFV-color-neutral-300);
+	--input-focus-border: var(--DFV-color-neutral-500);
+	--input-focus-shadow: var(--DFV-color-neutral-focus);
+	--input-placeholder: var(--DFV-color-neutral-300);
+
+	padding: 0.5rem 0.75rem;
+	border: 1px solid var(--input-border);
+	border-radius: 0.5rem;
+	background: var(--input-bg);
+	color: var(--input-fg);
+	font-size: 0.875rem;
+	font-weight: 500;
+	line-height: 1.2;
+	transition:
+		border-color 140ms ease,
+		box-shadow 140ms ease,
+		background-color 140ms ease;
+
+	&::placeholder {
+		color: var(--input-placeholder);
+	}
+
+	&:hover {
+		border-color: var(--input-hover-border);
+	}
+
+	&:focus-visible {
+		outline: none;
+		border-color: var(--input-focus-border);
+		box-shadow: 0 0 0 2px var(--input-focus-shadow);
+	}
+
+	&:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+}
+
+/* Source: TheTimeInput.vue */
+.DFV-time-input {
+	--input-bg: var(--DFV-color-white);
+	--input-fg: var(--DFV-color-text-strong);
+	--input-border: var(--DFV-color-neutral-200);
+	--input-hover-border: var(--DFV-color-neutral-300);
+	--input-focus-border: var(--DFV-color-neutral-500);
+	--input-focus-shadow: var(--DFV-color-neutral-focus);
+
+	padding: 0.5rem 0.75rem;
+	border: 1px solid var(--input-border);
+	border-radius: var(--DFV-radius-sm);
+	background: var(--input-bg);
+	color: var(--input-fg);
+	font-size: 0.875rem;
+	font-weight: 500;
+	line-height: 1.2;
+	transition:
+		border-color var(--DFV-transition-fast),
+		box-shadow var(--DFV-transition-fast),
+		background-color var(--DFV-transition-fast);
+
+	&:hover {
+		border-color: var(--input-hover-border);
+	}
+
+	&:focus-visible {
+		outline: none;
+		border-color: var(--input-focus-border);
+		box-shadow: 0 0 0 2px var(--input-focus-shadow);
+	}
+
+	&:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+}
+
+/* Source: UnionSelectKind.vue */
+.DFV-union-select-kind {
+	--select-bg: var(--DFV-color-white);
+	--select-fg: var(--DFV-color-text-strong);
+	--select-border: var(--DFV-color-neutral-200);
+	--select-hover-border: var(--DFV-color-neutral-300);
+	--select-focus-border: var(--DFV-color-neutral-500);
+	--select-focus-shadow: var(--DFV-color-neutral-focus);
+	--select-chevron: var(--DFV-color-neutral-300);
+
+	min-height: 2.25rem;
+	padding: 0.5rem 2.2rem 0.5rem 0.75rem;
+	border: 1px solid var(--select-border);
+	border-radius: var(--DFV-radius-sm);
+	background-color: var(--select-bg);
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M5 7.5L10 12.5L15 7.5' stroke='%2364748b' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+	background-repeat: no-repeat;
+	background-position: right 0.7rem center;
+	background-size: 1rem;
+	color: var(--select-fg);
+	font-size: 0.875rem;
+	font-weight: 500;
+	line-height: 1.2;
+	appearance: none;
+	transition:
+		border-color var(--DFV-transition-fast),
+		box-shadow var(--DFV-transition-fast),
+		background-color var(--DFV-transition-fast);
+
+	&:hover {
+		border-color: var(--select-hover-border);
+	}
+
+	&:focus-visible {
+		outline: none;
+		border-color: var(--select-focus-border);
+		box-shadow: 0 0 0 2px var(--select-focus-shadow);
+	}
+
+	&:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+}
+
+/* Source: icons/* */
+.DFV-icon-svg {
+	display: block;
+	height: var(--DFV-icon-size);
+	width: var(--DFV-icon-size);
+}

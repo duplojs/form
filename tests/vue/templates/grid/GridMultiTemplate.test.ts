@@ -2,8 +2,7 @@ import { createForm, createInput, createTemplate, useMultiLayout } from "@V";
 import { mount } from "@vue/test-utils";
 import TextInput from "@test-utils/TextInput.vue";
 import { testTemplates } from "@test-utils/templates";
-import GridMultiTemplate from "@V/templates/grid/GridMultiTemplate.vue";
-
+import { GridMultiTemplate } from "@V/templates/grid";
 describe("GridMultiTemplate", () => {
 	it("renders a real multi layout inside the grid container with layout styles", async() => {
 		const useForm = createForm(testTemplates);

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { E } from "@duplojs/utils";
-import { type InputTemplateProperties } from "@V/input";
+import { type ExposeInputProperties } from "@V/input";
 import { ref, useTemplateRef } from "vue";
 
 interface Props {
@@ -13,7 +13,7 @@ const model = defineModel<string>();
 const isDisposed = ref(false);
 const inputElement = useTemplateRef("inputElement");
 
-defineExpose<InputTemplateProperties["expose"]>({
+defineExpose<ExposeInputProperties>({
 	check: () => E.success("test"),
 	reset: () => {
 		setTimeout(

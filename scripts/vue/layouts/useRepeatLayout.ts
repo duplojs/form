@@ -5,13 +5,14 @@ import { type VueComponent } from "@V/types";
 import { simpleClone, unwrap } from "@duplojs/utils";
 import * as EE from "@duplojs/utils/either";
 import * as AA from "@duplojs/utils/array";
-import { computed, effectScope, h, ref, shallowRef, watch, type VNode } from "vue";
+import { computed, effectScope, h, ref, watch, type VNode } from "vue";
 
 export interface RepeatTemplateProperties {
 	props: {
 		fieldKey: string;
 		max: number;
 		min: number;
+		getFormFieldsQuantity(): number;
 		getCurrentValue(): unknown;
 		getFormFields(): VNode[];
 	};
@@ -161,6 +162,8 @@ export function useRepeatLayout(
 				},
 			);
 
+			const getFormFieldsQuantity = () => formFieldInstances.value.length;
+
 			const onAddElement = () => {
 				if (modelValue.value.length >= maxElements) {
 					return;
@@ -191,6 +194,7 @@ export function useRepeatLayout(
 					{
 						fieldKey: key,
 						getFormFields: getFormFieldVNodes,
+						getFormFieldsQuantity,
 						getCurrentValue,
 						max: maxElements,
 						min: minElements,
