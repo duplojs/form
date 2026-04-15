@@ -1,13 +1,9 @@
 <script setup lang="ts">
 import { computed } from "vue";
-
-import { DFV_ICON_SIZES, type DfvIconSize } from "./index";
+import { dfvIconSizeMapper, type DfvIconProps } from "./index";
 
 const props = withDefaults(
-	defineProps<{
-		size?: DfvIconSize;
-		strokeWidth?: number;
-	}>(),
+	defineProps<DfvIconProps>(),
 	{
 		size: "md",
 		strokeWidth: 1.7,
@@ -15,7 +11,7 @@ const props = withDefaults(
 );
 
 const iconStyle = computed(() => ({
-	"--DFV-icon-size": DFV_ICON_SIZES[props.size],
+	"--DFV-icon-size": dfvIconSizeMapper[props.size],
 }));
 </script>
 

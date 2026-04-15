@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { StepNextButton } from "@V/designSystem";
-import StepPreviousButton from "@V/designSystem/components/StepPreviousButton.vue";
-import StepResetButton from "@V/designSystem/components/StepResetButton.vue";
+import { StepNextButton, StepPreviousButton, StepResetButton } from "@V/designSystem";
 import { type StepTemplateProperties } from "@V/layouts";
 import { type VueComponent } from "@V/types";
 import { computed, type VNode } from "vue";
