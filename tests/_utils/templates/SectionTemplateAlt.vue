@@ -15,5 +15,9 @@ defineSlots<SectionTemplateProperties["slots"]>();
 		<small id="local-section-title">{{ props.title ?? "" }}</small>
 
 		<slot name="formField" />
+
+		<div id="local-section-current-value">
+			{{ props.getCurrentValue() }}
+		</div>
 	</section>
 </template>

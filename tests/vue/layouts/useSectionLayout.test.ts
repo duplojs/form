@@ -45,6 +45,7 @@ describe("useSectionLayout", () => {
 
 		expect(wrapper.find("#local-section-template").exists()).toBe(true);
 		expect(wrapper.find("#local-section-title").text()).toBe("Account");
+		expect(wrapper.find("#local-section-current-value").text()).toBe("default");
 
 		await wrapper.find("#test-text-input").setValue("updated");
 		expect(currentValue.value).toBe("updated");
