@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import * as EE from "@duplojs/utils/either";
 import { type ExposeInputProperties } from "@V/input";
+import { ref } from "vue";
 import TheCheckbox from "./TheCheckbox.vue";
 
 export interface Props {
@@ -10,11 +11,19 @@ export interface Props {
 	description?: string;
 	required?: boolean;
 	disabled?: boolean;
+	errorMessage?: string;
 }
 
-const props = defineProps<Props>();
+const props = withDefaults(
+	defineProps<Props>(),
+	{
+		errorMessage: "Required",
+	},
+);
 
 const model = defineModel<boolean>({ default: false });
+
+const currentErrorMessage = ref<string | null>(null);
 
 defineExpose<ExposeInputProperties>({
 	check: () => {
@@ -22,10 +31,15 @@ defineExpose<ExposeInputProperties>({
 			!props.required
 			|| model.value === true
 		) {
+			currentErrorMessage.value = null;
 			return EE.success(model.value);
 		}
 
+		currentErrorMessage.value = props.errorMessage;
 		return EE.error([{ key: props.id }]);
+	},
+	reset: () => {
+		currentErrorMessage.value = null;
 	},
 });
 </script>
@@ -62,5 +76,12 @@ defineExpose<ExposeInputProperties>({
 		>
 			<slot />
 		</div>
+
+		<small
+			v-if="currentErrorMessage !== null"
+			class="DFV-checkbox-policy-error"
+		>
+			{{ currentErrorMessage }}
+		</small>
 	</div>
 </template>

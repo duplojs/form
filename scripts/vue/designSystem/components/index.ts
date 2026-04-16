@@ -1,10 +1,9 @@
 export * from "./icons/index";
 export * from "./button/index";
+export * from "./checkbox/index";
 
 export { default as UnionSelectKind } from "./UnionSelectKind.vue";
 
-export { default as TheCheckbox } from "./TheCheckbox.vue";
-export { default as TheCheckboxPolicy } from "./TheCheckboxPolicy.vue";
 export { default as TheDateInput } from "./TheDateInput.vue";
 export { default as TheFileInput } from "./TheFileInput.vue";
 export { default as TheNumberInput } from "./TheNumberInput.vue";
