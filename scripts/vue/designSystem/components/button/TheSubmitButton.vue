@@ -3,7 +3,7 @@ import TheButton, { type Props as TheButtonProps } from "./TheButton.vue";
 
 export type Props = Pick<
 	TheButtonProps,
-	"className" | "disabled" | "label" | "size"
+	"disabled" | "label" | "size"
 >;
 
 const props = withDefaults(
@@ -18,7 +18,7 @@ const props = withDefaults(
 
 <template>
 	<TheButton
-		:class-name="['DFV-submit-button', props.className]"
+		class="DFV-submit-button"
 		type="submit"
 		:label="props.label"
 		:disabled="props.disabled"

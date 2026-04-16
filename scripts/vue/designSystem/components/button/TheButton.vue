@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type HTMLAttributes, type ButtonHTMLAttributes, defineAsyncComponent } from "vue";
+import { type ButtonHTMLAttributes, defineAsyncComponent } from "vue";
 import type { DfvIconSize } from "../icons";
 
 const iconMapper = {
@@ -18,7 +18,6 @@ export type IconPosition = "start" | "end";
 
 export interface Props {
 	label: string;
-	className?: HTMLAttributes["class"];
 	variant?: Variant;
 	size?: Size;
 	icon?: Icon;
@@ -47,7 +46,6 @@ withDefaults(
 			'DFV-button',
 			`DFV-button-variant-${variant}`,
 			`DFV-button-size-${size}`,
-			className,
 		]"
 		:type="type"
 		:aria-label="label"

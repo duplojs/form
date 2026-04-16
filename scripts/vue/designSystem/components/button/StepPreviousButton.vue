@@ -3,7 +3,7 @@ import TheButton, { type Props as TheButtonProps } from "./TheButton.vue";
 
 export type Props = Pick<
 	TheButtonProps,
-	"className" | "disabled" | "iconPosition" | "iconSize" | "label" | "size"
+	"disabled" | "iconPosition" | "iconSize" | "label" | "size"
 >;
 
 const props = withDefaults(
@@ -20,7 +20,7 @@ const props = withDefaults(
 
 <template>
 	<TheButton
-		:class-name="['DFV-button-step-previous', props.className]"
+		class="DFV-button-step-previous"
 		:label="props.label"
 		variant="outline"
 		:size="props.size"

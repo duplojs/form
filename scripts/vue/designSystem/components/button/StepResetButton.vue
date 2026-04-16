@@ -3,7 +3,7 @@ import TheButton, { type Props as TheButtonProps } from "./TheButton.vue";
 
 export type Props = Pick<
 	TheButtonProps,
-	"className" | "disabled" | "iconPosition" | "iconSize" | "label" | "size"
+	"disabled" | "iconPosition" | "iconSize" | "label" | "size"
 >;
 
 const props = withDefaults(
@@ -20,7 +20,7 @@ const props = withDefaults(
 
 <template>
 	<TheButton
-		:class-name="['DFV-button-step-reset', props.className]"
+		class="DFV-button-step-reset"
 		:label="props.label"
 		variant="destructive"
 		:size="props.size"
