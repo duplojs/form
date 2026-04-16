@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { createInput, useDisabledLayout, createForm, useMultiLayout, useCheckLayout, useRepeatLayout, useUnionLayout, useStepLayout, useSectionLayout } from "@V";
 import { useGridFormTemplate, useGridCheckTemplate, useGridRepeatTemplate, useGridUnionTemplate, useGridMultiTemplate, useGridInputTemplate, useGridStepByStepTemplate, useGridSectionTemplate } from "@V/templates/grid";
-import { TheCheckbox, TheCheckboxPolicy, TheDateInput, TheFileInput, TheNumberInput, TheRadioGroup, TheRange, TheSubmitButton, TheTextArea, TheTextInput, TheTimeInput } from "@V/designSystem";
+import { TheCheckbox, TheCheckboxPolicy, TheDateInput, TheFileInput, TheNumberInput, TheRadioGroup, TheRange, TheSubmitButton, TheTextArea, TheTextInput, TheTimeInput, TheDualRange } from "@V/designSystem";
 import { ref } from "vue";
 import { D, DPE } from "@duplojs/utils";
 
@@ -122,6 +122,21 @@ const useFileInput = createInput(
 	},
 );
 
+const useDualRangeInput = createInput(
+	TheDualRange,
+	{
+		defaultValue: () => ({
+			start: 4,
+			end: 17,
+		}),
+		props: {
+			displayValue: true,
+			min: 0,
+			max: 20,
+		},
+	},
+);
+
 const disabled = ref(false);
 
 const useForm = createForm({
@@ -179,6 +194,9 @@ const { component: Form, currentValue, check } = useForm(
 									}),
 									score: useRangeInput({
 										label: "Score",
+									}),
+									period: useDualRangeInput({
+										label: "Period",
 									}),
 								}),
 							],
