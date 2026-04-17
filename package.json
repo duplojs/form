@@ -55,8 +55,13 @@
     "README.md"
   ],
   "peerDependencies": {
-    "@duplojs/utils": ">=1.6.4 <2.0.0",
+    "@duplojs/utils": ">=1.6.5 <2.0.0",
     "vue": ">=3.5.30 <4.0.0"
+  },
+  "peerDependenciesMeta": {
+    "vue": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@commitlint/cli": "19.8.1",

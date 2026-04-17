@@ -1,26 +1,26 @@
 <script setup lang="ts">
 import { createInput, useDisabledLayout, createForm, useMultiLayout, useCheckLayout, useRepeatLayout, useUnionLayout, useStepLayout, useSectionLayout } from "@V";
 import { useGridFormTemplate, useGridCheckTemplate, useGridRepeatTemplate, useGridUnionTemplate, useGridMultiTemplate, useGridInputTemplate, useGridStepByStepTemplate, useGridSectionTemplate } from "@V/templates/grid";
-import { TheCheckbox, TheCheckboxPolicy, TheDateInput, TheFileInput, TheNumberInput, TheRadioGroup, TheRange, TheSubmitButton, TheTextArea, TheTextInput, TheTimeInput, TheDualRange } from "@V/designSystem";
+import { TheCheckbox, DateInput, FileInput, NumberInput, RadioGroup, RangeInput, PrimaryButton, TextareaInput, TextInput, TimeInput, DualRangeInput, CheckboxPolicy, RangeDateInput, RangeTimeInput } from "@V/designSystem";
 import { ref } from "vue";
 import { D, DPE } from "@duplojs/utils";
 
 const useTextInput = createInput(
-	TheTextInput,
+	TextInput,
 	{
 		defaultValue: () => "Default value",
 	},
 );
 
 const useNumberInput = createInput(
-	TheNumberInput,
+	NumberInput,
 	{
 		defaultValue: () => 42,
 	},
 );
 
 const useTextArea = createInput(
-	TheTextArea,
+	TextareaInput,
 	{
 		defaultValue: () => "Default value",
 	},
@@ -37,7 +37,7 @@ const useCheckbox = createInput(
 );
 
 const useCheckboxPolicy = createInput(
-	TheCheckboxPolicy,
+	CheckboxPolicy,
 	{
 		defaultValue: () => false,
 		props: {
@@ -50,7 +50,7 @@ const useCheckboxPolicy = createInput(
 );
 
 const useRadioGroup = createInput(
-	TheRadioGroup,
+	RadioGroup,
 	{
 		defaultValue: () => "weekly",
 		props: {
@@ -77,19 +77,20 @@ const useRadioGroup = createInput(
 );
 
 const useRangeInput = createInput(
-	TheRange,
+	RangeInput,
 	{
 		defaultValue: () => 35,
 		props: {
 			min: 0,
 			max: 100,
 			step: 5,
+			manual: true,
 		},
 	},
 );
 
 const useDateInput = createInput(
-	TheDateInput,
+	DateInput,
 	{
 		defaultValue: () => D.now(),
 		props: {
@@ -99,20 +100,43 @@ const useDateInput = createInput(
 	},
 );
 
+const useRangeDateInput = createInput(
+	RangeDateInput,
+	{
+		defaultValue: () => ({
+			to: D.now(),
+			from: D.tomorrow(),
+		}),
+	},
+);
+
 const useTimeInput = createInput(
-	TheTimeInput,
+	TimeInput,
 	{
 		defaultValue: () => D.createTime(9.5, "hour"),
 		props: {
 			min: D.createTime(8, "hour"),
 			max: D.createTime(20, "hour"),
-			step: 300,
+		},
+	},
+);
+
+const useRangeTimeInput = createInput(
+	RangeTimeInput,
+	{
+		defaultValue: () => ({
+			from: D.createTime(8, "hour"),
+			to: D.createTime(20, "hour"),
+		}),
+		props: {
+			min: D.createTime(6, "hour"),
+			max: D.createTime(22, "hour"),
 		},
 	},
 );
 
 const useFileInput = createInput(
-	TheFileInput,
+	FileInput,
 	{
 		defaultValue: () => [] as File[],
 		props: {
@@ -123,16 +147,17 @@ const useFileInput = createInput(
 );
 
 const useDualRangeInput = createInput(
-	TheDualRange,
+	DualRangeInput,
 	{
 		defaultValue: () => ({
-			start: 4,
-			end: 17,
+			start: 5,
+			end: 20,
 		}),
 		props: {
-			displayValue: true,
+			manual: true,
 			min: 0,
-			max: 20,
+			max: 100,
+			step: 5,
 		},
 	},
 );
@@ -237,8 +262,14 @@ const { component: Form, currentValue, check } = useForm(
 					stepDate: useDateInput({
 						label: "Step date",
 					}),
+					stepRangeDate: useRangeDateInput({
+						label: "Step Range Date",
+					}),
 					stepTime: useTimeInput({
 						label: "Step time",
+					}),
+					stepRangeTime: useRangeTimeInput({
+						label: "Step Range Time",
 					}),
 					stepLevel: useNumberInput({
 						label: "Priority",
@@ -256,7 +287,7 @@ const { component: Form, currentValue, check } = useForm(
 <template>
 	<div class="playground">
 		<Form @submit="console.log(check())">
-			<TheSubmitButton label="Submit" />
+			<PrimaryButton label="Submit" />
 		</Form>
 
 		<button

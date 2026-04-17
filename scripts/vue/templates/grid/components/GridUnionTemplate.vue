@@ -3,7 +3,7 @@ import { type UnionTemplateProperties } from "@V/layouts";
 import { computed } from "vue";
 import { type GridTemplateLayoutContainerProps } from "../types";
 import { type VueComponent } from "@V/types";
-import { UnionSelectKind } from "@V/designSystem";
+import { SelectInput } from "@V/designSystem";
 
 export type Props = (
 	& UnionTemplateProperties["props"]
@@ -29,7 +29,7 @@ export type Props = (
 const props = withDefaults(
 	defineProps<Props>(),
 	{
-		selectKind: UnionSelectKind,
+		selectKind: SelectInput,
 	},
 );
 

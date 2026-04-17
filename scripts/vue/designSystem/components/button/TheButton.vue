@@ -17,13 +17,12 @@ export type Variant = "destructive" | "primary" | "ghost" | "outline";
 export type IconPosition = "start" | "end";
 
 export interface Props {
-	label: string;
+	label?: string;
 	variant?: Variant;
 	size?: Size;
 	icon?: Icon;
 	iconSize?: DfvIconSize;
 	iconPosition?: IconPosition;
-	disabled?: boolean;
 	type?: ButtonHTMLAttributes["type"];
 }
 
@@ -48,8 +47,6 @@ withDefaults(
 			`DFV-button-size-${size}`,
 		]"
 		:type="type"
-		:aria-label="label"
-		:disabled="disabled"
 	>
 		<component
 			v-if="icon && iconPosition === 'start'"
@@ -57,7 +54,7 @@ withDefaults(
 			:size="iconSize ?? size"
 		/>
 
-		<span>{{ label }}</span>
+		<span v-if="label">{{ label }}</span>
 
 		<component
 			v-if="icon && iconPosition === 'end'"

@@ -2,10 +2,10 @@
 export interface Props {
 	id: string;
 	name?: string;
-	disabled?: boolean;
+	label?: string;
 }
 
-const props = defineProps<Props>();
+defineProps<Props>();
 
 const model = defineModel<boolean>({ default: false });
 </script>
@@ -13,22 +13,20 @@ const model = defineModel<boolean>({ default: false });
 <template>
 	<label
 		class="DFV-checkbox"
-		:class="{ 'is-disabled': props.disabled }"
 	>
 		<input
 			class="DFV-checkbox-input"
 			v-model="model"
 			type="checkbox"
-			:id="props.id"
-			:name="props.name"
-			:disabled="props.disabled"
+			:id="id"
+			:name="name"
 		/>
 
 		<span
-			v-if="$slots.default"
+			v-if="label"
 			class="DFV-checkbox-label"
 		>
-			<slot />
+			{{ label }}
 		</span>
 	</label>
 </template>

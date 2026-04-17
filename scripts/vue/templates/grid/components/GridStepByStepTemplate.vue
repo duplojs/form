@@ -1,28 +1,28 @@
 <script setup lang="ts">
-import { StepNextButton, StepPreviousButton, StepResetButton } from "@V/designSystem";
 import { type StepTemplateProperties } from "@V/layouts";
 import { type VueComponent } from "@V/types";
-import { computed, type VNode } from "vue";
+import { computed } from "vue";
+import { type FunctionButtonComponent, defaultStepNextButton, defaultStepPreviousButton, defaultStepResetButton } from "./templateButton";
 
 export type Props = (
 	& StepTemplateProperties["props"]
 	& {
-		nextButton?: VueComponent | (() => VNode)[];
+		nextButton?: VueComponent | FunctionButtonComponent;
 		nextLabel?: string;
-		previousButton?: VueComponent | (() => VNode)[];
+		previousButton?: VueComponent | FunctionButtonComponent;
 		previousLabel?: string;
-		resetButton?: VueComponent | (() => VNode)[];
+		resetButton?: VueComponent | FunctionButtonComponent;
 	}
 );
 
 const props = withDefaults(
 	defineProps<Props>(),
 	{
-		nextButton: StepNextButton,
+		nextButton: defaultStepNextButton,
 		nextLabel: "Next",
-		previousButton: StepPreviousButton,
+		previousButton: defaultStepPreviousButton,
 		previousLabel: "Previous",
-		resetButton: StepResetButton,
+		resetButton: defaultStepResetButton,
 	},
 );
 

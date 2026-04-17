@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { type RepeatTemplateProperties } from "@V/layouts";
 import { type GridTemplateLayoutContainerProps } from "../types";
-import { computed, type VNode } from "vue";
+import { computed } from "vue";
 import { type VueComponent } from "@V/types";
-import { RepeatAddButton, RepeatRemoveButton, RepeatResetButton } from "@V/designSystem";
+import { type FunctionButtonComponent, defaultAddButton, defaultRemoveButton, defaultResetButton } from "./templateButton";
 
 export type Props = (
 	& RepeatTemplateProperties["props"]
@@ -11,11 +11,11 @@ export type Props = (
 	& {
 		repeatElementColumn?: number;
 		repeatElementMaxColumn?: number;
-		removeButton?: VueComponent | (() => VNode);
+		removeButton?: VueComponent | FunctionButtonComponent;
 		removeLabel?: string;
-		addButton?: VueComponent | (() => VNode);
+		addButton?: VueComponent | FunctionButtonComponent;
 		addLabel?: string;
-		resetButton?: VueComponent | (() => VNode);
+		resetButton?: VueComponent | FunctionButtonComponent;
 		resetLabel?: string;
 	}
 );
@@ -23,11 +23,11 @@ export type Props = (
 const props = withDefaults(
 	defineProps<Props>(),
 	{
-		addButton: RepeatAddButton,
+		addButton: defaultAddButton,
 		addLabel: "Add",
-		removeButton: RepeatRemoveButton,
+		removeButton: defaultRemoveButton,
 		removeLabel: "Remove",
-		resetButton: RepeatResetButton,
+		resetButton: defaultResetButton,
 		resetLabel: "Reset",
 	},
 );

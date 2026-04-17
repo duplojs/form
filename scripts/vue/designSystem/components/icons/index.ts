@@ -1,3 +1,5 @@
+export { default as IconChevronDown } from "./IconChevronDown.vue";
+export { default as IconMinus } from "./IconMinus.vue";
 export { default as IconNext } from "./IconNext.vue";
 export { default as IconPlus } from "./IconPlus.vue";
 export { default as IconPrevious } from "./IconPrevious.vue";

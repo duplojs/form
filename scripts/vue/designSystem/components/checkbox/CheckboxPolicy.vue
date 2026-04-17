@@ -2,7 +2,6 @@
 import * as EE from "@duplojs/utils/either";
 import { type ExposeInputProperties } from "@V/input";
 import { ref } from "vue";
-import TheCheckbox from "./TheCheckbox.vue";
 
 export interface Props {
 	id: string;
@@ -10,7 +9,6 @@ export interface Props {
 	title?: string;
 	description?: string;
 	required?: boolean;
-	disabled?: boolean;
 	errorMessage?: string;
 }
 
@@ -46,12 +44,15 @@ defineExpose<ExposeInputProperties>({
 
 <template>
 	<div class="DFV-checkbox-policy">
-		<TheCheckbox
-			v-model="model"
-			:id="props.id"
-			:name="props.name"
-			:disabled="props.disabled"
-		>
+		<label class="DFV-checkbox">
+			<input
+				class="DFV-checkbox-input"
+				v-model="model"
+				type="checkbox"
+				:id="id"
+				:name="name"
+			/>
+
 			<span class="DFV-checkbox-policy-title">
 				{{ props.title }}
 				<span
@@ -61,7 +62,7 @@ defineExpose<ExposeInputProperties>({
 					*
 				</span>
 			</span>
-		</TheCheckbox>
+		</label>
 
 		<p
 			v-if="props.description"
@@ -69,13 +70,6 @@ defineExpose<ExposeInputProperties>({
 		>
 			{{ props.description }}
 		</p>
-
-		<div
-			v-if="$slots.default"
-			class="DFV-checkbox-policy-content"
-		>
-			<slot />
-		</div>
 
 		<small
 			v-if="currentErrorMessage !== null"

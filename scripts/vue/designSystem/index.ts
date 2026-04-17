@@ -1,17 +1,17 @@
 import { createInput } from "@V/input";
-import { TheCheckbox, TheCheckboxPolicy, TheDateInput, TheFileInput, TheNumberInput, TheRadioGroup, TheRange, TheTextArea, TheTextInput, TheTimeInput } from "./components";
+import { TheCheckbox, CheckboxPolicy, DateInput, FileInput, NumberInput, RadioGroup, RangeInput, TextareaInput, TextInput, TimeInput, DualRangeInput, RangeDateInput, RangeTimeInput } from "./components";
 
 import "./designSystem.scss";
 
 export * from "./components";
 
 export const useTextInput = createInput(
-	TheTextInput,
+	TextInput,
 	{ defaultValue: "" },
 );
 
 export const useNumberInput = createInput(
-	TheNumberInput,
+	NumberInput,
 	{ defaultValue: 0 },
 );
 
@@ -21,32 +21,52 @@ export const useCheckBoxInput = createInput(
 );
 
 export const useCheckBoxPolicyInput = createInput(
-	TheCheckboxPolicy,
+	CheckboxPolicy,
 	{ defaultValue: false },
 );
 
 export const useDateInput = createInput(
-	TheDateInput,
+	DateInput,
 	{ defaultValue: null },
 );
 
-export const useTextAreaInput = createInput(
-	TheTextArea,
+export const useRangeDateInput = createInput(
+	RangeDateInput,
+	{
+		defaultValue: () => ({
+			to: null,
+			from: null,
+		}),
+	},
+);
+
+export const useTextareaInput = createInput(
+	TextareaInput,
 	{ defaultValue: "" },
 );
 
 export const useTimeInput = createInput(
-	TheTimeInput,
+	TimeInput,
 	{ defaultValue: null },
 );
 
+export const useRangeTimeInput = createInput(
+	RangeTimeInput,
+	{
+		defaultValue: () => ({
+			to: null,
+			from: null,
+		}),
+	},
+);
+
 export const useFileInput = createInput(
-	TheFileInput,
+	FileInput,
 	{ defaultValue: null },
 );
 
 export const useRadioGroupInput = createInput(
-	TheRadioGroup,
+	RadioGroup,
 	{
 		defaultValue: null,
 		props: { options: [] },
@@ -54,6 +74,16 @@ export const useRadioGroupInput = createInput(
 );
 
 export const useRangeInput = createInput(
-	TheRange,
+	RangeInput,
 	{ defaultValue: 0 },
+);
+
+export const useDualRangeInput = createInput(
+	DualRangeInput,
+	{
+		defaultValue: () => ({
+			start: 0,
+			end: 100,
+		}),
+	},
 );
