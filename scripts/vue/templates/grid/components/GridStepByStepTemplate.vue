@@ -60,7 +60,7 @@ const progressPercent = computed(() => {
 			</div>
 		</div>
 
-		<div class="DFV-grid-container DFV-step-content">
+		<div class="DFV-step-content">
 			<slot name="formField" />
 		</div>
 

@@ -17,6 +17,7 @@ defineSlots<CheckTemplateProperties["slots"]>();
 
 const selfStyles = computed(() => ({
 	"--DFV-grid-columns": props.columns,
+	"--DFV-grid-gap": props.gap !== undefined ? `${props.gap}px` : undefined,
 }));
 
 const containerStyles = computed(() => ({
@@ -37,7 +38,10 @@ const containerStyles = computed(() => ({
 			<slot name="formField" />
 		</div>
 
-		<small v-if="props.getErrorMessage() !== null || props.hideEmptyMessageError !== true">
+		<small
+			class="DFV-grid-error"
+			v-if="props.getErrorMessage() !== null || props.hideEmptyMessageError !== true"
+		>
 			{{ props.getErrorMessage() }}
 		</small>
 	</div>

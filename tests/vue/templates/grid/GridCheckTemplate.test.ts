@@ -40,13 +40,13 @@ describe("GridCheckTemplate", () => {
 		expect(container.attributes("style")).toContain("--DFV-grid-gap: 12px");
 		expect(container.get("input").attributes("id")).toBe("test-text-input");
 
-		const error = checkTemplate.get(":scope > small");
+		const error = checkTemplate.get(".DFV-grid-error");
 		expect(error.text()).toBe("");
 
 		expect(currentValue.value).toBe("default");
 		check();
 		await sleep();
-		expect(checkTemplate.get(":scope > small").text()).toBe("Need number");
+		expect(checkTemplate.get(".DFV-grid-error").text()).toBe("Need number");
 	});
 
 	it("hides the empty error block when configured and shows it again on a real parser error", async() => {
@@ -68,15 +68,15 @@ describe("GridCheckTemplate", () => {
 		const checkTemplate = wrapper.get(".DFV-template_check");
 
 		expect(checkTemplate.find("label").exists()).toBe(false);
-		expect(checkTemplate.find(":scope > small").exists()).toBe(false);
+		expect(checkTemplate.find(".DFV-grid-error").exists()).toBe(false);
 
 		currentValue.value = "not-a-number";
 		check();
 		await sleep();
-		expect(checkTemplate.get(":scope > small").text()).toBe("Need number");
+		expect(checkTemplate.get(".DFV-grid-error").text()).toBe("Need number");
 
 		currentValue.value = "42";
 		await sleep();
-		expect(checkTemplate.find(":scope > small").exists()).toBe(false);
+		expect(checkTemplate.find(".DFV-grid-error").exists()).toBe(false);
 	});
 });

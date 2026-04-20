@@ -32,7 +32,7 @@ describe("GridStepByStepTemplate", () => {
 		);
 		expect(stepTemplate.get(".DFV-step-indicator-meta").text()).toContain("Step 1");
 		expect(stepTemplate.get(".DFV-step-indicator-meta").text()).toContain("on 2");
-		expect(stepTemplate.get(".DFV-grid-container").element.className).toContain("DFV-grid-container");
+		expect(stepTemplate.get(".DFV-step-content").element.className).toContain("DFV-step-content");
 		expect(stepTemplate.findAll("button[type=\"button\"]")).toHaveLength(3);
 		expect(stepTemplate.text()).toContain("Previous");
 		expect(stepTemplate.text()).toContain("Next");

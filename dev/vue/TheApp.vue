@@ -207,7 +207,7 @@ const { component: Form, currentValue, check } = useForm(
 											defaultValue: 26,
 										}),
 										{
-											dataParser: DPE.coerce.number(),
+											dataParser: DPE.coerce.number().max(30),
 											template: useGridCheckTemplate({
 												columns: 2,
 												hideEmptyMessageError: true,
