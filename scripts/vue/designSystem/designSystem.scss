@@ -4,34 +4,35 @@
 @use "./components/icons/icons";
 
 :root {
-	--DFV-primary: var(--DFV-color-zinc-700);
+	--DFV-primary: var(--DFV-color-blue-500);
 	--DFV-primary-foreground: var(--DFV-color-white);
-	--DFV-primary-border: var(--DFV-color-zinc-800);
-	--DFV-primary-hover: var(--DFV-color-zinc-600);
-	--DFV-primary-active: var(--DFV-color-zinc-800);
-	--DFV-primary-focus: var(--DFV-color-mist-300);
+	--DFV-primary-border: var(--DFV-color-blue-700);
+	--DFV-primary-hover: var(--DFV-color-blue-600);
+	--DFV-primary-active: var(--DFV-color-blue-700);
+	--DFV-primary-focus: var(--DFV-color-blue-300);
 
-	--DFV-secondary: var(--DFV-color-mauve-600);
+	--DFV-secondary: var(--DFV-color-slate-600);
 	--DFV-secondary-foreground: var(--DFV-color-white);
 
-	--DFV-muted: var(--DFV-color-neutral-100);
-	--DFV-muted-foreground: var(--DFV-color-neutral-700);
-	--DFV-muted-border: var(--DFV-color-neutral-200);
-	--DFV-muted-border-strong: var(--DFV-color-neutral-300);
-	--DFV-muted-border-stronger: var(--DFV-color-neutral-600);
-	--DFV-muted-hover: var(--DFV-color-neutral-100);
-	--DFV-muted-active: var(--DFV-color-neutral-150);
-	--DFV-muted-focus: var(--DFV-color-mist-300);
+	--DFV-muted: var(--DFV-color-gray-100);
+	--DFV-muted-foreground: var(--DFV-color-gray-700);
+	--DFV-muted-foreground-soft: var(--DFV-color-gray-500);
+	--DFV-muted-border: var(--DFV-color-gray-200);
+	--DFV-muted-border-strong: var(--DFV-color-gray-300);
+	--DFV-muted-border-stronger: var(--DFV-color-gray-600);
+	--DFV-muted-hover: var(--DFV-color-gray-100);
+	--DFV-muted-active: var(--DFV-color-gray-200);
+	--DFV-muted-focus: var(--DFV-color-slate-300);
 
-	--DFV-accent: var(--DFV-color-mist-600);
+	--DFV-accent: var(--DFV-color-slate-600);
 	--DFV-accent-foreground: var(--DFV-color-white);
 
-	--DFV-destructive: var(--DFV-color-rose-600);
+	--DFV-destructive: var(--DFV-color-red-600);
 	--DFV-destructive-foreground: var(--DFV-color-white);
-	--DFV-destructive-border: var(--DFV-color-rose-700);
-	--DFV-destructive-hover: var(--DFV-color-rose-700);
-	--DFV-destructive-active: var(--DFV-color-rose-800);
-	--DFV-destructive-focus: var(--DFV-color-rose-300);
+	--DFV-destructive-border: var(--DFV-color-red-700);
+	--DFV-destructive-hover: var(--DFV-color-red-700);
+	--DFV-destructive-active: var(--DFV-color-red-800);
+	--DFV-destructive-focus: var(--DFV-color-red-300);
 
 	--DFV-radius-sm: 0.5rem;
 	--DFV-radius-md: 0.6875rem;

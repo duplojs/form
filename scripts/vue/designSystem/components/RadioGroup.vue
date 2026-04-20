@@ -66,7 +66,7 @@ const model = defineModel<string | null>();
 	--DFV-radio-indicator: var(--DFV-primary-foreground);
 	--DFV-radio-focus: var(--DFV-primary-focus);
 	--DFV-radio-label-color: var(--DFV-muted-foreground);
-	--DFV-radio-description-color: var(--DFV-color-zinc-500);
+	--DFV-radio-description-color: var(--DFV-muted-foreground-soft);
 	--DFV-radio-content-gap: 0.15rem;
 
 	display: inline-flex;
