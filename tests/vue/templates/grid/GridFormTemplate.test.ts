@@ -28,8 +28,8 @@ describe("GridFormTemplate", () => {
 		expect(form.element.tagName).toBe("FORM");
 
 		const container = wrapper.get(".DFV-grid-container");
-		expect(container.attributes("style")).toContain("--max-columns: 8");
-		expect(container.attributes("style")).toContain("--gap: 12px");
+		expect(container.attributes("style")).toContain("--DFV-grid-max-columns: 8");
+		expect(container.attributes("style")).toContain("--DFV-grid-gap: 12px");
 		expect(container.get("#test-text-input").element.id).toBe("test-text-input");
 		expect(wrapper.get("#grid-form-submitter").element.id).toBe("grid-form-submitter");
 

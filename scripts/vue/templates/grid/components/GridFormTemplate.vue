@@ -25,8 +25,8 @@ function submit(event: SubmitEvent) {
 }
 
 const containerStyles = computed(() => ({
-	"--max-columns": props.maxColumns,
-	"--gap": props.gap !== undefined ? `${props.gap}px` : undefined,
+	"--DFV-grid-max-columns": props.maxColumns,
+	"--DFV-grid-gap": props.gap !== undefined ? `${props.gap}px` : undefined,
 }));
 </script>
 

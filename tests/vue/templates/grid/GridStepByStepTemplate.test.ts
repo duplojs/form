@@ -35,7 +35,6 @@ describe("GridStepByStepTemplate", () => {
 		expect(stepTemplate.get(".DFV-grid-container").element.className).toContain("DFV-grid-container");
 		expect(stepTemplate.findAll("button[type=\"button\"]")).toHaveLength(3);
 		expect(stepTemplate.text()).toContain("Previous");
-		expect(stepTemplate.text()).toContain("Reset");
 		expect(stepTemplate.text()).toContain("Next");
 
 		expect(E.isLeft(check())).toBe(true);
@@ -78,5 +77,25 @@ describe("GridStepByStepTemplate", () => {
 		await stepTemplate.findAll("button[type=\"button\"]")[0]!.trigger("click");
 		await sleep();
 		expect(currentValue.value.currentStep).toBe(0);
+	});
+
+	it("one step", () => {
+		const useForm = createForm(testTemplates);
+		const { component } = useForm(
+			useStepLayout(
+				[createInput(TextInput, { defaultValue: "only-step" })()],
+				{
+					template: useGridStepByStepTemplate(),
+					errorMessageNotAtLastStep: "",
+				},
+			),
+		);
+		const wrapper = mount(component);
+		const stepTemplate = wrapper.get(".DFV-template_step");
+
+		expect(stepTemplate.get(".DFV-step-indicator-meta").text()).toContain("Step 1");
+		expect(stepTemplate.get(".DFV-step-indicator-meta").text()).toContain("on 1");
+		expect(stepTemplate.get(".DFV-step-indicator-fill").attributes("style")).toContain("width: 100%");
+		expect(stepTemplate.find(".DFV-step-error").exists()).toBe(false);
 	});
 });

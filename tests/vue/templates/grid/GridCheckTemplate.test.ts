@@ -33,11 +33,11 @@ describe("GridCheckTemplate", () => {
 				"DFV-grid-element",
 			]),
 		);
-		expect(checkTemplate.attributes("style")).toContain("--columns: 6");
+		expect(checkTemplate.attributes("style")).toContain("--DFV-grid-columns: 6");
 
 		const container = checkTemplate.get(".DFV-grid-container");
-		expect(container.attributes("style")).toContain("--max-columns: 8");
-		expect(container.attributes("style")).toContain("--gap: 12px");
+		expect(container.attributes("style")).toContain("--DFV-grid-max-columns: 8");
+		expect(container.attributes("style")).toContain("--DFV-grid-gap: 12px");
 		expect(container.get("input").attributes("id")).toBe("test-text-input");
 
 		const error = checkTemplate.get(":scope > small");

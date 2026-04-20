@@ -37,20 +37,20 @@ const emit = defineEmits<RepeatTemplateProperties["emits"]>();
 defineSlots<RepeatTemplateProperties["slots"]>();
 
 const selfStyles = computed(() => ({
-	"--columns": props.columns,
+	"--DFV-grid-columns": props.columns,
 }));
 
 const containerStyles = computed(() => ({
-	"--max-columns": props.maxColumns,
-	"--gap": props.gap !== undefined ? `${props.gap}px` : undefined,
+	"--DFV-grid-max-columns": props.maxColumns,
+	"--DFV-grid-gap": props.gap !== undefined ? `${props.gap}px` : undefined,
 }));
 
 const repeatElementStyles = computed(() => ({
-	"--columns": props.repeatElementColumn,
+	"--DFV-grid-columns": props.repeatElementColumn,
 }));
 
 const repeatElementContainerStyles = computed(() => ({
-	"--max-columns": props.repeatElementMaxColumn,
+	"--DFV-grid-max-columns": props.repeatElementMaxColumn,
 }));
 </script>
 

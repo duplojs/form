@@ -17,9 +17,9 @@ const props = withDefaults(
 defineSlots<MultiTemplateProperties["slots"]>();
 
 const containerStyles = computed(() => ({
-	"--max-columns": props.maxColumns,
-	"--gap": props.gap !== undefined ? `${props.gap}px` : undefined,
-	"--columns": props.columns,
+	"--DFV-grid-max-columns": props.maxColumns,
+	"--DFV-grid-gap": props.gap !== undefined ? `${props.gap}px` : undefined,
+	"--DFV-grid-columns": props.columns,
 }));
 </script>
 

@@ -14,7 +14,7 @@ describe("useStepLayout", () => {
 			[
 				createInput(TextInput, { defaultValue: "first-default" })(),
 				createInput(TextInput, { defaultValue: "second-default" })(),
-			] as const,
+			],
 			{
 				errorMessageNotAtLastStep: "Go to the end",
 			},
@@ -87,7 +87,7 @@ describe("useStepLayout", () => {
 			[
 				createInput(TextInputWithErrorExpose, { defaultValue: "first-default" })(),
 				createInput(TextInput, { defaultValue: "second-default" })(),
-			] as const,
+			],
 			{
 				template: localTemplate,
 				errorMessageNotAtLastStep: "Go to the end",
@@ -114,7 +114,7 @@ describe("useStepLayout", () => {
 			[
 				createInput(TextInput, { defaultValue: "first-default" })(),
 				createInput(TextInputWithErrorExpose, { defaultValue: "second-default" })(),
-			] as const,
+			],
 			{
 				errorMessageNotAtLastStep: "Go to the end",
 			},
@@ -138,7 +138,7 @@ describe("useStepLayout", () => {
 			[
 				createInput(TextInputWithExpose, { defaultValue: "first-default" })(),
 				createInput(TextInputWithExpose, { defaultValue: "second-default" })(),
-			] as const,
+			],
 			{
 				errorMessageNotAtLastStep: "Go to the end",
 			},

@@ -32,9 +32,9 @@ describe("GridMultiTemplate", () => {
 				"DFV-grid-element",
 			]),
 		);
-		expect(multiTemplate.attributes("style")).toContain("--columns: 7");
-		expect(multiTemplate.attributes("style")).toContain("--max-columns: 10");
-		expect(multiTemplate.attributes("style")).toContain("--gap: 9px");
+		expect(multiTemplate.attributes("style")).toContain("--DFV-grid-columns: 7");
+		expect(multiTemplate.attributes("style")).toContain("--DFV-grid-max-columns: 10");
+		expect(multiTemplate.attributes("style")).toContain("--DFV-grid-gap: 9px");
 		expect(multiTemplate.findAll("#test-text-input")).toHaveLength(2);
 
 		await multiTemplate.findAll("#test-text-input")[0]!.setValue("first-value");
@@ -62,7 +62,7 @@ describe("GridMultiTemplate", () => {
 		const wrapper = mount(component);
 		const multiTemplate = wrapper.get(".DFV-template_multi");
 
-		expect(multiTemplate.attributes("style")).toContain("--columns: 3");
-		expect(multiTemplate.attributes("style")).not.toContain("--gap:");
+		expect(multiTemplate.attributes("style")).toContain("--DFV-grid-columns: 3");
+		expect(multiTemplate.attributes("style")).not.toContain("--DFV-grid-gap:");
 	});
 });

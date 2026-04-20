@@ -38,16 +38,16 @@ describe("GridUnionTemplate", () => {
 				"DFV-grid-element",
 			]),
 		);
-		expect(unionTemplate.attributes("style")).toContain("--columns: 9");
+		expect(unionTemplate.attributes("style")).toContain("--DFV-grid-columns: 9");
 
-		const select = unionTemplate.get<HTMLSelectElement>("#select-union-form-field");
+		const select = unionTemplate.get<HTMLSelectElement>(".DFV-select-input");
 		expect(select.findAll("option")).toHaveLength(2);
 		expect(select.text()).toContain("Kind A");
 		expect(select.text()).toContain("Kind B");
 
 		const container = unionTemplate.get(".DFV-grid-container");
-		expect(container.attributes("style")).toContain("--max-columns: 11");
-		expect(container.attributes("style")).toContain("--gap: 7px");
+		expect(container.attributes("style")).toContain("--DFV-grid-max-columns: 11");
+		expect(container.attributes("style")).toContain("--DFV-grid-gap: 7px");
 		expect(unionTemplate.get("#test-text-input").element.id).toBe("test-text-input");
 
 		await select.setValue("bb");
@@ -74,10 +74,10 @@ describe("GridUnionTemplate", () => {
 		);
 		const wrapper = mount(component);
 		const unionTemplate = wrapper.get(".DFV-template_union");
-		const select = unionTemplate.get<HTMLSelectElement>("#select-union-form-field");
+		const select = unionTemplate.get<HTMLSelectElement>(".DFV-select-input");
 
 		expect(select.text()).toContain("a");
 		expect(select.text()).toContain("b");
-		expect(unionTemplate.get(".DFV-grid-container").attributes("style") ?? "").not.toContain("--gap:");
+		expect(unionTemplate.get(".DFV-grid-container").attributes("style") ?? "").not.toContain("--DFV-grid-gap:");
 	});
 });

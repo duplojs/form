@@ -34,11 +34,11 @@ describe("GridRepeatTemplate", () => {
 				"DFV-grid-element",
 			]),
 		);
-		expect(repeatTemplate.attributes("style")).toContain("--columns: 8");
+		expect(repeatTemplate.attributes("style")).toContain("--DFV-grid-columns: 8");
 
 		const rootContainer = repeatTemplate.findAll(".DFV-grid-container")[0]!;
-		expect(rootContainer.attributes("style")).toContain("--max-columns: 12");
-		expect(rootContainer.attributes("style")).toContain("--gap: 14px");
+		expect(rootContainer.attributes("style")).toContain("--DFV-grid-max-columns: 12");
+		expect(rootContainer.attributes("style")).toContain("--DFV-grid-gap: 14px");
 		expect(repeatTemplate.findAll(".DFV-grid-repeat-element")).toHaveLength(1);
 		expect(repeatTemplate.findAll("button[type=\"button\"]")).toHaveLength(3);
 		expect(repeatTemplate.text()).toContain("Reset");
@@ -83,8 +83,8 @@ describe("GridRepeatTemplate", () => {
 		await sleep();
 		expect(currentValue.value).toStrictEqual(["default"]);
 
-		expect(repeatTemplate.attributes("style") ?? "").not.toContain("--columns:");
-		expect(repeatTemplate.findAll(".DFV-grid-container")[0]!.attributes("style") ?? "").not.toContain("--gap:");
+		expect(repeatTemplate.attributes("style") ?? "").not.toContain("--DFV-grid-columns:");
+		expect(repeatTemplate.findAll(".DFV-grid-container")[0]!.attributes("style") ?? "").not.toContain("--DFV-grid-gap:");
 		expect(repeatTemplate.findAll(".DFV-grid-repeat-container")).toHaveLength(1);
 	});
 });

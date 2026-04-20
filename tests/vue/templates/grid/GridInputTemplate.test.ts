@@ -29,7 +29,7 @@ describe("GridInputTemplate", () => {
 				"DFV-grid-input",
 			]),
 		);
-		expect(inputTemplate.attributes("style")).toContain("--columns: 4");
+		expect(inputTemplate.attributes("style")).toContain("--DFV-grid-columns: 4");
 		expect(inputTemplate.get("#test-text-input").element.id).toBe("test-text-input");
 
 		await wrapper.get("#test-text-input").setValue("updated");

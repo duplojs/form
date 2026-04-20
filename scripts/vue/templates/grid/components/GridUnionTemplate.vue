@@ -54,12 +54,12 @@ const modelValue = computed({
 });
 
 const containerStyles = computed(() => ({
-	"--max-columns": props.maxColumns,
-	"--gap": props.gap !== undefined ? `${props.gap}px` : undefined,
+	"--DFV-grid-max-columns": props.maxColumns,
+	"--DFV-grid-gap": props.gap !== undefined ? `${props.gap}px` : undefined,
 }));
 
 const selfStyles = computed(() => ({
-	"--columns": props.columns,
+	"--DFV-grid-columns": props.columns,
 }));
 </script>
 
@@ -68,7 +68,7 @@ const selfStyles = computed(() => ({
 		class="DFV-grid-element"
 		:style="selfStyles"
 	>
-		<div class="duplojs-form-vue-grid-union-select">
+		<div class="DFV-grid-union-select">
 			<component
 				:is="props.selectKind"
 				:field-key="props.fieldKey"

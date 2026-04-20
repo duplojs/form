@@ -13,7 +13,7 @@ const props = defineProps<Props>();
 defineSlots<InputTemplateProperties["slots"]>();
 
 const selfStyles = computed(() => ({
-	"--columns": props.columns,
+	"--DFV-grid-columns": props.columns,
 }));
 </script>
 

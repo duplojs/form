@@ -21,14 +21,7 @@ export default defineConfig({
 			provider: "istanbul",
 			reporter: ["text", "json", "html", "json-summary"],
 			reportsDirectory: "coverage",
-			include: [
-				"scripts/vue/form.ts",
-				"scripts/vue/formField.ts",
-				"scripts/vue/input.ts",
-				"scripts/vue/kind.ts",
-				"scripts/vue/template.ts",
-				"scripts/vue/layouts/**/*.ts",
-			],
+			include: ["scripts"],
 			exclude: [
 				"**/*.test.ts", 
 				"bin", 
