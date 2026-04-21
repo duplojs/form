@@ -17,6 +17,7 @@ const iconStyle = computed(() => ({
 <template>
 	<svg
 		class="DFV-icon-svg"
+		data-dfv-icon="previous"
 		:style="iconStyle"
 		viewBox="0 0 20 20"
 		fill="none"
