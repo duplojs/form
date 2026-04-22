@@ -2,35 +2,20 @@
 import { type UnionTemplateProperties } from "@V/layouts";
 import { computed } from "vue";
 import { type GridTemplateLayoutContainerProps } from "../types";
-import { type VueComponent } from "@V/types";
-import { SelectInput } from "@V/designSystem";
+import { type FunctionSelectInputComponent } from "./types";
 
 export type Props = (
 	& UnionTemplateProperties["props"]
 	& GridTemplateLayoutContainerProps
 	& {
 		labels?: Record<string, string>;
-		selectKind?: VueComponent<{
-			props: {
-				fieldKey: string;
-				options: {
-					value: string;
-					label: string;
-				}[];
-				modelValue: string;
-			};
-			emits: {
-				"update:modelValue"(value: string): any;
-			};
-		}>;
+		selectInputKind: FunctionSelectInputComponent;
 	}
 );
 
 const props = withDefaults(
 	defineProps<Props>(),
-	{
-		selectKind: SelectInput,
-	},
+	{ },
 );
 
 const emit = defineEmits<UnionTemplateProperties["emits"]>();
@@ -70,7 +55,7 @@ const selfStyles = computed(() => ({
 	>
 		<div class="DFV-grid-union-select">
 			<component
-				:is="props.selectKind"
+				:is="props.selectInputKind"
 				:field-key="props.fieldKey"
 				:options
 				v-model="modelValue"

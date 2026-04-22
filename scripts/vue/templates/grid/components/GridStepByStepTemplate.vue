@@ -1,28 +1,25 @@
 <script setup lang="ts">
 import { type StepTemplateProperties } from "@V/layouts";
-import { type VueComponent } from "@V/types";
 import { computed } from "vue";
-import { type FunctionButtonComponent, defaultStepNextButton, defaultStepPreviousButton, defaultStepResetButton } from "./templateButton";
+import { type FunctionButtonComponent } from "./types";
 
 export type Props = (
 	& StepTemplateProperties["props"]
 	& {
-		nextButton?: VueComponent | FunctionButtonComponent;
+		nextButton: FunctionButtonComponent;
 		nextLabel?: string;
-		previousButton?: VueComponent | FunctionButtonComponent;
+		previousButton: FunctionButtonComponent;
 		previousLabel?: string;
-		resetButton?: VueComponent | FunctionButtonComponent;
+		resetButton: FunctionButtonComponent;
+		restLabel?: string;
 	}
 );
 
 const props = withDefaults(
 	defineProps<Props>(),
 	{
-		nextButton: defaultStepNextButton,
 		nextLabel: "Next",
-		previousButton: defaultStepPreviousButton,
 		previousLabel: "Previous",
-		resetButton: defaultStepResetButton,
 	},
 );
 
@@ -81,6 +78,7 @@ const progressPercent = computed(() => {
 
 			<component
 				:is="props.resetButton"
+				:label="props.restLabel"
 				@click="emit('resetStep')"
 			/>
 

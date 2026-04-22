@@ -1,9 +1,27 @@
 <script setup lang="ts">
 import { createInput, useDisabledLayout, createForm, useMultiLayout, useCheckLayout, useRepeatLayout, useUnionLayout, useStepLayout, useSectionLayout } from "@V";
-import { useGridFormTemplate, useGridCheckTemplate, useGridRepeatTemplate, useGridUnionTemplate, useGridMultiTemplate, useGridInputTemplate, useGridStepByStepTemplate, useGridSectionTemplate } from "@V/templates/grid";
-import { TheCheckbox, DateInput, FileInput, NumberInput, RadioGroup, RangeInput, PrimaryButton, TextareaInput, TextInput, TimeInput, DualRangeInput, CheckboxPolicy, RangeDateInput, RangeTimeInput } from "@V/designSystem";
+import { createGridTemplates } from "@V/templates/grid";
+import { TheCheckbox, DateInput, FileInput, NumberInput, RadioGroup, RangeInput, PrimaryButton, TextareaInput, TextInput, TimeInput, DualRangeInput, CheckboxPolicy, RangeDateInput, RangeTimeInput, templateAddButton, templateRemoveButton, templateResetButton, templateNextButton, templatePreviousButton, templateSelect } from "@V/designSystem";
 import { ref } from "vue";
 import { D, DPE } from "@duplojs/utils";
+
+const gridTemplates = createGridTemplates({
+	repeat: {
+		addLabel: "Add another item",
+		removeLabel: "Remove this item",
+		addButton: templateAddButton,
+		removeButton: templateRemoveButton,
+		resetButton: templateResetButton,
+	},
+	step: {
+		nextLabel: "Continue",
+		previousLabel: "Back",
+		resetButton: templateResetButton,
+		nextButton: templateNextButton,
+		previousButton: templatePreviousButton,
+	},
+	union: { selectInputKind: templateSelect },
+});
 
 const useTextInput = createInput(
 	TextInput,
@@ -164,22 +182,9 @@ const useDualRangeInput = createInput(
 
 const disabled = ref(false);
 
-const useForm = createForm({
-	form: useGridFormTemplate(),
-	input: useGridInputTemplate(),
-	multi: useGridMultiTemplate(),
-	check: useGridCheckTemplate(),
-	section: useGridSectionTemplate(),
-	repeat: useGridRepeatTemplate({
-		addLabel: "Add another item",
-		removeLabel: "Remove this item",
-	}),
-	union: useGridUnionTemplate(),
-	step: useGridStepByStepTemplate({
-		nextLabel: "Continue",
-		previousLabel: "Back",
-	}),
-});
+const useForm = createForm(
+	gridTemplates.useTemplates(),
+);
 
 const { component: Form, currentValue, check } = useForm(
 	useStepLayout(
@@ -208,7 +213,7 @@ const { component: Form, currentValue, check } = useForm(
 										}),
 										{
 											dataParser: DPE.coerce.number().max(30),
-											template: useGridCheckTemplate({
+											template: gridTemplates.useCheckTemplate({
 												columns: 2,
 												hideEmptyMessageError: true,
 											}),
