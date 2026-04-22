@@ -1,0 +1,13 @@
+{
+  "name": "integrations",
+  "type": "module",
+  "scripts": {
+    "test": "playwright test -c playwright.config.ts"
+  },
+  "devDependencies": {
+    "@duplojs/form": "file:../..",
+    "@duplojs/playwright": "0.1.0",
+    "@duplojs/server-utils": "0.2.3",
+    "playwright": "1.59.1"
+  }
+}

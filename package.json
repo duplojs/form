@@ -27,6 +27,7 @@
     "test:tu:bench": "vitest bench",
     "test:tu:watch": "vitest --coverage --watch",
     "test:tu:update": "vitest --coverage --update",
+    "test:integration": "npm -w integration/vue run test",
     "test:types": "./.commands/test-types.sh",
     "test:lint": "./.commands/test-lint.sh",
     "test:lint:fix": "./.commands/test-lint.sh --fix",
@@ -48,7 +49,8 @@
       "import": "./dist/vue/designSystem.js",
       "require": "./dist/vue/designSystem.cjs",
       "types": "./dist/vue/designSystem/index.d.ts"
-    }
+    },
+    "./vue/designSystem.css": "./dist/vue/designSystem.css"
   },
   "files": [
     "dist",
@@ -87,7 +89,7 @@
     "vue-tsc": "3.2.6"
   },
   "workspaces": [
-    "integration",
+    "integration/**",
     "docs"
   ],
   "keywords": [
