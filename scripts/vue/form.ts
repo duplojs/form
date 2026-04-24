@@ -1,6 +1,7 @@
 import { type FunctionalComponent, h, type HTMLAttributes, type Ref, ref } from "vue";
 import { type GetFormFieldCheckedValue, type GetFormFieldValue, type FormField, type FormFieldInstance } from "./formField";
-import { simpleClone } from "@duplojs/utils";
+import type * as EE from "@duplojs/utils/either";
+import { simpleClone, type Unwrap } from "@duplojs/utils";
 import { type Templates } from "./template";
 import { type VueComponent } from "./types";
 
@@ -99,3 +100,13 @@ export function createForm(templates: Templates) {
 		};
 	};
 }
+
+export type GetCheckedValue<
+	GenericCheck extends FormProperties["check"],
+> = Unwrap<
+	Extract<
+		ReturnType<GenericCheck>,
+		EE.Right
+	>
+>;
+

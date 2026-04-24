@@ -1,9 +1,9 @@
-import { createForm, createInput, createTemplate, useUnionLayout } from "@V";
+import { createForm, createInput, useUnionLayout } from "@V";
 import { sleep } from "@duplojs/utils";
 import { mount } from "@vue/test-utils";
 import TextInput from "@test-utils/TextInput.vue";
 import { testTemplates } from "@test-utils/templates";
-import { GridUnionTemplate } from "@V/templates/grid";
+import { gridTemplates } from "@test-utils/grid";
 
 describe("GridUnionTemplate", () => {
 	it("renders a real union layout with the design-system select and grid container", async() => {
@@ -16,7 +16,7 @@ describe("GridUnionTemplate", () => {
 				] as const,
 				{
 					defaultKind: "aa",
-					template: createTemplate("union", GridUnionTemplate)({
+					template: gridTemplates.useUnionTemplate({
 						columns: 9,
 						maxColumns: 11,
 						gap: 7,
@@ -66,7 +66,7 @@ describe("GridUnionTemplate", () => {
 				] as const,
 				{
 					defaultKind: "a",
-					template: createTemplate("union", GridUnionTemplate)({
+					template: gridTemplates.useUnionTemplate({
 						columns: 4,
 					}),
 				},

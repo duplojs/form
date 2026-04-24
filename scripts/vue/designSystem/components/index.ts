@@ -2,6 +2,12 @@ import { type FunctionSelectInputComponent } from "@V/templates/grid/components/
 import { h } from "vue";
 
 import SelectInput from "./SelectInput.vue";
+import { createInput } from "@V/input";
+import FileInput from "./FileInput.vue";
+import NumberInput from "./NumberInput.vue";
+import RadioGroup from "./RadioGroup.vue";
+import TextareaInput from "./TextareaInput.vue";
+import TextInput from "./TextInput.vue";
 
 export * from "./icons";
 export * from "./button";
@@ -16,13 +22,67 @@ export { default as TextInput } from "./TextInput.vue";
 export { default as TextareaInput } from "./TextareaInput.vue";
 export { default as FileInput } from "./FileInput.vue";
 
-export const templateSelect: FunctionSelectInputComponent = (
+export const templateFormSelect: FunctionSelectInputComponent = (
 	props,
 	context,
 ) => h(
 	SelectInput,
 	{
 		...props,
-		"onUpdate:modelValue": (value) => void context.emit("update:modelValue", value),
+		"onUpdate:modelValue": (value) => {
+			if (value === null) {
+				return;
+			}
+
+			context.emit("update:modelValue", value);
+		},
+	},
+);
+
+export const useFileInput = createInput(
+	FileInput,
+	{
+		defaultValue: null,
+	},
+);
+
+export const useNumberInput = createInput(
+	NumberInput,
+	{
+		defaultValue: 0,
+	},
+);
+
+export const useRadioGroup = createInput(
+	RadioGroup,
+	{
+		defaultValue: null,
+		props: {
+			options: [],
+		},
+	},
+);
+
+export const useSelectInput = createInput(
+	SelectInput,
+	{
+		defaultValue: null,
+		props: {
+			options: [],
+		},
+	},
+);
+
+export const useTextareaInput = createInput(
+	TextareaInput,
+	{
+		defaultValue: "",
+	},
+);
+
+export const useTextInput = createInput(
+	TextInput,
+	{
+		defaultValue: "",
 	},
 );

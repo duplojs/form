@@ -2,16 +2,19 @@
 import { IconChevronDown } from "./icons";
 
 export interface Props {
-	fieldKey: string;
+	fieldKey?: string;
 	options: {
 		value: string;
 		label: string;
 	}[];
 }
 
-const props = defineProps<Props>();
+const props = withDefaults(
+	defineProps<Props>(),
+	{ fieldKey: "default" },
+);
 
-const modelValue = defineModel<string>({ required: true });
+const modelValue = defineModel<string | null>({ default: null });
 </script>
 
 <template>

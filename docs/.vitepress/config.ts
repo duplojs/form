@@ -96,14 +96,17 @@ export default pipe(
 									"// @filename: @duplojs/form/vue.ts",
 									`export * from "@form/v${namedGroups?.version ?? ""}/vue";`,
 
-									"// @filename: @duplojs/form/vue/grid.ts",
-									`export * from "@form/v${namedGroups?.version ?? ""}/vue/grid";`,
+									"// @filename: @duplojs/form/vueGrid.ts",
+									`export * from "@form/v${namedGroups?.version ?? ""}/vueGrid";`,
 
-									"// @filename: @duplojs/form/vue/grid.css.ts",
-									`export * from "@form/v${namedGroups?.version ?? ""}/vue/grid.css";`,
+									"// @filename: @duplojs/form/vueGrid.css.ts",
+									`export * from "@form/v${namedGroups?.version ?? ""}/vueGrid";`,
 
-									"// @filename: @duplojs/form/vue/designSystem.ts",
-									`export * from "@form/v${namedGroups?.version ?? ""}/vue/designSystem";`,
+									"// @filename: @duplojs/form/vueDesignSystem.ts",
+									`export * from "@form/v${namedGroups?.version ?? ""}/vueDesignSystem";`,
+
+									"// @filename: @duplojs/form/vueDesignSystem.css.ts",
+									`export * from "@form/v${namedGroups?.version ?? ""}/vueDesignSystem.css";`,
 
 									"// @filename: index.ts",
 									"// ---cut---",

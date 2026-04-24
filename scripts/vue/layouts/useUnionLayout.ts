@@ -35,26 +35,26 @@ export interface UseUnionLayoutParams<
 export type FormFieldUnionElement = [string, FormField];
 
 export function useUnionLayout<
-	const GenericFormFieldElements extends FormFieldUnionElement,
+	const GenericFormFieldElements extends AnyTuple<FormFieldUnionElement>,
 >(
-	formFieldUnionElements: AnyTuple<GenericFormFieldElements>,
-	params: UseUnionLayoutParams<GenericFormFieldElements[0]>
+	formFieldUnionElements: GenericFormFieldElements,
+	params: UseUnionLayoutParams<GenericFormFieldElements[number][0]>
 ): FormField<
-	Extract<GenericFormFieldElements, any> extends infer InferredFormFieldElements extends FormFieldUnionElement
-		? GenericFormFieldElements extends FormFieldUnionElement
+	Extract<GenericFormFieldElements[number], any> extends infer InferredFormFieldElements extends FormFieldUnionElement
+		? InferredFormFieldElements extends FormFieldUnionElement
 			? {
-				readonly kind: GenericFormFieldElements[0];
-				value: GetFormFieldValue<GenericFormFieldElements[1]>;
+				readonly kind: InferredFormFieldElements[0];
+				value: GetFormFieldValue<InferredFormFieldElements[1]>;
 				updateKind(
-					kind: InferredFormFieldElements[0],
+					kind: GenericFormFieldElements[number][0],
 				): void;
 				updateKind<
-					GenericKind extends InferredFormFieldElements[0],
+					GenericKind extends GenericFormFieldElements[number][0],
 				>(
 					kind: GenericKind,
 					value: GetFormFieldValue<
 						Extract<
-							InferredFormFieldElements,
+							GenericFormFieldElements[number],
 							[GenericKind, any]
 						>[1]
 					>,
@@ -62,11 +62,13 @@ export function useUnionLayout<
 			}
 			: never
 		: never,
-	GenericFormFieldElements extends FormFieldUnionElement
-		? {
-			kind: GenericFormFieldElements[0];
-			value: GetFormFieldCheckedValue<GenericFormFieldElements[1]>;
-		}
+	GenericFormFieldElements[number] extends infer InferredFormFieldElements extends FormFieldUnionElement
+		? InferredFormFieldElements extends FormFieldUnionElement
+			? {
+				kind: InferredFormFieldElements[0];
+				value: GetFormFieldCheckedValue<InferredFormFieldElements[1]>;
+			}
+			: never
 		: never
 >;
 

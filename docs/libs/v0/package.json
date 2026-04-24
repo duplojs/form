@@ -7,17 +7,18 @@
       "require": "./dist/vue/index.cjs",
       "types": "./dist/vue/index.d.ts"
     },
-    "./vue/grid": {
+    "./vueGrid": {
       "import": "./dist/vue/grid.js",
       "require": "./dist/vue/grid.cjs",
       "types": "./dist/vue/templates/grid/index.d.ts"
     },
-    "./vue/grid.css": "./dist/vue/grid.css",
-    "./vue/designSystem": {
+    "./vueGrid.css": "./dist/vue/grid.css",
+    "./vueDesignSystem": {
       "import": "./dist/vue/designSystem.js",
       "require": "./dist/vue/designSystem.cjs",
       "types": "./dist/vue/designSystem/index.d.ts"
-    }
+    },
+    "./vueDesignSystem.css": "./dist/vue/designSystem.css"
   },
   "peerDependencies": {
     "@duplojs/utils": ">=1.6.1 <2.0.0",

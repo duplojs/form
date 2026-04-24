@@ -18,7 +18,7 @@ const props = withDefaults(
 		max: 100,
 		step: 1,
 		manual: false,
-		manualDebounce: 800,
+		manualDebounce: 500,
 	},
 );
 
@@ -28,6 +28,11 @@ const inputValue = ref(model.value);
 const modelValue = computed({
 	get: () => model.value,
 	set(newValue) {
+		if (newValue > props.max || newValue < props.min) {
+			inputValue.value = model.value;
+			return;
+		}
+
 		model.value = newValue;
 		inputValue.value = newValue;
 	},
@@ -39,12 +44,12 @@ const updateByInput = FF.toFunction(
 
 		yield *FF.debounce(props.manualDebounce);
 
-		model.value = Math.round(newValue / props.step) * props.step;
+		modelValue.value = Math.round(newValue / props.step) * props.step;
 	},
 );
 
 const rangeStyle = computed(() => {
-	const clampedValue = Math.min(Math.max(model.value, props.min), props.max);
+	const clampedValue = Math.min(Math.max(modelValue.value, props.min), props.max);
 
 	return { "--DFV-range-progress-value": `${((clampedValue - props.min) / (props.max - props.min)) * 100}%` };
 });

@@ -1,26 +1,26 @@
 <script setup lang="ts">
 import { createInput, useDisabledLayout, createForm, useMultiLayout, useCheckLayout, useRepeatLayout, useUnionLayout, useStepLayout, useSectionLayout } from "@V";
 import { createGridTemplates } from "@V/templates/grid";
-import { TheCheckbox, DateInput, FileInput, NumberInput, RadioGroup, RangeInput, PrimaryButton, TextareaInput, TextInput, TimeInput, DualRangeInput, CheckboxPolicy, RangeDateInput, RangeTimeInput, templateAddButton, templateRemoveButton, templateResetButton, templateNextButton, templatePreviousButton, templateSelect } from "@V/designSystem";
+import { TheCheckbox, DateInput, FileInput, NumberInput, RadioGroup, RangeInput, PrimaryButton, TextareaInput, TextInput, TimeInput, DualRangeInput, CheckboxPolicy, RangeDateInput, RangeTimeInput, templateFormRemoveButton, templateFormResetButton, templateFormNextButton, templateFormPreviousButton, templateFormSelect, templateFormAddButton } from "@V/designSystem";
 import { ref } from "vue";
-import { D, DPE } from "@duplojs/utils";
+import { D, DP, DPE } from "@duplojs/utils";
 
 const gridTemplates = createGridTemplates({
 	repeat: {
 		addLabel: "Add another item",
 		removeLabel: "Remove this item",
-		addButton: templateAddButton,
-		removeButton: templateRemoveButton,
-		resetButton: templateResetButton,
+		addButton: templateFormAddButton,
+		removeButton: templateFormRemoveButton,
+		resetButton: templateFormResetButton,
 	},
 	step: {
 		nextLabel: "Continue",
 		previousLabel: "Back",
-		resetButton: templateResetButton,
-		nextButton: templateNextButton,
-		previousButton: templatePreviousButton,
+		resetButton: templateFormResetButton,
+		nextButton: templateFormNextButton,
+		previousButton: templateFormPreviousButton,
 	},
-	union: { selectInputKind: templateSelect },
+	union: { selectInputKind: templateFormSelect },
 });
 
 const useTextInput = createInput(
@@ -200,10 +200,12 @@ const { component: Form, currentValue, check } = useForm(
 										useTextInput({
 											label: "Name",
 											defaultValue: "Default value",
+											dataParser: DP.string({ errorMessage: "test" }),
 										}),
 										{
 											max: 10,
 											min: 2,
+											template: gridTemplates.useRepeatTemplate({ repeatElementColumn: 6 }),
 										},
 									),
 									age: useCheckLayout(

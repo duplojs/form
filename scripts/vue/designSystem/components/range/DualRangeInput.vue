@@ -18,7 +18,7 @@ const props = withDefaults(
 		max: 100,
 		step: 1,
 		manual: false,
-		manualDebounce: 800,
+		manualDebounce: 500,
 	},
 );
 
@@ -33,10 +33,11 @@ const startInputValue = ref(model.value.start);
 const startModelValue = computed({
 	get: () => model.value.start,
 	set: (newValue: number) => {
-		if (newValue > model.value.end) {
+		if (newValue > model.value.end || newValue < props.min) {
 			model.value = {
 				...model.value,
 			};
+			startInputValue.value = model.value.start;
 			return;
 		}
 
@@ -49,10 +50,11 @@ const endInputValue = ref(model.value.end);
 const endModelValue = computed({
 	get: () => model.value.end,
 	set: (newValue: number) => {
-		if (newValue < model.value.start) {
+		if (newValue < model.value.start || newValue > props.max) {
 			model.value = {
 				...model.value,
 			};
+			endInputValue.value = model.value.end;
 			return;
 		}
 

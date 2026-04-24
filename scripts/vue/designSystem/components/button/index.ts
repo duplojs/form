@@ -12,7 +12,7 @@ export { default as DestructiveButton } from "./DestructiveButton.vue";
 export { default as GhostButton } from "./GhostButton.vue";
 export { default as OutlineButton } from "./OutlineButton.vue";
 
-export const templateAddButton: FunctionButtonComponent = ({ label, disabled }) => h(
+export const templateFormAddButton: FunctionButtonComponent = ({ label, disabled }) => h(
 	PrimaryButton,
 	{
 		label,
@@ -24,7 +24,7 @@ export const templateAddButton: FunctionButtonComponent = ({ label, disabled }) 
 	},
 );
 
-export const templateRemoveButton: FunctionButtonComponent = ({ label, disabled }) => h(
+export const templateFormRemoveButton: FunctionButtonComponent = ({ label, disabled }) => h(
 	OutlineButton,
 	{
 		label,
@@ -35,7 +35,7 @@ export const templateRemoveButton: FunctionButtonComponent = ({ label, disabled 
 	},
 );
 
-export const templateResetButton: FunctionButtonComponent = ({ label, disabled }) => h(
+export const templateFormResetButton: FunctionButtonComponent = ({ label, disabled }) => h(
 	DestructiveButton,
 	{
 		label,
@@ -47,7 +47,7 @@ export const templateResetButton: FunctionButtonComponent = ({ label, disabled }
 	},
 );
 
-export const templateNextButton: FunctionButtonComponent = ({ label, disabled }) => h(
+export const templateFormNextButton: FunctionButtonComponent = ({ label, disabled }) => h(
 	PrimaryButton,
 	{
 		label,
@@ -59,7 +59,7 @@ export const templateNextButton: FunctionButtonComponent = ({ label, disabled })
 	},
 );
 
-export const templatePreviousButton: FunctionButtonComponent = ({ label, disabled }) => h(
+export const templateFormPreviousButton: FunctionButtonComponent = ({ label, disabled }) => h(
 	OutlineButton,
 	{
 		label,

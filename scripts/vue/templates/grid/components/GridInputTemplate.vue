@@ -6,6 +6,9 @@ import { computed } from "vue";
 type Props = (
 	& InputTemplateProperties["props"]
 	& GridTemplateLayoutProps
+	& {
+		hideEmptyMessageError?: boolean;
+	}
 );
 
 const props = defineProps<Props>();
@@ -30,5 +33,18 @@ const selfStyles = computed(() => ({
 		</label>
 
 		<slot name="input" />
+
+		<small
+			class="DFV-grid-error"
+			v-if="
+				props.getErrorMessage
+					&& (
+						props.getErrorMessage() !== null ||
+						props.hideEmptyMessageError !== true
+					)
+			"
+		>
+			{{ props.getErrorMessage() }}
+		</small>
 	</div>
 </template>
