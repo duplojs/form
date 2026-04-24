@@ -200,7 +200,7 @@ const { component: Form, currentValue, check } = useForm(
 										useTextInput({
 											label: "Name",
 											defaultValue: "Default value",
-											dataParser: DP.string({ errorMessage: "test" }),
+											dataParser: DP.string({ errorMessage: "need number" }),
 										}),
 										{
 											max: 10,
@@ -294,7 +294,10 @@ const { component: Form, currentValue, check } = useForm(
 <template>
 	<div class="playground">
 		<Form @submit="console.log(check())">
-			<PrimaryButton label="Submit" />
+			<PrimaryButton
+				type="submit"
+				label="Submit"
+			/>
 		</Form>
 
 		<button

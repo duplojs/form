@@ -12,6 +12,7 @@ export type Props = (
 		previousLabel?: string;
 		resetButton: FunctionButtonComponent;
 		restLabel?: string;
+		hideEmptyMessageError?: boolean;
 	}
 );
 
@@ -63,7 +64,7 @@ const progressPercent = computed(() => {
 
 		<small
 			class="DFV-step-error"
-			v-if="props.getErrorMessageNotAtLastStep()"
+			v-if="props.getErrorMessageNotAtLastStep() || props.hideEmptyMessageError !== true"
 		>
 			{{ props.getErrorMessageNotAtLastStep() }}
 		</small>
