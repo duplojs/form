@@ -1,9 +1,14 @@
 import { TimeInput } from "@V/designSystem";
+import { useTimeInput } from "@V/designSystem/components/time";
 import * as DD from "@duplojs/utils/date";
+import { createForm } from "@V/form";
+import { testTemplates } from "@test-utils/templates";
 import { mount } from "@vue/test-utils";
 import { vi } from "vitest";
 
 describe("TimeInput", () => {
+	const useForm = createForm(testTemplates);
+
 	it("renders a time input with formatted model, min, and max values", () => {
 		const wrapper = mount(TimeInput, {
 			props: {
@@ -77,5 +82,15 @@ describe("TimeInput", () => {
 		}
 
 		expect(wrapper.emitted("update:modelValue")![0]).toEqual([null]);
+	});
+
+	it("useTimeInput creates a form field with midnight default", () => {
+		const { component, currentValue } = useForm(useTimeInput());
+		const wrapper = mount(component);
+		const input = wrapper.get<HTMLInputElement>("input.DFV-time-input");
+
+		expect(DD.formatTime(currentValue.value as DD.TheTime, "HH:mm")).toBe("00:00");
+		expect(input.attributes("type")).toBe("time");
+		expect(input.element.value).toBe("00:00");
 	});
 });

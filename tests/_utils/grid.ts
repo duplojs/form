@@ -1,7 +1,7 @@
 import { templateFormAddButton, templateFormNextButton, templateFormPreviousButton, templateFormRemoveButton, templateFormResetButton, templateFormSelect } from "@V/designSystem";
 import { createGridTemplates } from "@V/templates/grid";
 
-export const gridTemplates = createGridTemplates({
+export const templatesGrid = createGridTemplates({
 	repeat: {
 		addLabel: "Add another item",
 		removeLabel: "Remove this item",
@@ -18,3 +18,4 @@ export const gridTemplates = createGridTemplates({
 	},
 	union: { selectInputKind: templateFormSelect },
 });
+

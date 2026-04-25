@@ -1,8 +1,8 @@
-import { createForm, createInput, createTemplate } from "@V";
+import { createForm, createInput } from "@V";
 import { mount } from "@vue/test-utils";
 import TextInput from "@test-utils/TextInput.vue";
 import { testTemplates } from "@test-utils/templates";
-import { GridFormTemplate } from "@V/templates/grid";
+import { templatesGrid } from "@test-utils/grid";
 
 describe("GridFormTemplate", () => {
 	it("renders a real form with the grid form wrapper, container styles, and submitter slot", async() => {
@@ -12,7 +12,7 @@ describe("GridFormTemplate", () => {
 				defaultValue: "default",
 			})(),
 			{
-				template: createTemplate("form", GridFormTemplate)({
+				template: templatesGrid.useFormTemplate({
 					maxColumns: 8,
 					gap: 12,
 				}),
@@ -44,7 +44,7 @@ describe("GridFormTemplate", () => {
 				defaultValue: "default",
 			})(),
 			{
-				template: createTemplate("form", GridFormTemplate)(),
+				template: templatesGrid.useFormTemplate(),
 			},
 		);
 		const wrapper = mount(component, {

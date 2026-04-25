@@ -1,8 +1,13 @@
 import { CheckboxPolicy } from "@V/designSystem";
+import { useCheckboxPolicy } from "@V/designSystem/components/checkbox";
 import * as EE from "@duplojs/utils/either";
+import { createForm } from "@V/form";
+import { testTemplates } from "@test-utils/templates";
 import { mount } from "@vue/test-utils";
 
 describe("CheckboxPolicy", () => {
+	const useForm = createForm(testTemplates);
+
 	it("renders policy content and required marker", () => {
 		const wrapper = mount(CheckboxPolicy, {
 			props: {
@@ -79,5 +84,13 @@ describe("CheckboxPolicy", () => {
 		wrapper.vm.reset!();
 		await wrapper.vm.$nextTick();
 		expect(wrapper.find(".DFV-checkbox-policy-error").exists()).toBe(false);
+	});
+
+	it("useCheckboxPolicy creates a form field with false as default", () => {
+		const { component, currentValue } = useForm(useCheckboxPolicy());
+		const wrapper = mount(component);
+
+		expect(currentValue.value).toBe(false);
+		expect(wrapper.get("input.DFV-checkbox-input").attributes("type")).toBe("checkbox");
 	});
 });

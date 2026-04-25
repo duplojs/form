@@ -15,6 +15,7 @@ defineSlots<StepTemplateProperties["slots"]>();
 <template>
 	<section id="local-step-template">
 		<header id="local-step-current">{{ props.getCurrentStep() }}</header>
+
 		<small id="local-step-error">{{ props.getErrorMessageNotAtLastStep() }}</small>
 
 		<button

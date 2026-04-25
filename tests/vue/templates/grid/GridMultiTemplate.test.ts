@@ -1,8 +1,8 @@
-import { createForm, createInput, createTemplate, useMultiLayout } from "@V";
+import { createForm, createInput, useMultiLayout } from "@V";
 import { mount } from "@vue/test-utils";
 import TextInput from "@test-utils/TextInput.vue";
 import { testTemplates } from "@test-utils/templates";
-import { GridMultiTemplate } from "@V/templates/grid";
+import { templatesGrid } from "@test-utils/grid";
 describe("GridMultiTemplate", () => {
 	it("renders a real multi layout inside the grid container with layout styles", async() => {
 		const useForm = createForm(testTemplates);
@@ -13,7 +13,7 @@ describe("GridMultiTemplate", () => {
 					second: createInput(TextInput, { defaultValue: "second-default" })(),
 				},
 				{
-					template: createTemplate("multi", GridMultiTemplate)({
+					template: templatesGrid.useMultiTemplate({
 						columns: 7,
 						maxColumns: 10,
 						gap: 9,
@@ -53,7 +53,7 @@ describe("GridMultiTemplate", () => {
 					first: createInput(TextInput, { defaultValue: "first-default" })(),
 				},
 				{
-					template: createTemplate("multi", GridMultiTemplate)({
+					template: templatesGrid.useMultiTemplate({
 						columns: 3,
 					}),
 				},

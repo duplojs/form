@@ -1,4 +1,4 @@
-import { type FunctionButtonComponent } from "@V/templates/grid/components/types";
+import { type FunctionButtonComponent } from "@V/types";
 import { h } from "vue";
 
 import PrimaryButton from "./PrimaryButton.vue";

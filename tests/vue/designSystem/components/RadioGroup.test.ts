@@ -1,15 +1,27 @@
 import { RadioGroup } from "@V/designSystem";
+import { useRadioGroup } from "@V/designSystem/components";
+import { createForm } from "@V/form";
+import { testTemplates } from "@test-utils/templates";
 import { mount } from "@vue/test-utils";
 
 describe("RadioGroup", () => {
+	const useForm = createForm(testTemplates);
+
 	it("renders radio options with labels and descriptions", () => {
 		const wrapper = mount(RadioGroup, {
 			props: {
 				name: "choice",
 				modelValue: "a",
 				options: [
-					{ value: "a", label: "A", description: "First option" },
-					{ value: "b", label: "B" },
+					{
+						value: "a",
+						label: "A",
+						description: "First option",
+					},
+					{
+						value: "b",
+						label: "B",
+					},
 				],
 			},
 		});
@@ -32,8 +44,14 @@ describe("RadioGroup", () => {
 				name: "choice",
 				modelValue: "a",
 				options: [
-					{ value: "a", label: "A" },
-					{ value: "b", label: "B" },
+					{
+						value: "a",
+						label: "A",
+					},
+					{
+						value: "b",
+						label: "B",
+					},
 				],
 			},
 		});
@@ -41,5 +59,24 @@ describe("RadioGroup", () => {
 		await wrapper.findAll("input.DFV-radio-input")[1]!.setValue();
 
 		expect(wrapper.emitted("update:modelValue")).toEqual([["b"]]);
+	});
+
+	it("useRadioGroup creates a form field with null default and accepts options from props", () => {
+		const { component, currentValue } = useForm(
+			useRadioGroup({
+				props: {
+					options: [
+						{
+							value: "a",
+							label: "A",
+						},
+					],
+				},
+			}),
+		);
+		const wrapper = mount(component);
+
+		expect(currentValue.value).toBeNull();
+		expect(wrapper.get("input.DFV-radio-input").attributes("value")).toBe("a");
 	});
 });

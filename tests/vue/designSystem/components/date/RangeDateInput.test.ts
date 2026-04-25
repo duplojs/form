@@ -1,8 +1,13 @@
 import { RangeDateInput } from "@V/designSystem";
+import { useRangeDateInput } from "@V/designSystem/components/date";
 import * as DD from "@duplojs/utils/date";
+import { createForm } from "@V/form";
+import { testTemplates } from "@test-utils/templates";
 import { mount } from "@vue/test-utils";
 
 describe("RangeDateInput", () => {
+	const useForm = createForm(testTemplates);
+
 	it("renders two date inputs with a minus separator", () => {
 		const wrapper = mount(RangeDateInput, {
 			props: {
@@ -17,7 +22,7 @@ describe("RangeDateInput", () => {
 
 		expect(wrapper.get(".DFV-range-date-input").element.tagName).toBe("DIV");
 		expect(inputs).toHaveLength(2);
-		expect(wrapper.get('.DFV-range-date-input-separator [data-dfv-icon="minus"]').element.tagName).toBe("svg");
+		expect(wrapper.get(".DFV-range-date-input-separator [data-dfv-icon=\"minus\"]").element.tagName).toBe("svg");
 	});
 
 	it("passes min and max constraints to inner date inputs", () => {
@@ -60,5 +65,21 @@ describe("RangeDateInput", () => {
 
 		expect(DD.format(modelValue.from as any, "YYYY-MM-DD", "UTC")).toBe("2024-03-04");
 		expect(DD.format(modelValue.to as any, "YYYY-MM-DD", "UTC")).toBe("2024-03-20");
+	});
+
+	it("useRangeDateInput creates a form field with from/to date defaults", () => {
+		const { component, currentValue } = useForm(useRangeDateInput());
+		const wrapper = mount(component);
+		const inputs = wrapper.findAll<HTMLInputElement>("input.DFV-date-input");
+
+		expect(currentValue.value.from).not.toBeNull();
+		expect(currentValue.value.to).not.toBeNull();
+		expect(inputs).toHaveLength(2);
+		expect(inputs[0]!.element.value).toBe(
+			DD.format(currentValue.value.from as DD.TheDate, "YYYY-MM-DD", "UTC"),
+		);
+		expect(inputs[1]!.element.value).toBe(
+			DD.format(currentValue.value.to as DD.TheDate, "YYYY-MM-DD", "UTC"),
+		);
 	});
 });

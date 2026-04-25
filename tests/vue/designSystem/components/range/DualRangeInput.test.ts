@@ -1,4 +1,7 @@
 import { DualRangeInput } from "@V/designSystem";
+import { useDualRangeInput } from "@V/designSystem/components/range";
+import { createForm } from "@V/form";
+import { testTemplates } from "@test-utils/templates";
 import { mount } from "@vue/test-utils";
 import { afterEach, vi } from "vitest";
 
@@ -7,6 +10,8 @@ afterEach(() => {
 });
 
 describe("DualRangeInput", () => {
+	const useForm = createForm(testTemplates);
+
 	it("renders two range sliders with constraints and selected range style", () => {
 		const wrapper = mount(DualRangeInput, {
 			props: {
@@ -176,5 +181,19 @@ describe("DualRangeInput", () => {
 			start: 20,
 			end: 85,
 		});
+	});
+
+	it("useDualRangeInput creates a form field with start/end defaults", () => {
+		const { component, currentValue } = useForm(useDualRangeInput());
+		const wrapper = mount(component);
+		const inputs = wrapper.findAll<HTMLInputElement>("input.DFV-dual-range-input");
+
+		expect(currentValue.value).toEqual({
+			start: 0,
+			end: 100,
+		});
+		expect(inputs).toHaveLength(2);
+		expect(inputs[0]!.element.value).toBe("0");
+		expect(inputs[1]!.element.value).toBe("100");
 	});
 });

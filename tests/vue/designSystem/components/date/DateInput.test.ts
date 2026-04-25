@@ -1,9 +1,14 @@
 import { DateInput } from "@V/designSystem";
+import { useDateInput } from "@V/designSystem/components/date";
 import * as DD from "@duplojs/utils/date";
+import { createForm } from "@V/form";
+import { testTemplates } from "@test-utils/templates";
 import { mount } from "@vue/test-utils";
 import { vi } from "vitest";
 
 describe("DateInput", () => {
+	const useForm = createForm(testTemplates);
+
 	it("renders a date input with formatted model, min, and max values", () => {
 		const wrapper = mount(DateInput, {
 			props: {
@@ -54,5 +59,17 @@ describe("DateInput", () => {
 		}
 
 		expect(wrapper.emitted("update:modelValue")?.[0]).toEqual([null]);
+	});
+
+	it("useDateInput creates a form field with a date default", () => {
+		const { component, currentValue } = useForm(useDateInput());
+		const wrapper = mount(component);
+		const input = wrapper.get<HTMLInputElement>("input.DFV-date-input");
+
+		expect(currentValue.value).not.toBeNull();
+		expect(input.attributes("type")).toBe("date");
+		expect(input.element.value).toBe(
+			DD.format(currentValue.value as DD.TheDate, "YYYY-MM-DD", "UTC"),
+		);
 	});
 });

@@ -1,8 +1,8 @@
-import { createForm, createInput, createTemplate, useSectionLayout } from "@V";
+import { createForm, createInput, useSectionLayout } from "@V";
 import { mount } from "@vue/test-utils";
 import TextInput from "@test-utils/TextInput.vue";
 import { testTemplates } from "@test-utils/templates";
-import { GridSectionTemplate } from "@V/templates/grid";
+import { templatesGrid } from "@test-utils/grid";
 
 describe("GridSectionTemplate", () => {
 	it("renders a real section layout with title, grid styles and nested field", async() => {
@@ -14,7 +14,7 @@ describe("GridSectionTemplate", () => {
 				})(),
 				{
 					title: "Profile",
-					template: createTemplate("section", GridSectionTemplate)({
+					template: templatesGrid.useSectionTemplate({
 						columns: 6,
 						maxColumns: 8,
 						gap: 12,
@@ -52,7 +52,7 @@ describe("GridSectionTemplate", () => {
 					defaultValue: "default",
 				})(),
 				{
-					template: createTemplate("section", GridSectionTemplate)({
+					template: templatesGrid.useSectionTemplate({
 						columns: 4,
 					}),
 				},

@@ -66,7 +66,7 @@ describe("TheButton", () => {
 		expect(children).toHaveLength(2);
 		expect(children[0]!.tagName).toBe("svg");
 		expect(children[1]!.tagName).toBe("SPAN");
-		expect(wrapper.get('[data-dfv-icon="next"]').attributes("style")).toContain("--DFV-icon-size: 1rem");
+		expect(wrapper.get("[data-dfv-icon=\"next\"]").attributes("style")).toContain("--DFV-icon-size: 1rem");
 	});
 
 	it("renders the icon after the label", async() => {
@@ -85,7 +85,7 @@ describe("TheButton", () => {
 		expect(children).toHaveLength(2);
 		expect(children[0]!.tagName).toBe("SPAN");
 		expect(children[1]!.tagName).toBe("svg");
-		expect(wrapper.get('[data-dfv-icon="previous"]').element.tagName).toBe("svg");
+		expect(wrapper.get("[data-dfv-icon=\"previous\"]").element.tagName).toBe("svg");
 	});
 
 	it("uses iconSize instead of button size when it is provided", async() => {
@@ -101,7 +101,7 @@ describe("TheButton", () => {
 		await flushPromises();
 
 		expect(wrapper.get("button").classes()).toContain("DFV-button-size-2xl");
-		expect(wrapper.get('[data-dfv-icon="plus"]').attributes("style")).toContain("--DFV-icon-size: 0.875rem");
+		expect(wrapper.get("[data-dfv-icon=\"plus\"]").attributes("style")).toContain("--DFV-icon-size: 0.875rem");
 	});
 
 	it("renders the remove icon", async() => {
@@ -114,7 +114,7 @@ describe("TheButton", () => {
 
 		await flushPromises();
 
-		expect(wrapper.get('[data-dfv-icon="remove"]').element.tagName).toBe("svg");
+		expect(wrapper.get("[data-dfv-icon=\"remove\"]").element.tagName).toBe("svg");
 	});
 
 	it("renders the minus icon", async() => {
@@ -127,6 +127,6 @@ describe("TheButton", () => {
 
 		await flushPromises();
 
-		expect(wrapper.get('[data-dfv-icon="minus"]').element.tagName).toBe("svg");
+		expect(wrapper.get("[data-dfv-icon=\"minus\"]").element.tagName).toBe("svg");
 	});
 });

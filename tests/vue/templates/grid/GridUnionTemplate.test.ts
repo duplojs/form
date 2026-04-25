@@ -3,7 +3,7 @@ import { sleep } from "@duplojs/utils";
 import { mount } from "@vue/test-utils";
 import TextInput from "@test-utils/TextInput.vue";
 import { testTemplates } from "@test-utils/templates";
-import { gridTemplates } from "@test-utils/grid";
+import { templatesGrid } from "@test-utils/grid";
 
 describe("GridUnionTemplate", () => {
 	it("renders a real union layout with the design-system select and grid container", async() => {
@@ -16,7 +16,7 @@ describe("GridUnionTemplate", () => {
 				] as const,
 				{
 					defaultKind: "aa",
-					template: gridTemplates.useUnionTemplate({
+					template: templatesGrid.useUnionTemplate({
 						columns: 9,
 						maxColumns: 11,
 						gap: 7,
@@ -66,7 +66,7 @@ describe("GridUnionTemplate", () => {
 				] as const,
 				{
 					defaultKind: "a",
-					template: gridTemplates.useUnionTemplate({
+					template: templatesGrid.useUnionTemplate({
 						columns: 4,
 					}),
 				},

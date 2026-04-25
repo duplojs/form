@@ -2,7 +2,7 @@
 import { type UnionTemplateProperties } from "@V/layouts";
 import { computed } from "vue";
 import { type GridTemplateLayoutContainerProps } from "../types";
-import { type FunctionSelectInputComponent } from "./types";
+import { type FunctionSelectInputComponent } from "@V/types";
 
 export type Props = (
 	& UnionTemplateProperties["props"]

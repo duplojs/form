@@ -3,7 +3,7 @@ import { E, sleep } from "@duplojs/utils";
 import { mount } from "@vue/test-utils";
 import TextInput from "@test-utils/TextInput.vue";
 import { testTemplates } from "@test-utils/templates";
-import { useGridStepByStepTemplate } from "@V/templates/grid";
+import { templatesGrid } from "@test-utils/grid";
 
 describe("GridStepByStepTemplate", () => {
 	it("renders a real step layout with the default design-system buttons", async() => {
@@ -16,7 +16,10 @@ describe("GridStepByStepTemplate", () => {
 				] as const,
 				{
 					errorMessageNotAtLastStep: "Go to the end",
-					template: useGridStepByStepTemplate(),
+					template: templatesGrid.useStepByStepTemplate({
+						nextLabel: "Next",
+						previousLabel: "Previous",
+					}),
 				},
 			),
 		);
@@ -30,6 +33,7 @@ describe("GridStepByStepTemplate", () => {
 				"DFV-grid-element",
 			]),
 		);
+
 		expect(stepTemplate.get(".DFV-step-indicator-meta").text()).toContain("Step 1");
 		expect(stepTemplate.get(".DFV-step-indicator-meta").text()).toContain("on 2");
 		expect(stepTemplate.get(".DFV-step-content").element.className).toContain("DFV-step-content");
@@ -58,7 +62,7 @@ describe("GridStepByStepTemplate", () => {
 				] as const,
 				{
 					errorMessageNotAtLastStep: "Go to the end",
-					template: useGridStepByStepTemplate(),
+					template: templatesGrid.useStepByStepTemplate(),
 				},
 			),
 		);
@@ -85,7 +89,7 @@ describe("GridStepByStepTemplate", () => {
 			useStepLayout(
 				[createInput(TextInput, { defaultValue: "only-step" })()],
 				{
-					template: useGridStepByStepTemplate(),
+					template: templatesGrid.useStepByStepTemplate({ hideEmptyMessageError: true }),
 					errorMessageNotAtLastStep: "",
 				},
 			),

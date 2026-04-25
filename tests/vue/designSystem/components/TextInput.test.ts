@@ -1,7 +1,12 @@
 import { TextInput } from "@V/designSystem";
+import { useTextInput } from "@V/designSystem/components";
+import { createForm } from "@V/form";
+import { testTemplates } from "@test-utils/templates";
 import { mount } from "@vue/test-utils";
 
 describe("TextInput", () => {
+	const useForm = createForm(testTemplates);
+
 	it("renders a text input with value and placeholder", () => {
 		const wrapper = mount(TextInput, {
 			props: {
@@ -27,5 +32,13 @@ describe("TextInput", () => {
 		await wrapper.get("input").setValue("updated");
 
 		expect(wrapper.emitted("update:modelValue")).toEqual([["updated"]]);
+	});
+
+	it("useTextInput creates a form field with an empty string default", () => {
+		const { component, currentValue } = useForm(useTextInput());
+		const wrapper = mount(component);
+
+		expect(currentValue.value).toBe("");
+		expect(wrapper.get("input.DFV-text-input").element.tagName).toBe("INPUT");
 	});
 });

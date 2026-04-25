@@ -1,7 +1,12 @@
 import { NumberInput } from "@V/designSystem";
+import { useNumberInput } from "@V/designSystem/components";
+import { createForm } from "@V/form";
+import { testTemplates } from "@test-utils/templates";
 import { mount } from "@vue/test-utils";
 
 describe("NumberInput", () => {
+	const useForm = createForm(testTemplates);
+
 	it("renders a number input with value, placeholder, and constraints", () => {
 		const wrapper = mount(NumberInput, {
 			props: {
@@ -61,5 +66,11 @@ describe("NumberInput", () => {
 
 		expect(wrapper.emitted("update:modelValue")).toEqual([[0]]);
 		expect(wrapper.get<HTMLInputElement>("input").element.value).toBe("0");
+	});
+
+	it("useNumberInput creates a form field with zero as default", () => {
+		const { currentValue } = useForm(useNumberInput());
+
+		expect(currentValue.value).toBe(0);
 	});
 });

@@ -1,4 +1,7 @@
 import { RangeInput } from "@V/designSystem";
+import { useRangeInput } from "@V/designSystem/components/range";
+import { createForm } from "@V/form";
+import { testTemplates } from "@test-utils/templates";
 import { mount } from "@vue/test-utils";
 import { afterEach, vi } from "vitest";
 
@@ -7,6 +10,8 @@ afterEach(() => {
 });
 
 describe("RangeInput", () => {
+	const useForm = createForm(testTemplates);
+
 	it("renders a range slider with value, constraints, and progress style", () => {
 		const wrapper = mount(RangeInput, {
 			props: {
@@ -95,5 +100,34 @@ describe("RangeInput", () => {
 		await vi.advanceTimersByTimeAsync(100);
 
 		expect(wrapper.emitted("update:modelValue")).toEqual([[55]]);
+	});
+
+	it("restores manual input to model value when value is out of range", async() => {
+		vi.useFakeTimers();
+		const wrapper = mount(RangeInput, {
+			props: {
+				modelValue: 25,
+				min: 0,
+				max: 100,
+				step: 5,
+				manual: true,
+				manualDebounce: 100,
+			},
+		});
+		const manualInput = wrapper.get<HTMLInputElement>("input.DFV-number-input");
+
+		await manualInput.setValue("120");
+		expect(manualInput.element.value).toBe("120");
+
+		await vi.advanceTimersByTimeAsync(100);
+
+		expect(wrapper.emitted("update:modelValue")).toBeUndefined();
+		expect(manualInput.element.value).toBe("25");
+	});
+
+	it("useRangeInput creates a form field with zero as default", () => {
+		const { currentValue } = useForm(useRangeInput());
+
+		expect(currentValue.value).toBe(0);
 	});
 });

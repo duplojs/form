@@ -15,5 +15,9 @@ defineSlots<InputTemplateProperties["slots"]>();
 		<slot name="input" />
 
 		<small id="current-value-input">{{ props.getCurrentValue() }}</small>
+
+		<small id="input-error-message">
+			{{ props.getErrorMessage?.() }}
+		</small>
 	</div>
 </template>

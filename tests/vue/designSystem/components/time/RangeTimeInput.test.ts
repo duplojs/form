@@ -1,8 +1,13 @@
 import { RangeTimeInput } from "@V/designSystem";
+import { useRangeTimeInput } from "@V/designSystem/components/time";
 import * as DD from "@duplojs/utils/date";
+import { createForm } from "@V/form";
+import { testTemplates } from "@test-utils/templates";
 import { mount } from "@vue/test-utils";
 
 describe("RangeTimeInput", () => {
+	const useForm = createForm(testTemplates);
+
 	it("renders two time inputs with a minus separator", () => {
 		const wrapper = mount(RangeTimeInput, {
 			props: {
@@ -17,7 +22,7 @@ describe("RangeTimeInput", () => {
 
 		expect(wrapper.get(".DFV-range-time-input").element.tagName).toBe("DIV");
 		expect(inputs).toHaveLength(2);
-		expect(wrapper.get('.DFV-range-time-input-separator [data-dfv-icon="minus"]').element.tagName).toBe("svg");
+		expect(wrapper.get(".DFV-range-time-input-separator [data-dfv-icon=\"minus\"]").element.tagName).toBe("svg");
 	});
 
 	it("passes min and max constraints to inner time inputs", () => {
@@ -60,5 +65,17 @@ describe("RangeTimeInput", () => {
 
 		expect(DD.formatTime(modelValue.from as any, "HH:mm")).toBe("09:45");
 		expect(DD.formatTime(modelValue.to as any, "HH:mm")).toBe("16:30");
+	});
+
+	it("useRangeTimeInput creates a form field with from/to midnight defaults", () => {
+		const { component, currentValue } = useForm(useRangeTimeInput());
+		const wrapper = mount(component);
+		const inputs = wrapper.findAll<HTMLInputElement>("input.DFV-time-input");
+
+		expect(DD.formatTime(currentValue.value.from as DD.TheTime, "HH:mm")).toBe("00:00");
+		expect(DD.formatTime(currentValue.value.to as DD.TheTime, "HH:mm")).toBe("00:00");
+		expect(inputs).toHaveLength(2);
+		expect(inputs[0]!.element.value).toBe("00:00");
+		expect(inputs[1]!.element.value).toBe("00:00");
 	});
 });

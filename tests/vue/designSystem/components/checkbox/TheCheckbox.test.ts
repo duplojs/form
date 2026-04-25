@@ -1,7 +1,12 @@
 import { TheCheckbox } from "@V/designSystem";
+import { useCheckbox } from "@V/designSystem/components/checkbox";
+import { createForm } from "@V/form";
+import { testTemplates } from "@test-utils/templates";
 import { mount } from "@vue/test-utils";
 
 describe("TheCheckbox", () => {
+	const useForm = createForm(testTemplates);
+
 	it("renders a checkbox with id, name, and label", () => {
 		const wrapper = mount(TheCheckbox, {
 			props: {
@@ -41,5 +46,13 @@ describe("TheCheckbox", () => {
 		await wrapper.get("input").setValue(true);
 
 		expect(wrapper.emitted("update:modelValue")).toEqual([[true]]);
+	});
+
+	it("useCheckbox creates a form field with false as default", () => {
+		const { component, currentValue } = useForm(useCheckbox());
+		const wrapper = mount(component);
+
+		expect(currentValue.value).toBe(false);
+		expect(wrapper.get("input.DFV-checkbox-input").attributes("type")).toBe("checkbox");
 	});
 });

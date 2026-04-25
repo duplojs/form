@@ -2,7 +2,7 @@
 import { type RepeatTemplateProperties } from "@V/layouts";
 import { type GridTemplateLayoutContainerProps } from "../types";
 import { computed } from "vue";
-import { type FunctionButtonComponent } from "./types";
+import { type FunctionButtonComponent } from "@V/types";
 
 export type Props = (
 	& RepeatTemplateProperties["props"]

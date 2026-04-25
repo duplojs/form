@@ -1,7 +1,12 @@
 import { FileInput } from "@V/designSystem";
+import { useFileInput } from "@V/designSystem/components";
+import { createForm } from "@V/form";
+import { testTemplates } from "@test-utils/templates";
 import { mount } from "@vue/test-utils";
 
 describe("FileInput", () => {
+	const useForm = createForm(testTemplates);
+
 	it("renders a file input with accept and multiple props", () => {
 		const wrapper = mount(FileInput, {
 			props: {
@@ -48,5 +53,13 @@ describe("FileInput", () => {
 		await input.trigger("change");
 
 		expect(wrapper.emitted("update:modelValue")).toBeUndefined();
+	});
+
+	it("useFileInput creates a form field with null as default", () => {
+		const { component, currentValue } = useForm(useFileInput());
+		const wrapper = mount(component);
+
+		expect(currentValue.value).toBeNull();
+		expect(wrapper.get("input.DFV-file-input").attributes("type")).toBe("file");
 	});
 });

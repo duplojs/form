@@ -1,9 +1,9 @@
-import { createForm, createInput, createTemplate, useCheckLayout } from "@V";
+import { createForm, createInput, useCheckLayout } from "@V";
 import { DP, sleep } from "@duplojs/utils";
 import { mount } from "@vue/test-utils";
 import TextInput from "@test-utils/TextInput.vue";
 import { testTemplates } from "@test-utils/templates";
-import { GridCheckTemplate } from "@V/templates/grid";
+import { templatesGrid } from "@test-utils/grid";
 
 describe("GridCheckTemplate", () => {
 	it("renders the grid check template inside a real form with the expected classes, styles and parser error", async() => {
@@ -14,7 +14,7 @@ describe("GridCheckTemplate", () => {
 					defaultValue: "default",
 				})(),
 				{
-					template: createTemplate("check", GridCheckTemplate)({
+					template: templatesGrid.useCheckTemplate({
 						columns: 6,
 						maxColumns: 8,
 						gap: 12,
@@ -57,7 +57,7 @@ describe("GridCheckTemplate", () => {
 					defaultValue: "41",
 				})(),
 				{
-					template: createTemplate("check", GridCheckTemplate)({
+					template: templatesGrid.useCheckTemplate({
 						hideEmptyMessageError: true,
 					}),
 					dataParser: DP.coerce.number({ errorMessage: "Need number" }),

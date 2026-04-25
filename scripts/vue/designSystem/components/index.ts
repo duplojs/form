@@ -1,4 +1,4 @@
-import { type FunctionSelectInputComponent } from "@V/templates/grid/components/types";
+import { type FunctionSelectInputComponent } from "@V/types";
 import { h } from "vue";
 
 import SelectInput from "./SelectInput.vue";

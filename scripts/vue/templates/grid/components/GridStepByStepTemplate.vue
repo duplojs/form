@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { type StepTemplateProperties } from "@V/layouts";
 import { computed } from "vue";
-import { type FunctionButtonComponent } from "./types";
+import { type FunctionButtonComponent } from "@V/types";
 
 export type Props = (
 	& StepTemplateProperties["props"]
