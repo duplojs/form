@@ -30,7 +30,7 @@ describe("GridRepeatTemplate", () => {
 		expect(repeatTemplate.classes()).toEqual(
 			expect.arrayContaining([
 				"DFV-template_repeat",
-				"DFV-deep_form-field",
+				"DFV-deep_FRM_REP",
 				"DFV-grid-element",
 			]),
 		);

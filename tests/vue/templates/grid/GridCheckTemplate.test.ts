@@ -29,7 +29,7 @@ describe("GridCheckTemplate", () => {
 		expect(checkTemplate.classes()).toEqual(
 			expect.arrayContaining([
 				"DFV-template_check",
-				"DFV-deep_form-field",
+				"DFV-deep_FRM_CHK",
 				"DFV-grid-element",
 			]),
 		);

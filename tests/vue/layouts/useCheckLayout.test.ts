@@ -22,7 +22,7 @@ describe("useCheckLayout", () => {
 		const wrapper = mount(component);
 
 		expect(wrapper.find("#test-text-input").exists()).toBe(true);
-		expect(wrapper.find("#check-field-key").text()).toBe("form-field");
+		expect(wrapper.find("#check-field-key").text()).toBe("FRM_CHK");
 		expect(wrapper.find("#check-current-value").text()).toBe("default");
 		expect(wrapper.find("#check-error-message").text()).toBe("");
 
@@ -30,7 +30,7 @@ describe("useCheckLayout", () => {
 		expect(E.isLeft(firstCheck)).toBe(true);
 		expect(unwrap(firstCheck)).toMatchObject([
 			{
-				key: "form-field",
+				key: "FRM_CHK",
 				dataParserError: {
 					issues: [
 						{
@@ -99,7 +99,7 @@ describe("useCheckLayout", () => {
 		const wrapper = mount(component);
 
 		expect(wrapper.find("#local-check-template").exists()).toBe(true);
-		expect(wrapper.find("#local-check-field-key").text()).toBe("form-field");
+		expect(wrapper.find("#local-check-field-key").text()).toBe("FRM_CHK");
 		expect(wrapper.find("#test-text-input").exists()).toBe(true);
 
 		await wrapper.find("#test-text-input").setValue("value");
@@ -163,10 +163,9 @@ describe("useCheckLayout", () => {
 					defaultValue: "bad",
 				})(),
 				{
-					refine: {
-						check: (value) => value.length >= 3 && value.startsWith("ok"),
-						errorMessage: "Need an ok value",
-					},
+					refine: (value) => value.length >= 3 && value.startsWith("ok")
+						? E.ok()
+						: E.error("Need an ok value"),
 					dataParser: parser as never,
 				},
 			),
@@ -174,7 +173,7 @@ describe("useCheckLayout", () => {
 		const wrapper = mount(component);
 
 		expect(check()).toStrictEqual(
-			E.error([{ key: "form-field" }]),
+			E.error([{ key: "FRM_CHK" }]),
 		);
 		expect(parser.parse).not.toHaveBeenCalled();
 		await sleep();

@@ -21,7 +21,7 @@ describe("useMultiLayout", () => {
 			first: "first-default",
 			second: "second-default",
 		});
-		expect(wrapper.find("#multi-field-key").text()).toBe("form-field");
+		expect(wrapper.find("#multi-field-key").text()).toBe("FRM_MUL");
 		expect(wrapper.find("#multi-current-value").text()).toBe(JSON.stringify({
 			first: "first-default",
 			second: "second-default",
@@ -85,7 +85,7 @@ describe("useMultiLayout", () => {
 		const wrapper = mount(component);
 
 		expect(wrapper.find("#local-multi-template").exists()).toBe(true);
-		expect(wrapper.find("#local-multi-field-key").text()).toBe("form-field");
+		expect(wrapper.find("#local-multi-field-key").text()).toBe("FRM_MUL");
 		expect(wrapper.find("#local-multi-current-value").text()).toBe(JSON.stringify({
 			success: "success-default",
 			failure: "failure-default",

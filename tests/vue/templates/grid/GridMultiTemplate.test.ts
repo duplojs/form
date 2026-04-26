@@ -27,7 +27,7 @@ describe("GridMultiTemplate", () => {
 		expect(multiTemplate.classes()).toEqual(
 			expect.arrayContaining([
 				"DFV-template_multi",
-				"DFV-deep_form-field",
+				"DFV-deep_FRM_MUL",
 				"DFV-grid-container",
 				"DFV-grid-element",
 			]),

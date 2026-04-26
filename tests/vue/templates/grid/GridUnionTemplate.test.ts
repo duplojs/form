@@ -34,7 +34,7 @@ describe("GridUnionTemplate", () => {
 		expect(unionTemplate.classes()).toEqual(
 			expect.arrayContaining([
 				"DFV-template_union",
-				"DFV-deep_form-field",
+				"DFV-deep_FRM_UNI",
 				"DFV-grid-element",
 			]),
 		);

@@ -25,7 +25,7 @@ describe("GridInputTemplate", () => {
 		expect(inputTemplate.classes()).toEqual(
 			expect.arrayContaining([
 				"DFV-template_input",
-				"DFV-deep_form-field",
+				"DFV-deep_FRM_INP",
 				"DFV-grid-element",
 				"DFV-grid-input",
 			]),

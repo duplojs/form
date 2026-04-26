@@ -28,7 +28,7 @@ describe("GridSectionTemplate", () => {
 		expect(sectionTemplate.classes()).toEqual(
 			expect.arrayContaining([
 				"DFV-template_section",
-				"DFV-deep_form-field",
+				"DFV-deep_FRM_SEC",
 				"DFV-grid-element",
 			]),
 		);

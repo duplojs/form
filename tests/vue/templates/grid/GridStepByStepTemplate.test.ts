@@ -29,17 +29,17 @@ describe("GridStepByStepTemplate", () => {
 		expect(stepTemplate.classes()).toEqual(
 			expect.arrayContaining([
 				"DFV-template_step",
-				"DFV-deep_form-field",
+				"DFV-deep_FRM_STP",
 				"DFV-grid-element",
 			]),
 		);
 
-		expect(stepTemplate.get(".DFV-step-indicator-meta").text()).toContain("Step 1");
-		expect(stepTemplate.get(".DFV-step-indicator-meta").text()).toContain("on 2");
 		expect(stepTemplate.get(".DFV-step-content").element.className).toContain("DFV-step-content");
 		expect(stepTemplate.findAll("button[type=\"button\"]")).toHaveLength(3);
 		expect(stepTemplate.text()).toContain("Previous");
 		expect(stepTemplate.text()).toContain("Next");
+		expect(stepTemplate.findAll("button[type=\"button\"]")[0]!.attributes("disabled")).toBeDefined();
+		expect(stepTemplate.findAll("button[type=\"button\"]")[2]!.attributes("disabled")).toBeUndefined();
 
 		expect(E.isLeft(check())).toBe(true);
 		await sleep();
@@ -48,8 +48,9 @@ describe("GridStepByStepTemplate", () => {
 		await stepTemplate.findAll("button[type=\"button\"]")[2]!.trigger("click");
 		await sleep();
 		expect(currentValue.value.currentStep).toBe(1);
-		expect(stepTemplate.get(".DFV-step-indicator-meta").text()).toContain("Step 2");
-		expect(stepTemplate.get(".DFV-step-indicator-meta").text()).toContain("on 2");
+		expect(stepTemplate.findAll("button[type=\"button\"]")[0]!.attributes("disabled")).toBeUndefined();
+		expect(stepTemplate.findAll("button[type=\"button\"]")[2]!.attributes("disabled")).toBeDefined();
+		expect(stepTemplate.get<HTMLInputElement>("#test-text-input").element.value).toBe("second-default");
 	});
 
 	it("wires previous and reset actions through the template buttons", async() => {
@@ -97,9 +98,10 @@ describe("GridStepByStepTemplate", () => {
 		const wrapper = mount(component);
 		const stepTemplate = wrapper.get(".DFV-template_step");
 
-		expect(stepTemplate.get(".DFV-step-indicator-meta").text()).toContain("Step 1");
-		expect(stepTemplate.get(".DFV-step-indicator-meta").text()).toContain("on 1");
-		expect(stepTemplate.get(".DFV-step-indicator-fill").attributes("style")).toContain("width: 100%");
+		expect(stepTemplate.get(".DFV-step-content").element.className).toContain("DFV-step-content");
+		expect(stepTemplate.findAll("button[type=\"button\"]")).toHaveLength(3);
+		expect(stepTemplate.findAll("button[type=\"button\"]")[0]!.attributes("disabled")).toBeDefined();
+		expect(stepTemplate.findAll("button[type=\"button\"]")[2]!.attributes("disabled")).toBeDefined();
 		expect(stepTemplate.find(".DFV-step-error").exists()).toBe(false);
 	});
 });

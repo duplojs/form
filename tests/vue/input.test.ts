@@ -122,7 +122,7 @@ describe("input", () => {
 		const label = wrapper.find("label");
 		expect(label.exists()).toBe(true);
 		expect(label.text()).toBe("Age");
-		expect(label.attributes("for")).toBe("form-field");
+		expect(label.attributes("for")).toBe("FRM_INP");
 	});
 
 	it("renders parser errors, clears them on valid value, and resets them", async() => {
@@ -142,7 +142,7 @@ describe("input", () => {
 		expect(E.isLeft(firstCheck)).toBe(true);
 		expect(unwrap(firstCheck)).toMatchObject([
 			{
-				key: "form-field",
+				key: "FRM_INP",
 				dataParserError: {
 					issues: [
 						{

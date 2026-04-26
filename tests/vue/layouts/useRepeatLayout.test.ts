@@ -22,7 +22,7 @@ describe("useRepeatLayout", () => {
 		const wrapper = mount(component);
 
 		expect(field.defaultValue).toStrictEqual(["default"]);
-		expect(wrapper.find("#repeat-field-key").text()).toBe("form-field");
+		expect(wrapper.find("#repeat-field-key").text()).toBe("FRM_REP");
 		expect(wrapper.find("#repeat-current-value").text()).toBe(JSON.stringify(["default"]));
 		expect(wrapper.find("#repeat-form-fields-count").text()).toBe("1");
 		expect(wrapper.find("#repeat-min").text()).toBe("1");
@@ -91,7 +91,7 @@ describe("useRepeatLayout", () => {
 		const wrapper = mount(component);
 
 		expect(wrapper.find("#local-repeat-template").exists()).toBe(true);
-		expect(wrapper.find("#local-repeat-field-key").text()).toBe("form-field");
+		expect(wrapper.find("#local-repeat-field-key").text()).toBe("FRM_REP");
 		expect(wrapper.find("#local-repeat-current-value").text()).toBe(JSON.stringify(["default"]));
 		expect(check()).toStrictEqual(
 			E.error([{ key: "inner-field" }]),

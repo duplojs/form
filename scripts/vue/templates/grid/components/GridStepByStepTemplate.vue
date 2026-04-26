@@ -10,7 +10,7 @@ export type Props = (
 		previousButton: FunctionButtonComponent;
 		previousLabel?: string;
 		resetButton: FunctionButtonComponent;
-		restLabel?: string;
+		resetLabel?: string;
 		hideEmptyMessageError?: boolean;
 	}
 );
@@ -51,7 +51,7 @@ defineSlots<StepTemplateProperties["slots"]>();
 
 			<component
 				:is="props.resetButton"
-				:label="props.restLabel"
+				:label="props.resetLabel"
 				@click="emit('resetStep')"
 			/>
 

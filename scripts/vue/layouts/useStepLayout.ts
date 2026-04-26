@@ -52,7 +52,11 @@ export function useStepLayout<
 		> extends `${infer InferredStep extends number}`
 			? InferredStep
 			: never;
-		steps: readonly [...GenericFormFields];
+		steps: {
+			-readonly [Prop in keyof GenericFormFields]: GetFormFieldValue<
+				Extract<GenericFormFields[Prop], FormField>
+			>
+		};
 	},
 	{
 		[Prop in keyof GenericFormFields]: GetFormFieldCheckedValue<GenericFormFields[Prop]>
