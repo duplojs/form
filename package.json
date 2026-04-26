@@ -36,20 +36,20 @@
   },
   "exports": {
     "./vue": {
+      "types": "./dist/vue/index.d.ts",
       "import": "./dist/vue/index.js",
-      "require": "./dist/vue/index.cjs",
-      "types": "./dist/vue/index.d.ts"
+      "require": "./dist/vue/index.cjs"
     },
     "./vueGrid": {
+      "types": "./dist/vue/templates/grid/index.d.ts",
       "import": "./dist/vue/grid.js",
-      "require": "./dist/vue/grid.cjs",
-      "types": "./dist/vue/templates/grid/index.d.ts"
+      "require": "./dist/vue/grid.cjs"
     },
     "./vueGrid.css": "./dist/vue/grid.css",
     "./vueDesignSystem": {
+      "types": "./dist/vue/designSystem/index.d.ts",
       "import": "./dist/vue/designSystem.js",
-      "require": "./dist/vue/designSystem.cjs",
-      "types": "./dist/vue/designSystem/index.d.ts"
+      "require": "./dist/vue/designSystem.cjs"
     },
     "./vueDesignSystem.css": "./dist/vue/designSystem.css"
   },
@@ -92,27 +92,5 @@
   "workspaces": [
     "integration/**",
     "docs"
-  ],
-  "keywords": [
-    "typescript",
-    "utils",
-    "functional-programming",
-    "immutable",
-    "pipe",
-    "curry",
-    "data-parser",
-    "pattern-matching",
-    "either",
-    "monad",
-    "array-utils",
-    "object-utils",
-    "string-utils",
-    "date-utils",
-    "ddd",
-    "clean-architecture",
-    "duplojs"
-  ],
-  "engines": {
-    "node": ">=22.15.1"
-  }
+  ]
 }
