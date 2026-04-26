@@ -1,7 +1,7 @@
 import { type SimplifyTopLevel, type Kind, type AnyFunction } from "@duplojs/utils";
 import { createVueFormKind } from "./kind";
 import { type VueComponent } from "./types";
-import { h, normalizeClass, type VNode } from "vue";
+import { type ClassValue, h, normalizeClass, type VNode } from "vue";
 import type * as OO from "@duplojs/utils/object";
 
 export const templateKind = createVueFormKind("template");
@@ -34,7 +34,10 @@ export interface Template<
 	getVNode(
 		props: SimplifyTopLevel<
 			& GenericComponentInstance["$props"]
-			& { fieldKey: string }
+			& {
+				fieldKey: string;
+				class?: ClassValue;
+			}
 			& { [key: string]: unknown }
 		>,
 		slots: GenericComponentInstance["$slots"]
@@ -91,7 +94,10 @@ export function createTemplate(
 			getVNode: (
 				props: (
 					& object
-					& { fieldKey: string }
+					& {
+						fieldKey: string;
+						class?: ClassValue;
+					}
 				),
 				slots: Record<string, AnyFunction>,
 			) => h(
@@ -103,6 +109,7 @@ export function createTemplate(
 					class: normalizeClass([
 						(params?.props as any)?.class,
 						(localParams as any)?.class,
+						props.class,
 						`DFV-template_${template} DFV-deep_${props.fieldKey}`,
 					]),
 				},

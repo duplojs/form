@@ -21,6 +21,7 @@ declare module "@V/template" {
 
 export interface UseSectionLayoutParams {
 	title?: string;
+	class?: string;
 	template?: Templates["section"];
 }
 
@@ -39,7 +40,9 @@ export function useSectionLayout(
 	params?: UseSectionLayoutParams,
 ): FormField {
 	return createFormField(
-		(modelValue, key, templates) => {
+		(modelValue, parentKey, templates) => {
+			const key = `${parentKey}_SEC`;
+
 			const template = params?.template ?? templates.section;
 
 			const formFieldInstance = formField.new(
@@ -70,6 +73,7 @@ export function useSectionLayout(
 						fieldKey: key,
 						getCurrentValue,
 						title: params?.title,
+						class: params?.class,
 					},
 					{
 						formField: getFormFieldVNode,

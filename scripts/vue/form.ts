@@ -1,4 +1,4 @@
-import { type FunctionalComponent, h, type HTMLAttributes, type Ref, ref } from "vue";
+import { type FunctionalComponent, h, type HTMLAttributes, normalizeClass, type Ref, ref } from "vue";
 import { type GetFormFieldCheckedValue, type GetFormFieldValue, type FormField, type FormFieldInstance } from "./formField";
 import type * as EE from "@duplojs/utils/either";
 import { simpleClone, type Unwrap } from "@duplojs/utils";
@@ -39,7 +39,9 @@ export interface FormProperties<
 }
 
 export interface UseFormParams {
+	class?: string;
 	template?: Templates["form"];
+
 }
 
 export type UseForm = <
@@ -53,13 +55,14 @@ export function createForm(templates: Templates): UseForm;
 
 export function createForm(templates: Templates) {
 	return (formField: FormField, params: UseFormParams = {}): FormProperties => {
+		const key = "FRM";
 		const templateForm = params.template ?? templates.form;
 
 		const currentValue = ref(simpleClone(formField.defaultValue));
 
 		const formFieldInstance = formField.new(
 			currentValue,
-			"form-field",
+			key,
 			templates,
 		);
 
@@ -80,7 +83,8 @@ export function createForm(templates: Templates) {
 			() => templateForm.getVNode(
 				{
 					...props,
-					fieldKey: "form",
+					class: normalizeClass([props.class, params.class]),
+					fieldKey: key,
 					onSubmit: () => {},
 					getCurrentValue,
 				},

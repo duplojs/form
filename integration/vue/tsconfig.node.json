@@ -3,9 +3,9 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-	  
-    },
+
+	},
 	"types": ["node"],
   },
-  "include": ["playwright.config.ts", "vite.config.js"],
+  "include": ["playwright.config.ts", "vite.config.js", "./envs.ts"],
 }

@@ -37,6 +37,7 @@ export interface UseRepeatLayoutParams<
 > {
 	max: number;
 	min?: GenericMin;
+	class?: string;
 	template?: Templates["repeat"];
 }
 
@@ -65,7 +66,9 @@ export function useRepeatLayout(
 	const maxElements = params.max;
 
 	return createFormField(
-		(modelValue, key, templates) => {
+		(modelValue, parentKey, templates) => {
+			const key = `${parentKey}_REP`;
+
 			const template = params?.template ?? templates.repeat;
 
 			const cacheFormFields: Record<number, FormFieldInstance> = {};
@@ -201,6 +204,7 @@ export function useRepeatLayout(
 						onAddElement,
 						onRemoveElement,
 						onResetElement,
+						class: params.class,
 					},
 					{
 						formField: getFormFieldVNodes,

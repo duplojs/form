@@ -1,15 +1,7 @@
 <script setup lang="ts">
-import { type ButtonHTMLAttributes, defineAsyncComponent } from "vue";
+import { type ButtonHTMLAttributes } from "vue";
 import type { DfvIconSize } from "../icons";
-
-const iconMapper = {
-	next: defineAsyncComponent(() => import("../icons/IconNext.vue")),
-	previous: defineAsyncComponent(() => import("../icons/IconPrevious.vue")),
-	plus: defineAsyncComponent(() => import("../icons/IconPlus.vue")),
-	remove: defineAsyncComponent(() => import("../icons/IconRemove.vue")),
-	reset: defineAsyncComponent(() => import("../icons/IconReset.vue")),
-	minus: defineAsyncComponent(() => import("../icons/IconMinus.vue")),
-};
+import { iconMapper } from "./iconMapper";
 
 export type Icon = keyof typeof iconMapper;
 export type Size = "sm" | "md" | "lg" | "xl" | "2xl";
@@ -25,6 +17,7 @@ export interface Props {
 	iconSize?: DfvIconSize;
 	iconPosition?: IconPosition;
 	type?: ButtonHTMLAttributes["type"];
+	disabled?: boolean;
 }
 
 withDefaults(
@@ -48,6 +41,7 @@ withDefaults(
 			`DFV-button-size-${size}`,
 		]"
 		:type="type"
+		:disabled="disabled"
 	>
 		<component
 			v-if="icon && iconPosition === 'start'"

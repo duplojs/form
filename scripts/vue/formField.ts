@@ -9,7 +9,7 @@ export type FormFieldInstanceParams<
 	GenericValue extends unknown = unknown,
 > = [
 	modelValue: Ref<GenericValue>,
-	key: string,
+	parentKey: string,
 	templates: Templates,
 ];
 

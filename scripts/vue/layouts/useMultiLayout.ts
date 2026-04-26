@@ -34,6 +34,7 @@ export type FormFieldEntry = [
 ];
 
 export interface UseMultiFieldLayoutParams {
+	class?: string;
 	template?: Templates["multi"];
 }
 
@@ -77,7 +78,9 @@ export function useMultiLayout(
 		: Object.entries(formFields);
 
 	return createFormField(
-		(modelValue, key, templates) => {
+		(modelValue, parentKey, templates) => {
+			const key = `${parentKey}_MUL`;
+
 			const template = params?.template ?? templates.multi;
 
 			const scope = effectScope();
@@ -154,6 +157,7 @@ export function useMultiLayout(
 						fieldKey: key,
 						getFormFields: getFormFieldVNodes,
 						getCurrentValue,
+						class: params?.class,
 					},
 					{
 						formField: getFormFieldVNodes,

@@ -38,6 +38,7 @@ export const templateFormSelect: FunctionSelectInputComponent = (
 		},
 	},
 );
+templateFormSelect.emits = ["update:modelValue"];
 
 export const useFileInput = createInput(
 	FileInput,

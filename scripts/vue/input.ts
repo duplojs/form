@@ -110,6 +110,7 @@ export interface UseInputParams<
 		>
 	>;
 	dataParser?: GenericDataParser;
+	class?: string;
 	template?: Templates["input"];
 }
 
@@ -164,7 +165,8 @@ export function createInput(
 			: preparedLabel;
 
 		return createFormField(
-			(modelValue, key, templates) => {
+			(modelValue, parentKey, templates) => {
+				const key = `${parentKey}_INP`;
 				const template = params?.template ?? defaultParams.template ?? templates.input;
 				let isDispose = false;
 
@@ -217,7 +219,8 @@ export function createInput(
 					}
 
 					errorMessage.value = null;
-					return result;
+
+					return parserResult;
 				};
 
 				const reset = () => {
@@ -265,6 +268,7 @@ export function createInput(
 							fieldKey: key,
 							getCurrentValue,
 							getErrorMessage,
+							class: params.class,
 						},
 						{
 							input: getInputVNode,

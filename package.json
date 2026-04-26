@@ -20,6 +20,7 @@
   "scripts": {
     "build": "./.commands/build.sh",
     "dev:vue": "cd dev/vue && vite --config vite.config.js",
+    "dev:vue:integration": "npx -w integration/vue vite",
     "docs:dev": "npm -w docs run docs:dev",
     "docs:build": "npm -w docs run docs:build",
     "docs:preview": "npm -w docs run docs:preview",

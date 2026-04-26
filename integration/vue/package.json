@@ -2,6 +2,7 @@
   "name": "integrations",
   "type": "module",
   "scripts": {
+    "test:types": "vue-tsc -p tsconfig.json",
     "test": "playwright test -c playwright.config.ts"
   },
   "devDependencies": {

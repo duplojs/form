@@ -3,7 +3,8 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-	  
+	  "@testClient": ["./testClient.ts"],
+	  "@envs": ["./envs.ts"]
     },
 	"types": ["web"],
   },

@@ -28,8 +28,9 @@ declare module "@V/template" {
 export interface UseUnionLayoutParams<
 	GenericKind extends string = string,
 > {
-	template?: Templates["union"];
 	defaultKind: GenericKind;
+	class?: string;
+	template?: Templates["union"];
 }
 
 export type FormFieldUnionElement = [string, FormField];
@@ -91,7 +92,8 @@ export function useUnionLayout(
 	const kinds = Object.keys(formFieldUnionMapper);
 
 	return createFormField(
-		(modelValue, key, templates) => {
+		(modelValue, parentKey, templates) => {
+			const key = `${parentKey}_UNI`;
 			const template = params?.template ?? templates.union;
 
 			let cacheValue: Record<string, unknown> = {};
@@ -124,7 +126,6 @@ export function useUnionLayout(
 						cacheValue = {};
 					},
 					{
-						flush: "sync",
 						immediate: true,
 					},
 				);
@@ -230,6 +231,7 @@ export function useUnionLayout(
 						getCurrentValue,
 						getCurrentKind,
 						onChangeKind,
+						class: params.class,
 					},
 					{
 						formField: getFieldVNode,

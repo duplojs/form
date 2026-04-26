@@ -21,7 +21,9 @@ export function useDisabledLayout(
 	params: UseDisabledLayoutParams,
 ): FormField {
 	return createFormField(
-		(modelValue, key, templates) => {
+		(modelValue, parentKey, templates) => {
+			const key = `${parentKey}_DIS`;
+
 			const formFieldInstance = formField.new(
 				modelValue,
 				key,
