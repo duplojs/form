@@ -33,12 +33,14 @@ const sameField = useMultiLayout({
 	name: useTextInput({
 		label: "Name",
 		class: "grid-col-6",
-		dataParser: DPE.string().min(3).max(20),
+		dataParser: DPE.string()
+			.min(3, { errorMessage: "Nom trop cours" })
+			.max(20, { errorMessage: "Nom trop long" }),
 	}),
 	price: useNumberInput({
 		label: "Price",
 		class: "grid-col-6",
-		dataParser: DPE.number().min(1),
+		dataParser: DPE.number().min(1, { errorMessage: "Prix invalide" }),
 	}),
 	fields: useSectionLayout(
 		useCheckLayout(
@@ -46,7 +48,9 @@ const sameField = useMultiLayout({
 				useMultiLayout({
 					fieldName: useTextInput({
 						label: "Nom du champ",
-						dataParser: DPE.string().min(3).max(20),
+						dataParser: DPE.string()
+							.min(3, { errorMessage: "Nom de champ trop cours" })
+							.max(20, { errorMessage: "Nom de champ trop long" }),
 					}),
 					fieldType: useUnionLayout(
 						[
@@ -192,9 +196,10 @@ function submit() {
 </script>
 
 <template>
-	<div>
+	<div data-testid="form-one">
 		<Form @submit="submit">
 			<PrimaryButton
+				data-testid="submit-button"
 				type="submit"
 				label="submit"
 				:disabled="
@@ -205,11 +210,11 @@ function submit() {
 		</Form>
 
 		<div id="current-value">
-			{{ currentValue }}
+			{{ JSON.stringify(currentValue) }}
 		</div>
 
 		<div id="checked-value">
-			{{ checkedValue }}
+			{{ JSON.stringify(checkedValue) }}
 		</div>
 	</div>
 </template>
