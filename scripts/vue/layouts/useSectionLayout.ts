@@ -1,4 +1,4 @@
-import { createFormField, type FormField, type GetFormFieldCheckedValue, type GetFormFieldValue } from "@V/formField";
+import { createFormField, type GetFormFieldSlots, type FormField, type GetFormFieldCheckedValue, type GetFormFieldValue } from "@V/formField";
 import { type Templates } from "@V/template";
 import { type VueComponent } from "@V/types";
 import { h } from "vue";
@@ -32,7 +32,8 @@ export function useSectionLayout<
 	params?: UseSectionLayoutParams
 ): FormField<
 	GetFormFieldValue<GenericFormField>,
-	GetFormFieldCheckedValue<GenericFormField>
+	GetFormFieldCheckedValue<GenericFormField>,
+	GetFormFieldSlots<GenericFormField>
 >;
 
 export function useSectionLayout(
@@ -40,7 +41,7 @@ export function useSectionLayout(
 	params?: UseSectionLayoutParams,
 ): FormField {
 	return createFormField(
-		(modelValue, parentKey, templates) => {
+		(modelValue, parentKey, templates, getSlot) => {
 			const key = `${parentKey}_SEC`;
 
 			const template = params?.template ?? templates.section;
@@ -49,6 +50,7 @@ export function useSectionLayout(
 				modelValue,
 				key,
 				templates,
+				getSlot,
 			);
 
 			const check = () => formFieldInstance.check();

@@ -1,7 +1,7 @@
-import { createFormField, type FormFieldInstance, type FormField, type GetFormFieldCheckedValue, type GetFormFieldValue } from "@V/formField";
+import { createFormField, type FormFieldInstance, type FormField, type GetFormFieldCheckedValue, type GetFormFieldValue, type GetFormFieldSlots, type FormFieldSlots, type MergeFormFieldSlots } from "@V/formField";
 import { type Templates } from "@V/template";
 import { type VueComponent } from "@V/types";
-import { simpleClone, unwrap, type AnyTuple } from "@duplojs/utils";
+import { simpleClone, type UnionToIntersection, unwrap, type AnyTuple, type SimplifyTopLevel } from "@duplojs/utils";
 import * as EE from "@duplojs/utils/either";
 import { computed, effectScope, h, type VNode, watch } from "vue";
 
@@ -70,7 +70,10 @@ export function useUnionLayout<
 				value: GetFormFieldCheckedValue<InferredFormFieldElements[1]>;
 			}
 			: never
-		: never
+		: never,
+	MergeFormFieldSlots<
+		GenericFormFieldElements[number][1]
+	>
 >;
 
 export function useUnionLayout(
@@ -92,7 +95,7 @@ export function useUnionLayout(
 	const kinds = Object.keys(formFieldUnionMapper);
 
 	return createFormField(
-		(modelValue, parentKey, templates) => {
+		(modelValue, parentKey, templates, getSlot) => {
 			const key = `${parentKey}_UNI`;
 			const template = params?.template ?? templates.union;
 
@@ -151,6 +154,7 @@ export function useUnionLayout(
 											}),
 											`${key}-${kind}`,
 											templates,
+											getSlot,
 										);
 									}
 

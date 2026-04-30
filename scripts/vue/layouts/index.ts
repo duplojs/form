@@ -5,3 +5,4 @@ export * from "./useRepeatLayout";
 export * from "./useUnionLayout";
 export * from "./useStepLayout";
 export * from "./useSectionLayout";
+export * from "./useSlotLayout";

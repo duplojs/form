@@ -252,7 +252,7 @@ describe("useUnionLayout", () => {
 			value: "a-default",
 			updateKind: (arg: string) => {},
 		});
-		const instance = field.new(modelValue, "root", testTemplates);
+		const instance = field.new(modelValue, "root", testTemplates, () => null);
 
 		expect(instance.check()).toStrictEqual(
 			E.success({

@@ -1,6 +1,6 @@
 
-import { createFormField, type GetFormFieldCheckedValue, type FormField, type GetFormFieldValue, type FormFieldInstance, type ErrorProperties } from "@V/formField";
-import { simpleClone, unwrap, type AnyTuple } from "@duplojs/utils";
+import { createFormField, type GetFormFieldCheckedValue, type FormField, type GetFormFieldValue, type FormFieldInstance, type ErrorProperties, type GetFormFieldSlots, type FormFieldSlots, type MergeFormFieldSlots } from "@V/formField";
+import { simpleClone, type UnionToIntersection, unwrap, type AnyTuple, type SimplifyTopLevel } from "@duplojs/utils";
 import { computed, effectScope, h, ref, type VNode } from "vue";
 import { type VueComponent } from "@V/types";
 import { type Templates } from "@V/template";
@@ -60,7 +60,10 @@ export function useStepLayout<
 	},
 	{
 		[Prop in keyof GenericFormFields]: GetFormFieldCheckedValue<GenericFormFields[Prop]>
-	}
+	},
+	MergeFormFieldSlots<
+		GenericFormFields[number]
+	>
 >;
 
 export function useStepLayout(
@@ -74,7 +77,7 @@ export function useStepLayout(
 		Record<number, unknown>
 	> {
 	return createFormField(
-		(modelValue, parentKey, templates) => {
+		(modelValue, parentKey, templates, getSlot) => {
 			const key = `${parentKey}_STP`;
 			const template = params?.template ?? templates.step;
 
@@ -98,6 +101,7 @@ export function useStepLayout(
 									}),
 									`${key}-${index}`,
 									templates,
+									getSlot,
 								);
 							}
 

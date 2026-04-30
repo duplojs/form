@@ -127,7 +127,8 @@ export type UseInput<
 	GetVueInputComponentValue<GenericInputComponentInstance>,
 	IsEqual<GenericDataParser, never> extends true
 		? GetVueInputComponentCheckedValue<GenericInputComponentInstance>
-		: DP.Output<GenericDataParser>
+		: DP.Output<GenericDataParser>,
+	{}
 >;
 
 export function createInput<

@@ -1,4 +1,4 @@
-import { createFormField, type GetFormFieldCheckedValue, type FormField, type GetFormFieldValue } from "@V/formField";
+import { createFormField, type GetFormFieldCheckedValue, type FormField, type GetFormFieldValue, type GetFormFieldSlots } from "@V/formField";
 import * as EE from "@duplojs/utils/either";
 import type * as DP from "@duplojs/utils/dataParser";
 import { type IsEqual, unwrap } from "@duplojs/utils";
@@ -45,7 +45,8 @@ export function useCheckLayout<
 	GetFormFieldValue<GenericFormField>,
 	IsEqual<GenericDataParser, never> extends true
 		? GetFormFieldCheckedValue<GenericFormField>
-		: DP.Output<GenericDataParser>
+		: DP.Output<GenericDataParser>,
+	GetFormFieldSlots<GenericFormField>
 >;
 
 export function useCheckLayout(
@@ -53,7 +54,7 @@ export function useCheckLayout(
 	params: UseCheckLayoutParams,
 ): FormField {
 	return createFormField(
-		(modelValue, parentKey, templates) => {
+		(modelValue, parentKey, templates, getSlot) => {
 			const key = `${parentKey}_CHK`;
 			const template = params?.template ?? templates.check;
 
@@ -61,6 +62,7 @@ export function useCheckLayout(
 				modelValue,
 				key,
 				templates,
+				getSlot,
 			);
 
 			const scope = effectScope();

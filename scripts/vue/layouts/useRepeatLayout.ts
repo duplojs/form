@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/prefer-for-of */
-import { createFormField, type FormFieldInstance, type ErrorProperties, type FormField, type GetFormFieldCheckedValue, type GetFormFieldValue } from "@V/formField";
+import { createFormField, type FormFieldInstance, type ErrorProperties, type FormField, type GetFormFieldCheckedValue, type GetFormFieldValue, type GetFormFieldSlots } from "@V/formField";
 import { type Templates } from "@V/template";
 import { type VueComponent } from "@V/types";
 import { simpleClone, unwrap } from "@duplojs/utils";
@@ -55,7 +55,8 @@ export function useRepeatLayout<
 	[
 		...AA.CreateTuple<GetFormFieldCheckedValue<GenericFormField>, GenericMin>,
 		...GetFormFieldCheckedValue<GenericFormField>[],
-	]
+	],
+	GetFormFieldSlots<GenericFormField>
 >;
 
 export function useRepeatLayout(
@@ -66,7 +67,7 @@ export function useRepeatLayout(
 	const maxElements = params.max;
 
 	return createFormField(
-		(modelValue, parentKey, templates) => {
+		(modelValue, parentKey, templates, getSlot) => {
 			const key = `${parentKey}_REP`;
 
 			const template = params?.template ?? templates.repeat;
@@ -89,6 +90,7 @@ export function useRepeatLayout(
 						}),
 						`${key}-${index}`,
 						templates,
+						getSlot,
 					);
 				}
 

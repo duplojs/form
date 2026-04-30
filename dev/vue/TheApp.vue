@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { createInput, useDisabledLayout, createForm, useMultiLayout, useCheckLayout, useRepeatLayout, useUnionLayout, useStepLayout, useSectionLayout } from "@V";
+import { createInput, useDisabledLayout, createForm, useMultiLayout, useCheckLayout, useRepeatLayout, useUnionLayout, useStepLayout, useSectionLayout, useSlotLayout } from "@V";
 import { createGridTemplates } from "@V/templates/grid";
 import { TheCheckbox, DateInput, FileInput, NumberInput, RadioGroup, RangeInput, PrimaryButton, TextareaInput, TextInput, TimeInput, DualRangeInput, CheckboxPolicy, RangeDateInput, RangeTimeInput, templateFormRemoveButton, templateFormResetButton, templateFormNextButton, templateFormPreviousButton, templateFormSelect, templateFormAddButton } from "@V/designSystem";
 import { ref } from "vue";
@@ -235,16 +235,22 @@ const { component: Form, currentValue, check } = useForm(
 							[
 								"Choice two",
 								useMultiLayout({
-									comment: useTextArea({
-										label: "Comment",
-										defaultValue: "Another default value",
-									}),
+									comment: useSlotLayout(
+										"test",
+										useTextArea({
+											label: "Comment",
+											defaultValue: "Another default value",
+										}),
+									),
 									subscribe: useCheckbox({
 										label: "Newsletter",
 									}),
-									policy: useCheckboxPolicy({
-										label: "Policy",
-									}),
+									policy: useSlotLayout(
+										"test",
+										useCheckboxPolicy({
+											label: "Policy",
+										}),
+									),
 									notificationFrequency: useRadioGroup({
 										label: "Frequency",
 									}),
@@ -298,6 +304,11 @@ const { component: Form, currentValue, check } = useForm(
 				type="submit"
 				label="Submit"
 			/>
+
+			<template #test="params">
+				test
+				<component :is="params.formField" />
+			</template>
 		</Form>
 
 		<button
