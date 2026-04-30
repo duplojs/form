@@ -15,28 +15,28 @@ hero:
       text: Voir sur GitHub
       link: "https://github.com/duplojs/form"
 features:
+  - icon: ✨
+    title: 100% customizable
+    details: Utilisez vos propres inputs, créez vos propres templates et personnalisez chaque détail de vos formulaires !
   - icon: 🔗
-    title: 100% typesafe
-    details: Soyez sécurisé de bout en bout ! Sans effort, sans bricolage, sans casse-tête. Le framework est prévu pour !
-  - icon: 💪
-    title: Robuste
-    details: Lisible, prévisible et résistant à vos erreurs. N'ayez plus peur de ne pas être en forme !
+    title: Typés jusqu'au bout des pieds
+    details: Valeur courante, valeur checkée et slots d'insertion complètement typés !
   - icon: 🗿
-    title: Opiniâtre
-    details: Il y a une solution et c'est la bonne. Ne vous posez pas plus de questions pour de la technique.
-  - icon: 🤓
-    title: Toujours au courant
-    details: Les réponses sont toujours identifiables et distinctes les unes des autres. Toujours sûr d'opérer sur la bonne partie du code.
-  - icon: 🤷‍♂️
-    title: Compatible avec tout 
-    details: Express, Fastify, Nest, Node, Bun, Deno... Peu importe, vous pouvez l'utiliser partout !
-  - icon: 🙏
-    title: Middleware vraiment utilisable 
-    details: Concevez des middleware qui peuvent recevoir et transmettre des données de manière fiable, sans se casser la tête en faisant n'importe quoi.
+    title: Système d'erreur complet
+    details: Chaque champ peut avoir son propre message d'erreur, de manière détaillée et automatiquement gérée par la structure du formulaire. L'affichage reste 100% personnalisable !
+  - icon: 😎
+    title: Ultra performant
+    details: Optimisé avec des systèmes de cache pour éviter de reconstruire du DOM inutilement.
+  - icon: ☁️
+    title: Super léger
+    details: Très peu de fonctions et de code, et tout est tree-shakeable au besoin.
+  - icon: 🤩
+    title: Inputs et templates par défaut
+    details: Rien de mieux pour prototyper que d'avoir tous les composants déjà fournis par défaut !
   - icon: 🤙
     title: Simple à prendre en main
-    details: Rien de nouveau, juste des petites choses logiques qui vous feront du bien.
+    details: 'Imbriquez vos layouts et tout se fera tout seul : calcul de la valeur courante, calcul de la valeur de sortie et gestion des erreurs !'
   - icon: 🧱
     title: Standards DuploJS
-    details: Toujours très typé, toujours robuste, toujours opiniâtre, toujours à gagner du temps sur des aspects techniques inutiles.
+    details: Librairie construite sur les meilleures fondations possibles pour créer des formulaires sur mesure, adaptés à tous vos besoins.
 ---

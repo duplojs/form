@@ -1,4 +1,4 @@
-import { type FormField, type GetFormFieldCheckedValue, type GetFormFieldValue } from "../formField";
+import { type FormField, type GetFormFieldCheckedValue, type GetFormFieldValue, type MergeFormFieldSlots } from "../formField";
 import { type Templates } from "../template";
 import { type VueComponent } from "../types";
 import { type AnyTuple } from "@duplojs/utils";
@@ -22,19 +22,20 @@ declare module "../template" {
     }
 }
 export interface UseUnionLayoutParams<GenericKind extends string = string> {
-    template?: Templates["union"];
     defaultKind: GenericKind;
+    class?: string;
+    template?: Templates["union"];
 }
 export type FormFieldUnionElement = [string, FormField];
-export declare function useUnionLayout<const GenericFormFieldElements extends FormFieldUnionElement>(formFieldUnionElements: AnyTuple<GenericFormFieldElements>, params: UseUnionLayoutParams<GenericFormFieldElements[0]>): FormField<Extract<GenericFormFieldElements, any> extends infer InferredFormFieldElements extends FormFieldUnionElement ? GenericFormFieldElements extends FormFieldUnionElement ? {
-    readonly kind: GenericFormFieldElements[0];
-    value: GetFormFieldValue<GenericFormFieldElements[1]>;
-    updateKind(kind: InferredFormFieldElements[0]): void;
-    updateKind<GenericKind extends InferredFormFieldElements[0]>(kind: GenericKind, value: GetFormFieldValue<Extract<InferredFormFieldElements, [
+export declare function useUnionLayout<const GenericFormFieldElements extends AnyTuple<FormFieldUnionElement>>(formFieldUnionElements: GenericFormFieldElements, params: UseUnionLayoutParams<GenericFormFieldElements[number][0]>): FormField<Extract<GenericFormFieldElements[number], any> extends infer InferredFormFieldElements extends FormFieldUnionElement ? InferredFormFieldElements extends FormFieldUnionElement ? {
+    readonly kind: InferredFormFieldElements[0];
+    value: GetFormFieldValue<InferredFormFieldElements[1]>;
+    updateKind(kind: GenericFormFieldElements[number][0]): void;
+    updateKind<GenericKind extends GenericFormFieldElements[number][0]>(kind: GenericKind, value: GetFormFieldValue<Extract<GenericFormFieldElements[number], [
         GenericKind,
         any
     ]>[1]>): void;
-} : never : never, GenericFormFieldElements extends FormFieldUnionElement ? {
-    kind: GenericFormFieldElements[0];
-    value: GetFormFieldCheckedValue<GenericFormFieldElements[1]>;
-} : never>;
+} : never : never, GenericFormFieldElements[number] extends infer InferredFormFieldElements extends FormFieldUnionElement ? InferredFormFieldElements extends FormFieldUnionElement ? {
+    kind: InferredFormFieldElements[0];
+    value: GetFormFieldCheckedValue<InferredFormFieldElements[1]>;
+} : never : never, MergeFormFieldSlots<GenericFormFieldElements[number][1]>>;

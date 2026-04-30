@@ -1,4 +1,4 @@
-import { type FormField, type GetFormFieldCheckedValue, type GetFormFieldValue } from "../formField";
+import { type FormField, type GetFormFieldCheckedValue, type GetFormFieldValue, type GetFormFieldSlots } from "../formField";
 import { type Templates } from "../template";
 import { type VueComponent } from "../types";
 import * as AA from "@duplojs/utils/array";
@@ -8,6 +8,7 @@ export interface RepeatTemplateProperties {
         fieldKey: string;
         max: number;
         min: number;
+        getFormFieldsQuantity(): number;
         getCurrentValue(): unknown;
         getFormFields(): VNode[];
     };
@@ -28,6 +29,7 @@ declare module "../template" {
 export interface UseRepeatLayoutParams<GenericMin extends number = number> {
     max: number;
     min?: GenericMin;
+    class?: string;
     template?: Templates["repeat"];
 }
 export declare function useRepeatLayout<GenericFormField extends FormField, GenericMin extends number = 0>(formField: GenericFormField, params: UseRepeatLayoutParams<GenericMin>): FormField<[
@@ -36,4 +38,4 @@ export declare function useRepeatLayout<GenericFormField extends FormField, Gene
 ], [
     ...AA.CreateTuple<GetFormFieldCheckedValue<GenericFormField>, GenericMin>,
     ...GetFormFieldCheckedValue<GenericFormField>[]
-]>;
+], GetFormFieldSlots<GenericFormField>>;

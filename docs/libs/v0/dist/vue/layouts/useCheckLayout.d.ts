@@ -1,5 +1,7 @@
-import { type FormField, type GetFormFieldValue } from "../formField";
+import { type GetFormFieldCheckedValue, type FormField, type GetFormFieldValue, type GetFormFieldSlots } from "../formField";
+import * as EE from "@duplojs/utils/either";
 import type * as DP from "@duplojs/utils/dataParser";
+import { type IsEqual } from "@duplojs/utils";
 import { type VueComponent } from "../types";
 import { type Templates } from "../template";
 export interface CheckTemplateProperties {
@@ -17,8 +19,10 @@ declare module "../template" {
         check: VueComponent<CheckTemplateProperties>;
     }
 }
-export interface UseCheckLayoutParams<GenericDataParser extends DP.DataParser = DP.DataParser> {
-    dataParser: GenericDataParser;
+export interface UseCheckLayoutParams<GenericDataParser extends DP.DataParser = DP.DataParser, GenericCheckedValue extends unknown = unknown> {
+    dataParser?: GenericDataParser;
+    refine?(value: GenericCheckedValue): EE.Ok | EE.Error<string>;
+    class?: string;
     template?: Templates["check"];
 }
-export declare function useCheckLayout<GenericFormField extends FormField, GenericDataParser extends DP.DataParser>(formField: GenericFormField, params: UseCheckLayoutParams<GenericDataParser>): FormField<GetFormFieldValue<GenericFormField>, DP.Output<GenericDataParser>>;
+export declare function useCheckLayout<GenericFormField extends FormField, GenericDataParser extends DP.DataParser = never>(formField: GenericFormField, params: UseCheckLayoutParams<GenericDataParser, GetFormFieldCheckedValue<GenericFormField>>): FormField<GetFormFieldValue<GenericFormField>, IsEqual<GenericDataParser, never> extends true ? GetFormFieldCheckedValue<GenericFormField> : DP.Output<GenericDataParser>, GetFormFieldSlots<GenericFormField>>;

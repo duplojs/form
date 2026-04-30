@@ -2,7 +2,7 @@ import { defineConfig, type DefaultTheme, type UserConfig } from "vitepress";
 import { transformerTwoslash } from "@shikijs/vitepress-twoslash";
 import { ModuleDetectionKind, ModuleKind, ModuleResolutionKind } from "typescript";
 import { groupIconMdPlugin, groupIconVitePlugin } from "vitepress-plugin-group-icons";
-import { A, innerPipe, pipe, S, type AnyFunction } from "@duplojs/utils";
+import { A, innerPipe, Path, pipe, S, type AnyFunction } from "@duplojs/utils";
 import { withMermaid } from "vitepress-plugin-mermaid";
 
 const hostname = "https://form.duplojs.dev";
@@ -106,7 +106,7 @@ export default pipe(
 									`export * from "@form/v${namedGroups?.version ?? ""}/vueDesignSystem";`,
 
 									"// @filename: @duplojs/form/vueDesignSystem.css.ts",
-									`export * from "@form/v${namedGroups?.version ?? ""}/vueDesignSystem.css";`,
+									`export * from "@form/v${namedGroups?.version ?? ""}/vueDesignSystem";`,
 
 									"// @filename: index.ts",
 									"// ---cut---",
@@ -131,10 +131,15 @@ export default pipe(
 					},
 				}),
 			],
-			languages: ["js", "jsx", "ts", "tsx"],
+			languages: ["js", "jsx", "ts", "tsx", "vue", "css"],
 		},
 		vite: {
 			plugins: [groupIconVitePlugin()],
+			resolve: {
+				alias: {
+					"@": Path.resolveRelative([import.meta.dirname, ".."]),
+				},
+			},
 		},
 		locales: {
 			fr: {

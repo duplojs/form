@@ -1,4 +1,4 @@
-import { type GetFormFieldCheckedValue, type GetFormFieldValue, type FormField } from "../formField";
+import { type GetFormFieldCheckedValue, type GetFormFieldValue, type FormField, type MergeFormFieldSlots } from "../formField";
 import { type VNode } from "vue";
 import { type VueComponent } from "../types";
 import { type Templates } from "../template";
@@ -23,15 +23,16 @@ export type FormFieldEntry = [
     FormField
 ];
 export interface UseMultiFieldLayoutParams {
+    class?: string;
     template?: Templates["multi"];
 }
 export declare function useMultiLayout<GenericFormFieldWrapper extends FormFieldWrapper>(formFieldWrapper: GenericFormFieldWrapper, params?: UseMultiFieldLayoutParams): FormField<{
     [Prop in keyof GenericFormFieldWrapper]: GetFormFieldValue<GenericFormFieldWrapper[Prop]>;
 }, {
     [Prop in keyof GenericFormFieldWrapper]: GetFormFieldCheckedValue<GenericFormFieldWrapper[Prop]>;
-}>;
+}, MergeFormFieldSlots<GenericFormFieldWrapper[keyof GenericFormFieldWrapper]>>;
 export declare function useMultiLayout<GenericFormFieldEntry extends FormFieldEntry>(formFieldEntries: GenericFormFieldEntry[], params?: UseMultiFieldLayoutParams): FormField<{
     [Entry in GenericFormFieldEntry as string]: GetFormFieldValue<Entry[1]>;
 }, {
     [Entry in GenericFormFieldEntry as string]: GetFormFieldCheckedValue<Entry[1]>;
-}>;
+}, MergeFormFieldSlots<GenericFormFieldEntry[1]>>;

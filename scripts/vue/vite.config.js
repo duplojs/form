@@ -6,11 +6,11 @@ import tsconfigPaths from "vite-tsconfig-paths";
 export default defineConfig({
 	resolve: {
 		alias: {
-			"@V": import.meta.dirname
+			"@V": import.meta.dirname,
 		},
 	},
 	plugins: [
-		vue(), 
+		vue(),
 		tsconfigPaths(),
 	],
 	build: {
@@ -18,15 +18,20 @@ export default defineConfig({
 		cssCodeSplit: true,
 		lib: {
 			entry: {
-				index: Path.resolveRelative([import.meta.dirname, "index.ts"]),
-				grid: Path.resolveRelative([import.meta.dirname, "templates/grid/index.ts"]),
-				designSystem: Path.resolveRelative([import.meta.dirname, "designSystem/index.ts"]),
+				"index": Path.resolveRelative([import.meta.dirname, "index.ts"]),
+				"templates/grid/index": Path.resolveRelative([import.meta.dirname, "templates/grid/index.ts"]),
+				"designSystem/index": Path.resolveRelative([import.meta.dirname, "designSystem/index.ts"]),
 			},
 			name: "form/vue",
 			formats: ["es", "cjs"],
 		},
 		rollupOptions: {
-			external: ["vue"],
-		}
+			external: ["vue", "@duplojs/utils"],
+
+			output: {
+				chunkFileNames: "chunks/[name]-[hash].js",
+				assetFileNames: "assets/[name][extname]"
+			},
+		},
 	},
-})
+});

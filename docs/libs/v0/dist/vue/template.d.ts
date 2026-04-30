@@ -1,5 +1,5 @@
 import { type SimplifyTopLevel, type Kind } from "@duplojs/utils";
-import { type VNode } from "vue";
+import { type ClassValue, type VNode } from "vue";
 import type * as OO from "@duplojs/utils/object";
 export declare const templateKind: import("@duplojs/utils").KindHandler<import("@duplojs/utils").KindDefinition<"@DuplojsVueForm/template", unknown>>;
 type AllowedTemplateComponentInstances = InstanceType<AllowedTemplateComponents[keyof AllowedTemplateComponents]>;
@@ -9,9 +9,12 @@ export type CreateTemplateParams<GenericInputComponentInstance extends AllowedTe
     props: InferredProps;
 } : never)>;
 export interface Template<GenericComponentInstance extends AllowedTemplateComponentInstances = AllowedTemplateComponentInstances> extends Kind<typeof templateKind.definition> {
-    getVNode(props: (GenericComponentInstance["$props"] & {
+    getVNode(props: SimplifyTopLevel<GenericComponentInstance["$props"] & {
         fieldKey: string;
-    } & object), slots: GenericComponentInstance["$slots"]): VNode;
+        class?: ClassValue;
+    } & {
+        [key: string]: unknown;
+    }>, slots: GenericComponentInstance["$slots"]): VNode;
 }
 export type UseTemplate<GenericComponentInstance extends AllowedTemplateComponentInstances = AllowedTemplateComponentInstances, GenericTemplateSystemProps extends object = object> = (params?: Partial<CreateTemplateParams<GenericComponentInstance, GenericTemplateSystemProps>["props"]>) => Template<GenericComponentInstance>;
 export type GetTemplateComponentSystemProp<GenericComponent extends AllowedTemplateComponents[keyof AllowedTemplateComponents]> = OO.UnionObjectToIntersection<{
