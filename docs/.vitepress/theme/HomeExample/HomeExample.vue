@@ -3,7 +3,7 @@ import Example from "./example.md";
 import { useMyCustomForm } from "@/examples/v0/vue/home/index.ts";
 import { PrimaryButton } from "@form/v0/vueDesignSystem";
 
-const { TheForm, CheckForm } = useMyCustomForm();
+const { TheForm, checkForm } = useMyCustomForm();
 </script>
 
 <template>
@@ -14,7 +14,7 @@ const { TheForm, CheckForm } = useMyCustomForm();
 			<div class="form-container">
 				<TheForm
 					class="form"
-					@submit="CheckForm()"
+					@submit="checkForm()"
 				>
 					<PrimaryButton
 						type="submit"

@@ -121,6 +121,7 @@ export default pipe(
 		},
 		locales: {
 			fr: {
+				description: "Librairie de formulaires typés et robustes.",
 				label: "Français",
 				lang: "fr",
 				link: "/fr/",
@@ -357,9 +358,17 @@ export default pipe(
 							},
 						],
 					},
+					outline: { label: "Sur cette page" },
+					returnToTopLabel: "Retourner en haut",
+					darkModeSwitchLabel: "Dark mode",
+					footer: {
+						copyright: "Copyright © 2025-present DuploJS contributors",
+						message: "Released under the MIT License.",
+					},
 				},
 			},
 			root: {
+				description: "Library of typed and robust forms.",
 				label: "English",
 				lang: "en",
 				link: "/en/",
