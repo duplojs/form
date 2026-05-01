@@ -88,36 +88,9 @@ export default pipe(
 			codeTransformers: [
 				{
 					name: "duplo-version-transformer",
-					preprocess: innerPipe(
-						S.replace(
-							/\/\/ @version: (?<version>[0-9]+)/,
-							({ namedGroups }) => A.join(
-								[
-									"// @filename: @duplojs/form/vue.ts",
-									`export * from "@form/v${namedGroups?.version ?? ""}/vue";`,
-
-									"// @filename: @duplojs/form/vueGrid.ts",
-									`export * from "@form/v${namedGroups?.version ?? ""}/vueGrid";`,
-
-									"// @filename: @duplojs/form/vueGrid.css.ts",
-									`export * from "@form/v${namedGroups?.version ?? ""}/vueGrid";`,
-
-									"// @filename: @duplojs/form/vueDesignSystem.ts",
-									`export * from "@form/v${namedGroups?.version ?? ""}/vueDesignSystem";`,
-
-									"// @filename: @duplojs/form/vueDesignSystem.css.ts",
-									`export * from "@form/v${namedGroups?.version ?? ""}/vueDesignSystem";`,
-
-									"// @filename: index.ts",
-									"// ---cut---",
-								],
-								"\n",
-							),
-						),
-						S.replace(
-							/ ?@ts-expect-error/g,
-							"",
-						),
+					preprocess: S.replace(
+						/ ?@ts-expect-error/g,
+						"",
 					),
 					postprocess: S.replace(
 						/"@form\/v([0-9]+)/g,

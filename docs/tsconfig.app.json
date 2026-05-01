@@ -2,7 +2,7 @@
   "extends": ["../tsconfig.app.json", "@vue/tsconfig/tsconfig.dom.json"],
   "compilerOptions": {
 	"tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
-	"types": ["vitepress/client"],
+	"types": ["vitepress/client", "web"],
   },
   "include": [".vitepress/**/*.vue", ".vitepress/**/*.ts"],
 }

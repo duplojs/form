@@ -2,6 +2,13 @@
   "extends": "../tsconfig.app.json",
   "compilerOptions": {
 	"baseUrl": "./",
+	"paths": {
+		"@form/v0/vue": ["./libs/v0/dist/vue"],
+		"@form/v0/vueGrid": ["./libs/v0/dist/vue/templates/grid"],
+		"@form/v0/vueGrid.css": ["./libs/v0/dist/vue/templates/grid.css"],
+		"@form/v0/vueDesignSystem": ["./libs/v0/dist/vue/designSystem"],
+		"@form/v0/vueDesignSystem.css": ["./libs/v0/dist/vue/designSystem.css"],
+	},
 	"types": ["web"]
   },
   "include": ["examples/v0/**/*.ts", "examples/v0/**/*.vue", "libs/v0/**/*.d.ts"],

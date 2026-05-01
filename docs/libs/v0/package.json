@@ -1,5 +1,5 @@
 {
-  "name": "v0",
+  "name": "@form/v0",
   "type": "module",
   "exports": {
     "./vue": {
