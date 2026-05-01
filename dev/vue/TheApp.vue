@@ -230,6 +230,10 @@ const { component: Form, currentValue, check } = useForm(
 									period: useDualRangeInput({
 										label: "Period",
 									}),
+									slot: useSlotLayout(
+										"testSlot",
+										{ defaultValue: "" },
+									),
 								}),
 							],
 							[
@@ -308,6 +312,14 @@ const { component: Form, currentValue, check } = useForm(
 			<template #test="params">
 				test
 				<component :is="params.formField" />
+			</template>
+
+			<template #testSlot="{value, update}">
+				<input
+					type="text"
+					:value="value"
+					@input="(event) => update((event.target as unknown as {value: string}).value)"
+				/>
 			</template>
 		</Form>
 

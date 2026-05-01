@@ -11,5 +11,5 @@
 	},
 	"types": ["web"]
   },
-  "include": ["examples/v0/**/*.ts", "libs/v0/**/*.d.ts"],
+  "include": ["examples/v0/**/*.ts", "examples/v0/**/*.vue", "libs/v0/**/*.d.ts"],
 }

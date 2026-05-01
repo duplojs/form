@@ -126,7 +126,8 @@ export default pipe(
 							module: ModuleKind.ESNext,
 							moduleResolution: ModuleResolutionKind.Bundler,
 							moduleDetection: ModuleDetectionKind.Force,
-							types: ["@types/web"],
+							types: ["@types/web", "vue"],
+							allowArbitraryExtensions: true,
 						},
 					},
 				}),
@@ -146,6 +147,240 @@ export default pipe(
 				label: "Français",
 				lang: "fr",
 				link: "/fr/",
+				themeConfig: {
+					nav: [
+						{
+							text: "Guide",
+							link: "/fr/v0/vue/guide",
+						},
+						{
+							text: "API",
+							items: [
+								{
+									text: "Layouts",
+									link: "/fr/v0/vue/API/layout",
+								},
+								{
+									text: "Templates Grid",
+									link: "/fr/v0/vue/API/templatesGrid",
+								},
+								{
+									text: "Design system",
+									link: "/fr/v0/vue/API/designSystem",
+								},
+							],
+						},
+						{
+							text: "v0.x (LTS)",
+							items: [
+								{
+									text: "v0.x (LTS)",
+									link: "/fr/v0/vue/guide/",
+								},
+							],
+						},
+					],
+					sidebar: {
+						"/fr/v0/vue/guide": [
+							{
+								text: "Commencer",
+								items: [
+									{
+										text: "Introduction",
+										link: "/fr/v0/vue/guide/",
+									},
+									{
+										text: "Démarrage rapide",
+										link: "/fr/v0/vue/guide/quickStart",
+									},
+								],
+							},
+							{
+								text: "Les Bases",
+								items: [
+									{
+										text: "Initialiser un formulaire",
+										link: "/fr/v0/vue/guide/form",
+									},
+									{
+										text: "Création d'un input",
+										link: "/fr/v0/vue/guide/input",
+									},
+									{
+										text: "Les layouts",
+										link: "/fr/v0/vue/guide/layout",
+									},
+									{
+										text: "Les templates",
+										link: "/fr/v0/vue/guide/template",
+									},
+								],
+							},
+							{
+								text: "Composants par défaut",
+								items: [
+									{
+										text: "Templates Grid",
+										link: "/fr/v0/vue/guide/templatesGrid",
+									},
+									{
+										text: "Design system",
+										link: "/fr/v0/vue/guide/designSystem",
+									},
+								],
+							},
+						],
+						"/fr/v0/vue/API/layout": [
+							{
+								text: "API Layout",
+								items: [
+									{
+										text: "Introduction",
+										link: "/fr/v0/vue/API/layout/",
+									},
+									{
+										text: "Formulaire",
+										link: "/fr/v0/vue/API/layout/form",
+									},
+									{
+										text: "Input",
+										link: "/fr/v0/vue/API/layout/input",
+									},
+									{
+										text: "useMultiLayout",
+										link: "/fr/v0/vue/API/layout/multi",
+									},
+									{
+										text: "useRepeatLayout",
+										link: "/fr/v0/vue/API/layout/repeat",
+									},
+									{
+										text: "useUnionLayout",
+										link: "/fr/v0/vue/API/layout/union",
+									},
+									{
+										text: "useStepLayout",
+										link: "/fr/v0/vue/API/layout/step",
+									},
+									{
+										text: "useSectionLayout",
+										link: "/fr/v0/vue/API/layout/section",
+									},
+									{
+										text: "useSlotLayout",
+										link: "/fr/v0/vue/API/layout/slot",
+									},
+									{
+										text: "useCheckLayout",
+										link: "/fr/v0/vue/API/layout/check",
+									},
+									{
+										text: "useDisabledLayout",
+										link: "/fr/v0/vue/API/layout/disabled",
+									},
+								],
+							},
+						],
+						"/fr/v0/vue/API/templatesGrid": [
+							{
+								text: "API Templates Grid",
+								items: [
+									{
+										text: "Introduction",
+										link: "/fr/v0/vue/API/templatesGrid/",
+									},
+									{
+										text: "createGridTemplates",
+										link: "/fr/v0/vue/API/templatesGrid/createGridTemplates",
+									},
+									{
+										text: "GridFormTemplate",
+										link: "/fr/v0/vue/API/templatesGrid/form",
+									},
+									{
+										text: "GridInputTemplate",
+										link: "/fr/v0/vue/API/templatesGrid/input",
+									},
+									{
+										text: "GridMultiTemplate",
+										link: "/fr/v0/vue/API/templatesGrid/multi",
+									},
+									{
+										text: "GridCheckTemplate",
+										link: "/fr/v0/vue/API/templatesGrid/check",
+									},
+									{
+										text: "GridRepeatTemplate",
+										link: "/fr/v0/vue/API/templatesGrid/repeat",
+									},
+									{
+										text: "GridUnionTemplate",
+										link: "/fr/v0/vue/API/templatesGrid/union",
+									},
+									{
+										text: "GridStepByStepTemplate",
+										link: "/fr/v0/vue/API/templatesGrid/step",
+									},
+									{
+										text: "GridSectionTemplate",
+										link: "/fr/v0/vue/API/templatesGrid/section",
+									},
+								],
+							},
+						],
+						"/fr/v0/vue/API/designSystem": [
+							{
+								text: "API Design System",
+								items: [
+									{
+										text: "Introduction",
+										link: "/fr/v0/vue/API/designSystem/",
+									},
+									{
+										text: "Tokens et thème",
+										link: "/fr/v0/vue/API/designSystem/theme",
+									},
+									{
+										text: "Boutons",
+										link: "/fr/v0/vue/API/designSystem/buttons",
+									},
+									{
+										text: "Texte et nombre",
+										link: "/fr/v0/vue/API/designSystem/text",
+									},
+									{
+										text: "Select et radio",
+										link: "/fr/v0/vue/API/designSystem/selectRadio",
+									},
+									{
+										text: "Checkbox",
+										link: "/fr/v0/vue/API/designSystem/checkbox",
+									},
+									{
+										text: "Date",
+										link: "/fr/v0/vue/API/designSystem/date",
+									},
+									{
+										text: "Heure",
+										link: "/fr/v0/vue/API/designSystem/time",
+									},
+									{
+										text: "Range",
+										link: "/fr/v0/vue/API/designSystem/range",
+									},
+									{
+										text: "Fichier",
+										link: "/fr/v0/vue/API/designSystem/file",
+									},
+									{
+										text: "Helpers",
+										link: "/fr/v0/vue/API/designSystem/helpers",
+									},
+								],
+							},
+						],
+					},
+				},
 			},
 			root: {
 				label: "English",

@@ -10,7 +10,7 @@ hero:
   actions:
     - theme: brand
       text: Commencer
-      link: "/fr/v0/guide/"
+      link: "/fr/v0/vue/guide/"
     - theme: alt
       text: Voir sur GitHub
       link: "https://github.com/duplojs/form"

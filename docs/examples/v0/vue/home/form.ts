@@ -1,6 +1,12 @@
+import "@duplojs/form/vueGrid.css";
+import "@duplojs/form/vueDesignSystem.css";
+
 import { createGridTemplates } from "@duplojs/form/vueGrid";
 import { templateFormAddButton, templateFormRemoveButton, templateFormResetButton, templateFormNextButton, templateFormPreviousButton, templateFormSelect } from "@duplojs/form/vueDesignSystem";
 import { createForm } from "@duplojs/form/vue";
+
+export { useNumberInput, useTextInput } from "@duplojs/form/vueDesignSystem";
+
 
 export const templatesGrid = createGridTemplates({
 	repeat: {

@@ -1,0 +1,15 @@
+:root {
+	--DFV-primary: #0f766e;
+	--DFV-primary-foreground: #ffffff;
+	--DFV-primary-border: #115e59;
+	--DFV-primary-hover: #0d9488;
+	--DFV-primary-active: #115e59;
+	--DFV-primary-focus: rgb(20 184 166 / 0.25);
+
+	--DFV-muted: #f5f5f4;
+	--DFV-muted-foreground: #44403c;
+	--DFV-muted-border: #d6d3d1;
+
+	--DFV-radius-sm: 0.375rem;
+	--DFV-spacing-sm: 0.625rem;
+}

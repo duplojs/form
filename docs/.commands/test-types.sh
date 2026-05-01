@@ -3,4 +3,4 @@
 set -e
 
 tsc -p tsconfig.app.json
-tsc -p tsconfig.v0.json
+vue-tsc -p tsconfig.v0.json

@@ -9,7 +9,7 @@ const { TheForm, CheckForm } = useMyCustomForm();
 <template>
 	<div class="win">
 		<div class="container">
-			<Example />
+			<Example class="example" />
 
 			<div class="form-container">
 				<TheForm
@@ -42,12 +42,16 @@ const { TheForm, CheckForm } = useMyCustomForm();
 	width: 95vw;
 	display: flex;
 	gap: 10px;
+	justify-content: center;
+	align-items: start;
+	overflow: hidden;
 
 	> * {
 		flex-grow: 1;
 		flex-shrink: 1;
 		flex-basis: 0;
 		min-width: 0;
+		height: 1050px;
 	}
 }
 
@@ -55,15 +59,14 @@ const { TheForm, CheckForm } = useMyCustomForm();
   .container {
     flex-direction: column;
 	width: 100%;
-	flex-grow: unset;
-	flex-shrink: unset;
-	flex-basis: unset;
 
 	> * {
 		flex-grow: 1;
 		flex-shrink: 1;
 		flex-basis: auto;
 		min-width: auto;
+		height: auto;
+		width: 100%;
 	}
   }
 }
@@ -78,10 +81,18 @@ const { TheForm, CheckForm } = useMyCustomForm();
 	padding: 20px;
 	border-radius: 8px;
 	color: black;
+	overflow: hidden;
 
 	&::before {
 		content: "This is a super form !";
 		font-size: 1.5rem;
+	}
+
+	> :global(.DFV-grid-container) {
+		max-height: 100%;
+		flex-grow: 1;
+		overflow: auto;
+		align-content: start;
 	}
 }
 </style>

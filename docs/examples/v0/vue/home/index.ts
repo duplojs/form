@@ -1,10 +1,7 @@
-import "@duplojs/form/vueGrid.css";
-import "@duplojs/form/vueDesignSystem.css";
-import { useNumberInput, useTextInput } from "@duplojs/form/vueDesignSystem";
 import { useMultiLayout, useRepeatLayout } from "@duplojs/form/vue";
-import { DP } from "@duplojs/utils";
+import * as DP from "@duplojs/utils/dataParser";
 
-import { templatesGrid, useForm } from "./form";
+import { templatesGrid, useForm, useNumberInput, useTextInput } from "./form";
 
 export function useMyCustomForm() {
 	const { component, check, currentValue, reset } = useForm(
@@ -28,7 +25,7 @@ export function useMyCustomForm() {
 				}),
 			}),
 			{
-				min: 1,
+				min: 2,
 				max: 10,
 			},
 		),
@@ -36,7 +33,7 @@ export function useMyCustomForm() {
 
 	return {
 		TheForm: component,
-		CheckForm: check,
+		checkForm: check,
 		currentFormValue: currentValue,
 		resetForm: reset,
 	};

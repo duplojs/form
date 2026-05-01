@@ -2,9 +2,16 @@ import * as DD from "@duplojs/utils/date";
 import { createInput } from "@V/input";
 import RangeTimeInput from "./RangeTimeInput.vue";
 import TimeInput from "./TimeInput.vue";
+import "@vue/reactivity";
 
 export { default as TimeInput } from "./TimeInput.vue";
 export { default as RangeTimeInput } from "./RangeTimeInput.vue";
+
+declare module "@vue/reactivity" {
+	interface RefUnwrapBailTypes {
+		duplojsTime: DD.TheTime;
+	}
+}
 
 export const useTimeInput = createInput(
 	TimeInput,
