@@ -1,5 +1,5 @@
-import { useRepeatLayout } from "@duplojs/form/vue";
-import { useTextInput } from "@duplojs/form/vueDesignSystem";
+import { useRepeatLayout } from "@form/v0/vue";
+import { useTextInput } from "@form/v0/vueDesignSystem";
 
 export const contacts = useRepeatLayout(
 	useTextInput({ label: "Email" }),

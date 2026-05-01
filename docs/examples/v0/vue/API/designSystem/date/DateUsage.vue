@@ -2,7 +2,7 @@
 import {
 	DateInput,
 	RangeDateInput,
-} from "@duplojs/form/vueDesignSystem";
+} from "@form/v0/vueDesignSystem";
 import * as DD from "@duplojs/utils/date";
 import { ref } from "vue";
 

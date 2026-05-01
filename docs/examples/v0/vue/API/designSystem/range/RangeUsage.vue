@@ -2,7 +2,7 @@
 import {
 	DualRangeInput,
 	RangeInput,
-} from "@duplojs/form/vueDesignSystem";
+} from "@form/v0/vueDesignSystem";
 import { ref } from "vue";
 
 const value = ref(35);

@@ -1,8 +1,8 @@
 import * as DP from "@duplojs/utils/dataParser";
-import { useMultiLayout } from "@duplojs/form/vue";
+import { useMultiLayout } from "@form/v0/vue";
 import { useForm } from "./init";
 import { useMyTextInput } from "./firstInput";
-import { useNumberInput } from "@duplojs/form/vueDesignSystem";
+import { useNumberInput } from "@form/v0/vueDesignSystem";
 
 export function useFirstForm() {
 	const { component, check, reset, currentValue } = useForm(

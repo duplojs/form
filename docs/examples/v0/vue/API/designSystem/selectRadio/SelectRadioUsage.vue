@@ -2,7 +2,7 @@
 import {
 	RadioGroup,
 	SelectInput,
-} from "@duplojs/form/vueDesignSystem";
+} from "@form/v0/vueDesignSystem";
 import { ref } from "vue";
 
 const kind = ref<string | null>("email");

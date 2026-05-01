@@ -4,7 +4,7 @@ import {
 	GhostButton,
 	OutlineButton,
 	PrimaryButton,
-} from "@duplojs/form/vueDesignSystem";
+} from "@form/v0/vueDesignSystem";
 </script>
 
 <template>

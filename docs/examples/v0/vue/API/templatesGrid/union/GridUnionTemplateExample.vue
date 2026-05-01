@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { type UnionTemplateProperties, type FunctionSelectInputComponent } from "@duplojs/form/vue";
+import { type UnionTemplateProperties, type FunctionSelectInputComponent } from "@form/v0/vue";
 import { computed } from "vue";
-import { type GridTemplateLayoutContainerProps } from "@duplojs/form/vueGrid";
+import { type GridTemplateLayoutContainerProps } from "@form/v0/vueGrid";
 
 type Props = (
 	& UnionTemplateProperties["props"]

@@ -1,4 +1,4 @@
-import { createTemplate } from "@duplojs/form/vue";
+import { createTemplate } from "@form/v0/vue";
 import MyRepeatTemplate from "./repeatTemplate.vue";
 
 export const useMyRepeatTemplate = createTemplate(

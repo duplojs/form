@@ -1,5 +1,5 @@
-import { useSlotLayout } from "@duplojs/form/vue";
-import { useTextareaInput } from "@duplojs/form/vueDesignSystem";
+import { useSlotLayout } from "@form/v0/vue";
+import { useTextareaInput } from "@form/v0/vueDesignSystem";
 
 export const message = useSlotLayout(
 	"customMessage",

@@ -119,6 +119,10 @@ export default pipe(
 							"",
 						),
 					),
+					postprocess: S.replace(
+						/"@form\/v([0-9]+)/g,
+						"\"@duplojs/form",
+					),
 				},
 				transformerTwoslash({
 					twoslashOptions: {

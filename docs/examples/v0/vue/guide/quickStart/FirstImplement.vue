@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import * as EE from "@duplojs/utils/either";
-import { PrimaryButton } from "@duplojs/form/vueDesignSystem";
+import { PrimaryButton } from "@form/v0/vueDesignSystem";
 import { useFirstForm } from "./firstForm";
 
 const {

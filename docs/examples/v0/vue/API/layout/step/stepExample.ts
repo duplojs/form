@@ -1,5 +1,5 @@
-import { useMultiLayout, useStepLayout } from "@duplojs/form/vue";
-import { useTextInput } from "@duplojs/form/vueDesignSystem";
+import { useMultiLayout, useStepLayout } from "@form/v0/vue";
+import { useTextInput } from "@form/v0/vueDesignSystem";
 
 export const onboarding = useStepLayout(
 	[

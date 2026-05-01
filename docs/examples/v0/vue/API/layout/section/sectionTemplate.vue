@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type SectionTemplateProperties } from "@duplojs/form/vue";
+import { type SectionTemplateProperties } from "@form/v0/vue";
 
 defineProps<SectionTemplateProperties["props"]>();
 defineSlots<SectionTemplateProperties["slots"]>();

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { FileInput } from "@duplojs/form/vueDesignSystem";
+import { FileInput } from "@form/v0/vueDesignSystem";
 import { ref } from "vue";
 
 const files = ref<File[] | null>(null);

@@ -1,5 +1,5 @@
-import { useMultiLayout, useSectionLayout } from "@duplojs/form/vue";
-import { useTextInput } from "@duplojs/form/vueDesignSystem";
+import { useMultiLayout, useSectionLayout } from "@form/v0/vue";
+import { useTextInput } from "@form/v0/vueDesignSystem";
 
 export const identity = useSectionLayout(
 	useMultiLayout({

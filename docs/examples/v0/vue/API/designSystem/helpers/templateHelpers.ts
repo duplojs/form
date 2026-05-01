@@ -5,7 +5,7 @@ import {
 	templateFormRemoveButton,
 	templateFormResetButton,
 	templateFormSelect,
-} from "@duplojs/form/vueDesignSystem";
+} from "@form/v0/vueDesignSystem";
 
 export {
 	templateFormAddButton,

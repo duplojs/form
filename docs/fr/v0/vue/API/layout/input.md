@@ -12,7 +12,7 @@ L'API concernée est `createInput(...)`.
 ## Signature
 
 ```ts [ts]
-import { createInput } from "@duplojs/form/vue";
+import { createInput } from "@form/v0/vue";
 
 const useMyInput = createInput(component, defaultParams);
 ```

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type StepTemplateProperties, type FunctionButtonComponent } from "@duplojs/form/vue";
+import { type StepTemplateProperties, type FunctionButtonComponent } from "@form/v0/vue";
 
 type Props = (
 	& StepTemplateProperties["props"]

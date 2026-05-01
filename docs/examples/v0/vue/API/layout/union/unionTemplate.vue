@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type UnionTemplateProperties } from "@duplojs/form/vue";
+import { type UnionTemplateProperties } from "@form/v0/vue";
 
 defineProps<UnionTemplateProperties["props"]>();
 defineSlots<UnionTemplateProperties["slots"]>();

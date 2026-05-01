@@ -4,13 +4,13 @@ import {
 	useSectionLayout,
 	useSlotLayout,
 	useUnionLayout,
-} from "@duplojs/form/vue";
+} from "@form/v0/vue";
 import { useForm } from "./init";
 
 import {
 	useTextInput,
 	useTextareaInput,
-} from "@duplojs/form/vueDesignSystem";
+} from "@form/v0/vueDesignSystem";
 
 export function useProfileLayoutForm() {
 	const { component, check } = useForm(

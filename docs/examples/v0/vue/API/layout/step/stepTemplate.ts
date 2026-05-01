@@ -1,4 +1,4 @@
-import { createTemplate } from "@duplojs/form/vue";
+import { createTemplate } from "@form/v0/vue";
 import MyStepTemplate from "./stepTemplate.vue";
 
 export const useMyStepTemplate = createTemplate(

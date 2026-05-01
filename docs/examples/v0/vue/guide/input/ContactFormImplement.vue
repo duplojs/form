@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import * as EE from "@duplojs/utils/either";
 import { unwrap } from "@duplojs/utils";
-import { OutlineButton, PrimaryButton } from "@duplojs/form/vueDesignSystem";
+import { OutlineButton, PrimaryButton } from "@form/v0/vueDesignSystem";
 import { onBeforeUnmount, ref } from "vue";
 import {
 	type ContactFormSubmitValue,

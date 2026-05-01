@@ -1,6 +1,6 @@
 import { ref } from "vue";
-import { useDisabledLayout } from "@duplojs/form/vue";
-import { useTextInput } from "@duplojs/form/vueDesignSystem";
+import { useDisabledLayout } from "@form/v0/vue";
+import { useTextInput } from "@form/v0/vueDesignSystem";
 
 const hasCompany = ref(false);
 

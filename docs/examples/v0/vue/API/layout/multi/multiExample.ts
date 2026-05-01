@@ -1,5 +1,5 @@
-import { useMultiLayout } from "@duplojs/form/vue";
-import { useTextInput } from "@duplojs/form/vueDesignSystem";
+import { useMultiLayout } from "@form/v0/vue";
+import { useTextInput } from "@form/v0/vueDesignSystem";
 import { useForm } from "./init";
 
 export function useProfileForm() {

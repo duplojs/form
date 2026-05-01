@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type StepTemplateProperties } from "@duplojs/form/vue";
+import { type StepTemplateProperties } from "@form/v0/vue";
 
 type Props = (
 	& StepTemplateProperties["props"]

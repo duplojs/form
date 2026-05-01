@@ -1,8 +1,8 @@
-import { useMultiLayout } from "@duplojs/form/vue";
+import { useMultiLayout } from "@form/v0/vue";
 import {
 	useTextInput,
 	useTextareaInput,
-} from "@duplojs/form/vueDesignSystem";
+} from "@form/v0/vueDesignSystem";
 import { useHeroInputTemplate } from "./customInputTemplate";
 import { templatesGrid, useForm } from "./init";
 

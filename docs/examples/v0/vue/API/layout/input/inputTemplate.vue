@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type InputTemplateProperties } from "@duplojs/form/vue";
+import { type InputTemplateProperties } from "@form/v0/vue";
 
 defineProps<InputTemplateProperties["props"]>();
 defineSlots<InputTemplateProperties["slots"]>();

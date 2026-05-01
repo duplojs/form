@@ -1,4 +1,4 @@
-import { useMultiLayout, useRepeatLayout } from "@duplojs/form/vue";
+import { useMultiLayout, useRepeatLayout } from "@form/v0/vue";
 import * as DP from "@duplojs/utils/dataParser";
 
 import { templatesGrid, useForm, useNumberInput, useTextInput } from "./form";

@@ -1,7 +1,7 @@
-import "@duplojs/form/vueGrid.css";
-import "@duplojs/form/vueDesignSystem.css";
+import "@form/v0/vueGrid.css";
+import "@form/v0/vueDesignSystem.css";
 
-import { createForm } from "@duplojs/form/vue";
+import { createForm } from "@form/v0/vue";
 import {
 	templateFormAddButton,
 	templateFormRemoveButton,
@@ -9,8 +9,8 @@ import {
 	templateFormNextButton,
 	templateFormPreviousButton,
 	templateFormSelect,
-} from "@duplojs/form/vueDesignSystem";
-import { createGridTemplates } from "@duplojs/form/vueGrid";
+} from "@form/v0/vueDesignSystem";
+import { createGridTemplates } from "@form/v0/vueGrid";
 
 export const templatesGrid = createGridTemplates({
 	repeat: {

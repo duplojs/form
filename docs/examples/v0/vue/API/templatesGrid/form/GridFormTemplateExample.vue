@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { type FormTemplateProperties } from "@duplojs/form/vue";
+import { type FormTemplateProperties } from "@form/v0/vue";
 import { computed } from "vue";
-import { type GridTemplateContainerProps } from "@duplojs/form/vueGrid";
+import { type GridTemplateContainerProps } from "@form/v0/vueGrid";
 
 type Props = (
 	& FormTemplateProperties["props"]

@@ -1,5 +1,5 @@
-import { useUnionLayout } from "@duplojs/form/vue";
-import { useTextInput } from "@duplojs/form/vueDesignSystem";
+import { useUnionLayout } from "@form/v0/vue";
+import { useTextInput } from "@form/v0/vueDesignSystem";
 
 export const preferredChannel = useUnionLayout(
 	[

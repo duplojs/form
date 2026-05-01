@@ -1,4 +1,4 @@
-import { useTextInput } from "@duplojs/form/vueDesignSystem";
+import { useTextInput } from "@form/v0/vueDesignSystem";
 import { useForm } from "./init";
 
 export function useNewsletterForm() {

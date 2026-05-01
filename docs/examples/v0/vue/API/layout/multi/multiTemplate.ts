@@ -1,4 +1,4 @@
-import { createTemplate } from "@duplojs/form/vue";
+import { createTemplate } from "@form/v0/vue";
 import MyMultiTemplate from "./multiTemplate.vue";
 
 export const useMyMultiTemplate = createTemplate(

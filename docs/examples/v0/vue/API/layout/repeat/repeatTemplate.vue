@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type RepeatTemplateProperties } from "@duplojs/form/vue";
+import { type RepeatTemplateProperties } from "@form/v0/vue";
 
 type Props = (
 	& RepeatTemplateProperties["props"]

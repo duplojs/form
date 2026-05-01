@@ -5,11 +5,11 @@ import {
 	useDisabledLayout,
 	useMultiLayout,
 	useStepLayout,
-} from "@duplojs/form/vue";
+} from "@form/v0/vue";
 import {
 	useTextInput,
 	useTextareaInput,
-} from "@duplojs/form/vueDesignSystem";
+} from "@form/v0/vueDesignSystem";
 import { useForm } from "./init";
 
 export function useFlowLayoutForm() {

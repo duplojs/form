@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import * as EE from "@duplojs/utils/either";
-import { type ExposeInputProperties } from "@duplojs/form/vue";
+import { type ExposeInputProperties } from "@form/v0/vue";
 import { ref } from "vue";
 
 export interface Props {

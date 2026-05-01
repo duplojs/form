@@ -1,4 +1,4 @@
-import { createInput } from "@duplojs/form/vue";
+import { createInput } from "@form/v0/vue";
 import FirstInput from "./FirstInput.vue";
 
 export const useMyTextInput = createInput(

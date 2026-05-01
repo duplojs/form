@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type CheckTemplateProperties } from "@duplojs/form/vue";
+import { type CheckTemplateProperties } from "@form/v0/vue";
 
 defineProps<CheckTemplateProperties["props"]>();
 defineSlots<CheckTemplateProperties["slots"]>();

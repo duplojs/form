@@ -12,7 +12,7 @@ The relevant API is `createForm(...)`.
 ## Signature
 
 ```ts [ts]
-import { createForm } from "@duplojs/form/vue";
+import { createForm } from "@form/v0/vue";
 
 const useForm = createForm(templates);
 ```

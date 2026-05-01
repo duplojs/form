@@ -1,5 +1,5 @@
-import { useMultiLayout, type GetCheckedValue } from "@duplojs/form/vue";
-import { useNumberInput, useTextInput } from "@duplojs/form/vueDesignSystem";
+import { useMultiLayout, type GetCheckedValue } from "@form/v0/vue";
+import { useNumberInput, useTextInput } from "@form/v0/vueDesignSystem";
 import * as DP from "@duplojs/utils/dataParser";
 import { useForm } from "./init";
 
