@@ -92,5 +92,16 @@
   "workspaces": [
     "integration/**",
     "docs"
+  ],
+  "keywords": [
+    "duplojs",
+    "form",
+    "vue",
+    "vue-form",
+    "typed-form",
+    "type-safe",
+    "form-builder",
+    "typescript",
+    "step-form"
   ]
 }
