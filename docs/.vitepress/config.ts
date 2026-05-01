@@ -387,12 +387,242 @@ export default pipe(
 				lang: "en",
 				link: "/en/",
 				themeConfig: {
-					nav: [],
+					nav: [
+						{
+							text: "Guide",
+							link: "/en/v0/vue/guide",
+						},
+						{
+							text: "API",
+							items: [
+								{
+									text: "Layouts",
+									link: "/en/v0/vue/API/layout",
+								},
+								{
+									text: "Templates Grid",
+									link: "/en/v0/vue/API/templatesGrid",
+								},
+								{
+									text: "Design system",
+									link: "/en/v0/vue/API/designSystem",
+								},
+							],
+						},
+						{
+							text: "v0.x (LTS)",
+							items: [
+								{
+									text: "v0.x (LTS)",
+									link: "/en/v0/vue/guide/",
+								},
+							],
+						},
+					],
 					docFooter: {
 						prev: "Previous page",
 						next: "Next page",
 					},
-					sidebar: {},
+					sidebar: {
+						"/en/v0/vue/guide": [
+							{
+								text: "Getting Started",
+								items: [
+									{
+										text: "Introduction",
+										link: "/en/v0/vue/guide/",
+									},
+									{
+										text: "Quick start",
+										link: "/en/v0/vue/guide/quickStart",
+									},
+								],
+							},
+							{
+								text: "Fundamentals",
+								items: [
+									{
+										text: "Initialize a form",
+										link: "/en/v0/vue/guide/form",
+									},
+									{
+										text: "Create an input",
+										link: "/en/v0/vue/guide/input",
+									},
+									{
+										text: "Layouts",
+										link: "/en/v0/vue/guide/layout",
+									},
+									{
+										text: "Templates",
+										link: "/en/v0/vue/guide/template",
+									},
+								],
+							},
+							{
+								text: "Default components",
+								items: [
+									{
+										text: "Templates Grid",
+										link: "/en/v0/vue/guide/templatesGrid",
+									},
+									{
+										text: "Design system",
+										link: "/en/v0/vue/guide/designSystem",
+									},
+								],
+							},
+						],
+						"/en/v0/vue/API/layout": [
+							{
+								text: "Layout API",
+								items: [
+									{
+										text: "Introduction",
+										link: "/en/v0/vue/API/layout/",
+									},
+									{
+										text: "Form",
+										link: "/en/v0/vue/API/layout/form",
+									},
+									{
+										text: "Input",
+										link: "/en/v0/vue/API/layout/input",
+									},
+									{
+										text: "useMultiLayout",
+										link: "/en/v0/vue/API/layout/multi",
+									},
+									{
+										text: "useRepeatLayout",
+										link: "/en/v0/vue/API/layout/repeat",
+									},
+									{
+										text: "useUnionLayout",
+										link: "/en/v0/vue/API/layout/union",
+									},
+									{
+										text: "useStepLayout",
+										link: "/en/v0/vue/API/layout/step",
+									},
+									{
+										text: "useSectionLayout",
+										link: "/en/v0/vue/API/layout/section",
+									},
+									{
+										text: "useSlotLayout",
+										link: "/en/v0/vue/API/layout/slot",
+									},
+									{
+										text: "useCheckLayout",
+										link: "/en/v0/vue/API/layout/check",
+									},
+									{
+										text: "useDisabledLayout",
+										link: "/en/v0/vue/API/layout/disabled",
+									},
+								],
+							},
+						],
+						"/en/v0/vue/API/templatesGrid": [
+							{
+								text: "Templates Grid API",
+								items: [
+									{
+										text: "Introduction",
+										link: "/en/v0/vue/API/templatesGrid/",
+									},
+									{
+										text: "createGridTemplates",
+										link: "/en/v0/vue/API/templatesGrid/createGridTemplates",
+									},
+									{
+										text: "GridFormTemplate",
+										link: "/en/v0/vue/API/templatesGrid/form",
+									},
+									{
+										text: "GridInputTemplate",
+										link: "/en/v0/vue/API/templatesGrid/input",
+									},
+									{
+										text: "GridMultiTemplate",
+										link: "/en/v0/vue/API/templatesGrid/multi",
+									},
+									{
+										text: "GridCheckTemplate",
+										link: "/en/v0/vue/API/templatesGrid/check",
+									},
+									{
+										text: "GridRepeatTemplate",
+										link: "/en/v0/vue/API/templatesGrid/repeat",
+									},
+									{
+										text: "GridUnionTemplate",
+										link: "/en/v0/vue/API/templatesGrid/union",
+									},
+									{
+										text: "GridStepByStepTemplate",
+										link: "/en/v0/vue/API/templatesGrid/step",
+									},
+									{
+										text: "GridSectionTemplate",
+										link: "/en/v0/vue/API/templatesGrid/section",
+									},
+								],
+							},
+						],
+						"/en/v0/vue/API/designSystem": [
+							{
+								text: "Design system API",
+								items: [
+									{
+										text: "Introduction",
+										link: "/en/v0/vue/API/designSystem/",
+									},
+									{
+										text: "Tokens and theme",
+										link: "/en/v0/vue/API/designSystem/theme",
+									},
+									{
+										text: "Buttons",
+										link: "/en/v0/vue/API/designSystem/buttons",
+									},
+									{
+										text: "Text and number inputs",
+										link: "/en/v0/vue/API/designSystem/text",
+									},
+									{
+										text: "Select and radio",
+										link: "/en/v0/vue/API/designSystem/selectRadio",
+									},
+									{
+										text: "Checkbox",
+										link: "/en/v0/vue/API/designSystem/checkbox",
+									},
+									{
+										text: "Date",
+										link: "/en/v0/vue/API/designSystem/date",
+									},
+									{
+										text: "Time",
+										link: "/en/v0/vue/API/designSystem/time",
+									},
+									{
+										text: "Range",
+										link: "/en/v0/vue/API/designSystem/range",
+									},
+									{
+										text: "File",
+										link: "/en/v0/vue/API/designSystem/file",
+									},
+									{
+										text: "Helpers",
+										link: "/en/v0/vue/API/designSystem/helpers",
+									},
+								],
+							},
+						],
+					},
 					outline: { label: "On this page" },
 					returnToTopLabel: "Return to top",
 					darkModeSwitchLabel: "Dark mode",
