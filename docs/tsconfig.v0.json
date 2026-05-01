@@ -3,11 +3,11 @@
   "compilerOptions": {
 	"baseUrl": "./",
 	"paths": {
-		"@duplojs/form/vue": ["../node_modules/@form/v0/dist/vue"],
-		"@duplojs/form/vueGrid": ["../node_modules/@form/v0/dist/vue/templates/grid"],
-		"@duplojs/form/vueGrid.css": ["../node_modules/@form/v0/dist/vue/templates/grid.css"],
-		"@duplojs/form/vueDesignSystem": ["../node_modules/@form/v0/dist/vue/designSystem"],
-		"@duplojs/form/vueDesignSystem.css": ["../node_modules/@form/v0/dist/vue/designSystem.css"],
+		"@duplojs/form/vue": ["./libs/v0/dist/vue"],
+		"@duplojs/form/vueGrid": ["./libs/v0/dist/vue/templates/grid"],
+		"@duplojs/form/vueGrid.css": ["./libs/v0/dist/vue/templates/grid.css"],
+		"@duplojs/form/vueDesignSystem": ["./libs/v0/dist/vue/designSystem"],
+		"@duplojs/form/vueDesignSystem.css": ["./libs/v0/dist/vue/designSystem.css"],
 	},
 	"types": ["web"]
   },
