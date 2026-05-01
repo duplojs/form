@@ -4,7 +4,7 @@ import { type EmitsToProps, type EmitFn } from "vue";
 export interface VueComponentParams {
 	props?: Record<string, unknown>;
 	emits?: Record<string, AnyFunction | any[]>;
-	expose?: Record<string, unknown>;
+	expose?: object;
 	slots?: Record<string, AnyFunction<[any]>>;
 }
 

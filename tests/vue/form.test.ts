@@ -1,10 +1,12 @@
 import { createForm, createInput, createTemplate } from "@V";
+import { createFormField } from "@V/formField";
 import { E, sleep } from "@duplojs/utils";
 import { mount } from "@vue/test-utils";
 import TextInput from "@test-utils/TextInput.vue";
 import TextInputWithExpose from "@test-utils/TextInputWithExpose.vue";
 import FormTemplate from "@test-utils/templates/FormTemplate.vue";
 import { testTemplates } from "@test-utils/templates";
+import { h } from "vue";
 
 describe("form", () => {
 	it("mount form with default template and sync current value with the rendered field", async() => {
@@ -93,5 +95,48 @@ describe("form", () => {
 
 		await wrapper.find("form").trigger("submit");
 		expect(onSubmit).toHaveBeenCalledTimes(1);
+	});
+
+	it("returns slot vnode when slot exists and null when slot is missing", () => {
+		const useForm = createForm(testTemplates);
+		const field = createFormField(
+			(modelValue, _parentKey, _templates, getSlot) => ({
+				check: () => E.success(modelValue.value),
+				reset: () => undefined,
+				dispose: () => undefined,
+				getVNode: () => h(
+					() => {
+						const existingSlot = getSlot("exists", {
+							fieldKey: "k",
+							value: modelValue.value,
+							update: () => undefined,
+						});
+						const missingSlot = getSlot("missing", {
+							fieldKey: "k",
+							value: modelValue.value,
+							update: () => undefined,
+						});
+
+						return h(
+							"div",
+							[
+								existingSlot,
+								h("small", { id: "slot-missing" }, missingSlot === null ? "null" : "not-null"),
+							],
+						);
+					},
+				),
+			}),
+			"default",
+		);
+		const { component } = useForm(field);
+		const wrapper = mount(component, {
+			slots: {
+				exists: () => h("span", { id: "slot-content" }, "ok"),
+			},
+		});
+
+		expect(wrapper.find("#slot-content").exists()).toBe(true);
+		expect(wrapper.find("#slot-missing").text()).toBe("null");
 	});
 });

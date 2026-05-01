@@ -1,10 +1,9 @@
-import { createForm, createInput, createTemplate, useStepLayout } from "@V";
-import { E } from "@duplojs/utils";
-import { sleep } from "@duplojs/utils";
+import { createForm, createInput, useStepLayout } from "@V";
+import { E, sleep } from "@duplojs/utils";
 import { mount } from "@vue/test-utils";
 import TextInput from "@test-utils/TextInput.vue";
 import { testTemplates } from "@test-utils/templates";
-import { GridStepByStepTemplate } from "@V/templates/grid";
+import { templatesGrid } from "@test-utils/grid";
 
 describe("GridStepByStepTemplate", () => {
 	it("renders a real step layout with the default design-system buttons", async() => {
@@ -17,7 +16,10 @@ describe("GridStepByStepTemplate", () => {
 				] as const,
 				{
 					errorMessageNotAtLastStep: "Go to the end",
-					template: createTemplate("step", GridStepByStepTemplate)(),
+					template: templatesGrid.useStepByStepTemplate({
+						nextLabel: "Next",
+						previousLabel: "Previous",
+					}),
 				},
 			),
 		);
@@ -27,16 +29,17 @@ describe("GridStepByStepTemplate", () => {
 		expect(stepTemplate.classes()).toEqual(
 			expect.arrayContaining([
 				"DFV-template_step",
-				"DFV-deep_form-field",
+				"DFV-deep_FRM_STP",
 				"DFV-grid-element",
 			]),
 		);
-		expect(stepTemplate.get("label").text()).toBe("1/2");
-		expect(stepTemplate.get(".DFV-grid-container").element.className).toContain("DFV-grid-container");
+
+		expect(stepTemplate.get(".DFV-step-content").element.className).toContain("DFV-step-content");
 		expect(stepTemplate.findAll("button[type=\"button\"]")).toHaveLength(3);
-		expect(stepTemplate.text()).toContain("previous");
-		expect(stepTemplate.text()).toContain("reset");
-		expect(stepTemplate.text()).toContain("next");
+		expect(stepTemplate.text()).toContain("Previous");
+		expect(stepTemplate.text()).toContain("Next");
+		expect(stepTemplate.findAll("button[type=\"button\"]")[0]!.attributes("disabled")).toBeDefined();
+		expect(stepTemplate.findAll("button[type=\"button\"]")[2]!.attributes("disabled")).toBeUndefined();
 
 		expect(E.isLeft(check())).toBe(true);
 		await sleep();
@@ -45,7 +48,9 @@ describe("GridStepByStepTemplate", () => {
 		await stepTemplate.findAll("button[type=\"button\"]")[2]!.trigger("click");
 		await sleep();
 		expect(currentValue.value.currentStep).toBe(1);
-		expect(stepTemplate.get("label").text()).toBe("2/2");
+		expect(stepTemplate.findAll("button[type=\"button\"]")[0]!.attributes("disabled")).toBeUndefined();
+		expect(stepTemplate.findAll("button[type=\"button\"]")[2]!.attributes("disabled")).toBeDefined();
+		expect(stepTemplate.get<HTMLInputElement>("#test-text-input").element.value).toBe("second-default");
 	});
 
 	it("wires previous and reset actions through the template buttons", async() => {
@@ -58,7 +63,7 @@ describe("GridStepByStepTemplate", () => {
 				] as const,
 				{
 					errorMessageNotAtLastStep: "Go to the end",
-					template: createTemplate("step", GridStepByStepTemplate)(),
+					template: templatesGrid.useStepByStepTemplate(),
 				},
 			),
 		);
@@ -77,5 +82,26 @@ describe("GridStepByStepTemplate", () => {
 		await stepTemplate.findAll("button[type=\"button\"]")[0]!.trigger("click");
 		await sleep();
 		expect(currentValue.value.currentStep).toBe(0);
+	});
+
+	it("one step", () => {
+		const useForm = createForm(testTemplates);
+		const { component } = useForm(
+			useStepLayout(
+				[createInput(TextInput, { defaultValue: "only-step" })()],
+				{
+					template: templatesGrid.useStepByStepTemplate({ hideEmptyMessageError: true }),
+					errorMessageNotAtLastStep: "",
+				},
+			),
+		);
+		const wrapper = mount(component);
+		const stepTemplate = wrapper.get(".DFV-template_step");
+
+		expect(stepTemplate.get(".DFV-step-content").element.className).toContain("DFV-step-content");
+		expect(stepTemplate.findAll("button[type=\"button\"]")).toHaveLength(3);
+		expect(stepTemplate.findAll("button[type=\"button\"]")[0]!.attributes("disabled")).toBeDefined();
+		expect(stepTemplate.findAll("button[type=\"button\"]")[2]!.attributes("disabled")).toBeDefined();
+		expect(stepTemplate.find(".DFV-step-error").exists()).toBe(false);
 	});
 });

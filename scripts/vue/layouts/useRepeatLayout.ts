@@ -1,17 +1,18 @@
 /* eslint-disable @typescript-eslint/prefer-for-of */
-import { createFormField, type FormFieldInstance, type ErrorProperties, type FormField, type GetFormFieldCheckedValue, type GetFormFieldValue } from "@V/formField";
+import { createFormField, type FormFieldInstance, type ErrorProperties, type FormField, type GetFormFieldCheckedValue, type GetFormFieldValue, type GetFormFieldSlots } from "@V/formField";
 import { type Templates } from "@V/template";
 import { type VueComponent } from "@V/types";
 import { simpleClone, unwrap } from "@duplojs/utils";
 import * as EE from "@duplojs/utils/either";
 import * as AA from "@duplojs/utils/array";
-import { computed, effectScope, h, ref, shallowRef, watch, type VNode } from "vue";
+import { computed, effectScope, h, ref, watch, type VNode } from "vue";
 
 export interface RepeatTemplateProperties {
 	props: {
 		fieldKey: string;
 		max: number;
 		min: number;
+		getFormFieldsQuantity(): number;
 		getCurrentValue(): unknown;
 		getFormFields(): VNode[];
 	};
@@ -36,6 +37,7 @@ export interface UseRepeatLayoutParams<
 > {
 	max: number;
 	min?: GenericMin;
+	class?: string;
 	template?: Templates["repeat"];
 }
 
@@ -53,7 +55,8 @@ export function useRepeatLayout<
 	[
 		...AA.CreateTuple<GetFormFieldCheckedValue<GenericFormField>, GenericMin>,
 		...GetFormFieldCheckedValue<GenericFormField>[],
-	]
+	],
+	GetFormFieldSlots<GenericFormField>
 >;
 
 export function useRepeatLayout(
@@ -64,7 +67,9 @@ export function useRepeatLayout(
 	const maxElements = params.max;
 
 	return createFormField(
-		(modelValue, key, templates) => {
+		(modelValue, parentKey, templates, getSlot) => {
+			const key = `${parentKey}_REP`;
+
 			const template = params?.template ?? templates.repeat;
 
 			const cacheFormFields: Record<number, FormFieldInstance> = {};
@@ -85,6 +90,7 @@ export function useRepeatLayout(
 						}),
 						`${key}-${index}`,
 						templates,
+						getSlot,
 					);
 				}
 
@@ -161,6 +167,8 @@ export function useRepeatLayout(
 				},
 			);
 
+			const getFormFieldsQuantity = () => formFieldInstances.value.length;
+
 			const onAddElement = () => {
 				if (modelValue.value.length >= maxElements) {
 					return;
@@ -191,12 +199,14 @@ export function useRepeatLayout(
 					{
 						fieldKey: key,
 						getFormFields: getFormFieldVNodes,
+						getFormFieldsQuantity,
 						getCurrentValue,
 						max: maxElements,
 						min: minElements,
 						onAddElement,
 						onRemoveElement,
 						onResetElement,
+						class: params.class,
 					},
 					{
 						formField: getFormFieldVNodes,

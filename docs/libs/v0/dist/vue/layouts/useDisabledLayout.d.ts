@@ -1,5 +1,5 @@
-import { type FormField, type GetFormFieldCheckedValue, type GetFormFieldValue } from "../formField";
+import { type GetFormFieldSlots, type FormField, type GetFormFieldCheckedValue, type GetFormFieldValue } from "../formField";
 export interface UseDisabledLayoutParams {
     isDisabled(): boolean;
 }
-export declare function useDisabledLayout<GenericFormField extends FormField>(formField: GenericFormField, params: UseDisabledLayoutParams): FormField<GetFormFieldValue<GenericFormField>, GetFormFieldCheckedValue<GenericFormField> | undefined>;
+export declare function useDisabledLayout<GenericFormField extends FormField>(formField: GenericFormField, params: UseDisabledLayoutParams): FormField<GetFormFieldValue<GenericFormField>, GetFormFieldCheckedValue<GenericFormField> | undefined, GetFormFieldSlots<GenericFormField>>;

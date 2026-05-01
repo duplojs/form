@@ -74,6 +74,7 @@ export default [
 				"svg": "always",
 				"math": "always"
 			}],
+			"vue/prefer-import-from-vue": "off",
 			"@stylistic/js/max-len": "off",
 			"@typescript-eslint/no-unsafe-argument": "off",
 			"@typescript-eslint/no-unsafe-call": "off",

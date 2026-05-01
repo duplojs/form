@@ -1,6 +1,7 @@
-import { createForm, createInput, createTemplate, useStepLayout } from "@V";
+import { createForm, createFormField, createInput, createTemplate, useStepLayout } from "@V";
 import { E, sleep } from "@duplojs/utils";
 import { mount } from "@vue/test-utils";
+import { h } from "vue";
 import TextInput from "@test-utils/TextInput.vue";
 import TextInputWithErrorExpose from "@test-utils/TextInputWithErrorExpose.vue";
 import TextInputWithExpose from "@test-utils/TextInputWithExpose.vue";
@@ -14,7 +15,7 @@ describe("useStepLayout", () => {
 			[
 				createInput(TextInput, { defaultValue: "first-default" })(),
 				createInput(TextInput, { defaultValue: "second-default" })(),
-			] as const,
+			],
 			{
 				errorMessageNotAtLastStep: "Go to the end",
 			},
@@ -35,7 +36,7 @@ describe("useStepLayout", () => {
 		expect(wrapper.find("#step-form-fields-count").text()).toBe("2");
 
 		expect(check()).toStrictEqual(
-			E.error([{ key: "form-field" }]),
+			E.error([{ key: "FRM_STP" }]),
 		);
 		await sleep();
 		expect(wrapper.find("#step-error-message").text()).toBe("Go to the end");
@@ -87,7 +88,7 @@ describe("useStepLayout", () => {
 			[
 				createInput(TextInputWithErrorExpose, { defaultValue: "first-default" })(),
 				createInput(TextInput, { defaultValue: "second-default" })(),
-			] as const,
+			],
 			{
 				template: localTemplate,
 				errorMessageNotAtLastStep: "Go to the end",
@@ -114,7 +115,7 @@ describe("useStepLayout", () => {
 			[
 				createInput(TextInput, { defaultValue: "first-default" })(),
 				createInput(TextInputWithErrorExpose, { defaultValue: "second-default" })(),
-			] as const,
+			],
 			{
 				errorMessageNotAtLastStep: "Go to the end",
 			},
@@ -132,13 +133,47 @@ describe("useStepLayout", () => {
 		expect(wrapper.find("#step-error-message").text()).toBe("");
 	});
 
+	it("moves back to the first failing step when multiple steps fail on final check", () => {
+		const useForm = createForm(testTemplates);
+		const failingField = createFormField(
+			(__, key: string) => ({
+				check: () => E.error([{ key }]),
+				reset: () => undefined,
+				dispose: () => undefined,
+				getVNode: () => h("div"),
+			}),
+			"default",
+		);
+		const { currentValue, check } = useForm(
+			useStepLayout(
+				[
+					failingField,
+					failingField,
+				],
+				{
+					errorMessageNotAtLastStep: "Go to the end",
+				},
+			),
+		);
+
+		currentValue.value.currentStep = 1;
+
+		expect(check()).toStrictEqual(
+			E.error([
+				{ key: "FRM_STP-0" },
+				{ key: "FRM_STP-1" },
+			]),
+		);
+		expect(currentValue.value.currentStep).toBe(0);
+	});
+
 	it("delegates reset and dispose to visited cached step instances", async() => {
 		const useForm = createForm(testTemplates);
 		const field = useStepLayout(
 			[
 				createInput(TextInputWithExpose, { defaultValue: "first-default" })(),
 				createInput(TextInputWithExpose, { defaultValue: "second-default" })(),
-			] as const,
+			],
 			{
 				errorMessageNotAtLastStep: "Go to the end",
 			},

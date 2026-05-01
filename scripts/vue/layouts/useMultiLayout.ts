@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/prefer-for-of */
-import { type GetFormFieldCheckedValue, type GetFormFieldValue, type FormField, createFormField, type ErrorProperties } from "@V/formField";
+import { type GetFormFieldCheckedValue, type GetFormFieldValue, type FormField, createFormField, type ErrorProperties, type GetFormFieldSlots, type FormFieldSlots, type MergeFormFieldSlots } from "@V/formField";
 import { computed, effectScope, h, type VNode } from "vue";
 import * as EE from "@duplojs/utils/either";
 import * as AA from "@duplojs/utils/array";
@@ -34,6 +34,7 @@ export type FormFieldEntry = [
 ];
 
 export interface UseMultiFieldLayoutParams {
+	class?: string;
 	template?: Templates["multi"];
 }
 
@@ -48,7 +49,10 @@ export function useMultiLayout<
 	},
 	{
 		[Prop in keyof GenericFormFieldWrapper]: GetFormFieldCheckedValue<GenericFormFieldWrapper[Prop]>
-	}
+	},
+	MergeFormFieldSlots<
+		GenericFormFieldWrapper[keyof GenericFormFieldWrapper]
+	>
 >;
 
 export function useMultiLayout<
@@ -62,7 +66,10 @@ export function useMultiLayout<
 	},
 	{
 		[Entry in GenericFormFieldEntry as string]: GetFormFieldCheckedValue<Entry[1]>
-	}
+	},
+	MergeFormFieldSlots<
+		GenericFormFieldEntry[1]
+	>
 >;
 
 export function useMultiLayout(
@@ -77,7 +84,9 @@ export function useMultiLayout(
 		: Object.entries(formFields);
 
 	return createFormField(
-		(modelValue, key, templates) => {
+		(modelValue, parentKey, templates, getSlot) => {
+			const key = `${parentKey}_MUL`;
+
 			const template = params?.template ?? templates.multi;
 
 			const scope = effectScope();
@@ -95,6 +104,7 @@ export function useMultiLayout(
 								}),
 								`${key}-${subKey}`,
 								templates,
+								getSlot,
 							),
 						] as const,
 					);
@@ -154,6 +164,7 @@ export function useMultiLayout(
 						fieldKey: key,
 						getFormFields: getFormFieldVNodes,
 						getCurrentValue,
+						class: params?.class,
 					},
 					{
 						formField: getFormFieldVNodes,

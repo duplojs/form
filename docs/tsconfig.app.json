@@ -5,5 +5,4 @@
 	"types": ["vitepress/client"],
   },
   "include": [".vitepress/**/*.vue", ".vitepress/**/*.ts"],
-  "exclude": ["libs/**/*.ts", "examples/**/*.ts"],
 }

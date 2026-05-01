@@ -5,4 +5,4 @@ set -e
 ARGUMENTS="$@"
 
 # scripts
-eslint --quiet $ARGUMENTS scripts/
+eslint --quiet $ARGUMENTS

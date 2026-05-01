@@ -1,20 +1,20 @@
-import { createForm, createInput, createTemplate, useRepeatLayout } from "@V";
+import { createForm, createInput, useRepeatLayout } from "@V";
 import { sleep } from "@duplojs/utils";
 import { mount } from "@vue/test-utils";
 import TextInput from "@test-utils/TextInput.vue";
 import { testTemplates } from "@test-utils/templates";
-import GridRepeatTemplate from "@V/templates/grid/GridRepeatTemplate.vue";
+import { templatesGrid } from "@test-utils/grid";
 
 describe("GridRepeatTemplate", () => {
 	it("renders a real repeat layout with grid wrappers and default design-system buttons", async() => {
-		const useForm = createForm(testTemplates);
+		const useForm = createForm(templatesGrid.useTemplates());
 		const { component, currentValue } = useForm(
 			useRepeatLayout(
 				createInput(TextInput, { defaultValue: "default" })(),
 				{
 					min: 1,
 					max: 2,
-					template: createTemplate("repeat", GridRepeatTemplate)({
+					template: templatesGrid.useRepeatTemplate({
 						columns: 8,
 						maxColumns: 12,
 						gap: 14,
@@ -30,20 +30,20 @@ describe("GridRepeatTemplate", () => {
 		expect(repeatTemplate.classes()).toEqual(
 			expect.arrayContaining([
 				"DFV-template_repeat",
-				"DFV-deep_form-field",
+				"DFV-deep_FRM_REP",
 				"DFV-grid-element",
 			]),
 		);
-		expect(repeatTemplate.attributes("style")).toContain("--columns: 8");
+		expect(repeatTemplate.attributes("style")).toContain("--DFV-grid-columns: 8");
 
 		const rootContainer = repeatTemplate.findAll(".DFV-grid-container")[0]!;
-		expect(rootContainer.attributes("style")).toContain("--max-columns: 12");
-		expect(rootContainer.attributes("style")).toContain("--gap: 14px");
+		expect(rootContainer.attributes("style")).toContain("--DFV-grid-max-columns: 12");
+		expect(rootContainer.attributes("style")).toContain("--DFV-grid-gap: 14px");
 		expect(repeatTemplate.findAll(".DFV-grid-repeat-element")).toHaveLength(1);
 		expect(repeatTemplate.findAll("button[type=\"button\"]")).toHaveLength(3);
-		expect(repeatTemplate.text()).toContain("reset");
-		expect(repeatTemplate.text()).toContain("x");
-		expect(repeatTemplate.text()).toContain("+");
+		expect(repeatTemplate.text()).toContain("Reset");
+		expect(repeatTemplate.text()).toContain("Remove");
+		expect(repeatTemplate.text()).toContain("Add");
 
 		await repeatTemplate.findAll("button[type=\"button\"]").at(-1)!.trigger("click");
 		await sleep();
@@ -62,7 +62,7 @@ describe("GridRepeatTemplate", () => {
 				{
 					min: 1,
 					max: 2,
-					template: createTemplate("repeat", GridRepeatTemplate)(),
+					template: templatesGrid.useRepeatTemplate(),
 				},
 			),
 		);
@@ -83,8 +83,8 @@ describe("GridRepeatTemplate", () => {
 		await sleep();
 		expect(currentValue.value).toStrictEqual(["default"]);
 
-		expect(repeatTemplate.attributes("style") ?? "").not.toContain("--columns:");
-		expect(repeatTemplate.findAll(".DFV-grid-container")[0]!.attributes("style") ?? "").not.toContain("--gap:");
+		expect(repeatTemplate.attributes("style") ?? "").not.toContain("--DFV-grid-columns:");
+		expect(repeatTemplate.findAll(".DFV-grid-container")[0]!.attributes("style") ?? "").not.toContain("--DFV-grid-gap:");
 		expect(repeatTemplate.findAll(".DFV-grid-repeat-container")).toHaveLength(1);
 	});
 });

@@ -1,6 +1,6 @@
-/* eslint-disable @typescript-eslint/prefer-for-of */
-import { createFormField, type GetFormFieldCheckedValue, type FormField, type GetFormFieldValue, type FormFieldInstance, type ErrorProperties } from "@V/formField";
-import { simpleClone, unwrap, type AnyTuple } from "@duplojs/utils";
+
+import { createFormField, type GetFormFieldCheckedValue, type FormField, type GetFormFieldValue, type FormFieldInstance, type ErrorProperties, type GetFormFieldSlots, type FormFieldSlots, type MergeFormFieldSlots } from "@V/formField";
+import { simpleClone, type UnionToIntersection, unwrap, type AnyTuple, type SimplifyTopLevel } from "@duplojs/utils";
 import { computed, effectScope, h, ref, type VNode } from "vue";
 import { type VueComponent } from "@V/types";
 import { type Templates } from "@V/template";
@@ -34,8 +34,9 @@ declare module "@V/template" {
 }
 
 export interface UseStepLayoutParams {
-	template?: Templates["step"];
 	errorMessageNotAtLastStep: string;
+	class?: string;
+	template?: Templates["step"];
 }
 
 export function useStepLayout<
@@ -52,14 +53,17 @@ export function useStepLayout<
 			? InferredStep
 			: never;
 		steps: {
-			-readonly [Prop in Exclude<keyof GenericFormFields, keyof any[]>]: GetFormFieldValue<
+			-readonly [Prop in keyof GenericFormFields]: GetFormFieldValue<
 				Extract<GenericFormFields[Prop], FormField>
 			>
 		};
 	},
 	{
 		[Prop in keyof GenericFormFields]: GetFormFieldCheckedValue<GenericFormFields[Prop]>
-	}
+	},
+	MergeFormFieldSlots<
+		GenericFormFields[number]
+	>
 >;
 
 export function useStepLayout(
@@ -73,7 +77,8 @@ export function useStepLayout(
 		Record<number, unknown>
 	> {
 	return createFormField(
-		(modelValue, key, templates) => {
+		(modelValue, parentKey, templates, getSlot) => {
+			const key = `${parentKey}_STP`;
 			const template = params?.template ?? templates.step;
 
 			const cacheFormFields: Record<number, FormFieldInstance> = {};
@@ -96,6 +101,7 @@ export function useStepLayout(
 									}),
 									`${key}-${index}`,
 									templates,
+									getSlot,
 								);
 							}
 
@@ -119,16 +125,24 @@ export function useStepLayout(
 					return EE.error([{ key }]);
 				}
 
+				let firstStepIndexError: undefined | number = undefined;
 				for (let index = 0; index < formFieldInstances.length; index++) {
 					const formFieldInstance = formFieldInstances[index]!();
 
 					const checkResult = formFieldInstance.check();
 
 					if (EE.isLeft(checkResult)) {
+						if (firstStepIndexError === undefined) {
+							firstStepIndexError = index;
+						}
 						errors.push(...unwrap(checkResult));
 					} else {
 						result.push(unwrap(checkResult));
 					}
+				}
+
+				if (firstStepIndexError !== undefined) {
+					modelValue.value.currentStep = firstStepIndexError;
 				}
 
 				if (AA.minElements(errors, 1)) {
@@ -224,6 +238,7 @@ export function useStepLayout(
 						onNextStep,
 						onPreviousStep,
 						onResetStep,
+						class: params.class,
 					},
 					{
 						formField: getCurrentFormFieldStepVNodes,

@@ -28,7 +28,7 @@ describe("useUnionLayout", () => {
 		});
 		expect(typeof field.defaultValue.updateKind).toBe("function");
 		expect(() => void field.defaultValue.updateKind("b")).not.toThrow();
-		expect(wrapper.find("#union-field-key").text()).toBe("form-field");
+		expect(wrapper.find("#union-field-key").text()).toBe("FRM_UNI");
 		expect(wrapper.find("#union-current-kind").text()).toBe("a");
 		expect(wrapper.find("#union-current-value").text()).toBe(JSON.stringify({
 			kind: "a",
@@ -252,7 +252,7 @@ describe("useUnionLayout", () => {
 			value: "a-default",
 			updateKind: (arg: string) => {},
 		});
-		const instance = field.new(modelValue, "root", testTemplates);
+		const instance = field.new(modelValue, "root", testTemplates, () => null);
 
 		expect(instance.check()).toStrictEqual(
 			E.success({

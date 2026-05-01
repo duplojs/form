@@ -1,4 +1,4 @@
-import { createFormField, type FormField, type GetFormFieldCheckedValue, type GetFormFieldValue } from "@V/formField";
+import { createFormField, type GetFormFieldSlots, type FormField, type GetFormFieldCheckedValue, type GetFormFieldValue } from "@V/formField";
 import * as EE from "@duplojs/utils/either";
 import { h } from "vue";
 
@@ -13,7 +13,8 @@ export function useDisabledLayout<
 	params: UseDisabledLayoutParams
 ): FormField<
 	GetFormFieldValue<GenericFormField>,
-	GetFormFieldCheckedValue<GenericFormField> | undefined
+	GetFormFieldCheckedValue<GenericFormField> | undefined,
+	GetFormFieldSlots<GenericFormField>
 >;
 
 export function useDisabledLayout(
@@ -21,11 +22,14 @@ export function useDisabledLayout(
 	params: UseDisabledLayoutParams,
 ): FormField {
 	return createFormField(
-		(modelValue, key, templates) => {
+		(modelValue, parentKey, templates, getSlot) => {
+			const key = `${parentKey}_DIS`;
+
 			const formFieldInstance = formField.new(
 				modelValue,
 				key,
 				templates,
+				getSlot,
 			);
 
 			const check = () => {

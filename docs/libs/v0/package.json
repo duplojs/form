@@ -3,24 +3,25 @@
   "type": "module",
   "exports": {
     "./vue": {
+      "types": "./dist/vue/index.d.ts",
       "import": "./dist/vue/index.js",
-      "require": "./dist/vue/index.cjs",
-      "types": "./dist/vue/index.d.ts"
+      "require": "./dist/vue/index.cjs"
     },
-    "./vue/grid": {
-      "import": "./dist/vue/grid.js",
-      "require": "./dist/vue/grid.cjs",
-      "types": "./dist/vue/templates/grid/index.d.ts"
+    "./vueGrid": {
+      "types": "./dist/vue/templates/grid/index.d.ts",
+      "import": "./dist/vue/templates/grid/index.js",
+      "require": "./dist/vue/templates/grid/index.cjs"
     },
-    "./vue/grid.css": "./dist/vue/grid.css",
-    "./vue/designSystem": {
-      "import": "./dist/vue/designSystem.js",
-      "require": "./dist/vue/designSystem.cjs",
-      "types": "./dist/vue/designSystem/index.d.ts"
-    }
+    "./vueGrid.css": "./dist/vue/assets/index.css",
+    "./vueDesignSystem": {
+      "types": "./dist/vue/designSystem/index.d.ts",
+      "import": "./dist/vue/designSystem/index.js",
+      "require": "./dist/vue/designSystem/index.cjs"
+    },
+    "./vueDesignSystem.css": "./dist/vue/assets/index2.css"
   },
   "peerDependencies": {
-    "@duplojs/utils": ">=1.6.1 <2.0.0",
+    "@duplojs/utils": ">=1.7.0 <2.0.0",
     "vue": ">=3.5.30 <4.0.0"
   }
 }

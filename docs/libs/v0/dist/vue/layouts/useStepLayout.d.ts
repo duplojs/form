@@ -1,4 +1,4 @@
-import { type GetFormFieldCheckedValue, type FormField, type GetFormFieldValue } from "../formField";
+import { type GetFormFieldCheckedValue, type FormField, type GetFormFieldValue, type MergeFormFieldSlots } from "../formField";
 import { type AnyTuple } from "@duplojs/utils";
 import { type VNode } from "vue";
 import { type VueComponent } from "../types";
@@ -28,14 +28,15 @@ declare module "../template" {
     }
 }
 export interface UseStepLayoutParams {
-    template?: Templates["step"];
     errorMessageNotAtLastStep: string;
+    class?: string;
+    template?: Templates["step"];
 }
 export declare function useStepLayout<const GenericFormFields extends AnyTuple<FormField>>(formFields: GenericFormFields, params: UseStepLayoutParams): FormField<{
     currentStep: Exclude<keyof GenericFormFields, keyof any[]> extends `${infer InferredStep extends number}` ? InferredStep : never;
     steps: {
-        -readonly [Prop in Exclude<keyof GenericFormFields, keyof any[]>]: GetFormFieldValue<Extract<GenericFormFields[Prop], FormField>>;
+        -readonly [Prop in keyof GenericFormFields]: GetFormFieldValue<Extract<GenericFormFields[Prop], FormField>>;
     };
 }, {
     [Prop in keyof GenericFormFields]: GetFormFieldCheckedValue<GenericFormFields[Prop]>;
-}>;
+}, MergeFormFieldSlots<GenericFormFields[number]>>;

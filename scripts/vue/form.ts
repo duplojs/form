@@ -1,6 +1,7 @@
-import { type FunctionalComponent, h, type HTMLAttributes, type Ref, ref } from "vue";
-import { type GetFormFieldCheckedValue, type GetFormFieldValue, type FormField, type FormFieldInstance } from "./formField";
-import { simpleClone } from "@duplojs/utils";
+import { type FunctionalComponent, h, type HTMLAttributes, normalizeClass, type Ref, ref } from "vue";
+import { type GetFormFieldCheckedValue, type GetFormFieldValue, type FormField, type FormFieldInstance, type GetFormFieldSlots, type FormFieldSlots } from "./formField";
+import type * as EE from "@duplojs/utils/either";
+import { type AnyFunction, simpleClone, type SimplifyTopLevel, type Unwrap } from "@duplojs/utils";
 import { type Templates } from "./template";
 import { type VueComponent } from "./types";
 
@@ -33,12 +34,23 @@ export interface FormProperties<
 	component: FunctionalComponent<
 		HTMLAttributes,
 		{},
-		{ default?(): any }
+		SimplifyTopLevel<
+			& { default?(): any }
+			& (
+				GetFormFieldSlots<GenericFormField> extends infer InferredSlots extends FormFieldSlots
+					? {
+						[Prop in keyof InferredSlots]: (params: InferredSlots[Prop]) => any
+					}
+					: {}
+			)
+		>
 	>;
 }
 
 export interface UseFormParams {
+	class?: string;
 	template?: Templates["form"];
+
 }
 
 export type UseForm = <
@@ -52,14 +64,17 @@ export function createForm(templates: Templates): UseForm;
 
 export function createForm(templates: Templates) {
 	return (formField: FormField, params: UseFormParams = {}): FormProperties => {
+		const key = "FRM";
 		const templateForm = params.template ?? templates.form;
 
 		const currentValue = ref(simpleClone(formField.defaultValue));
+		const formSlots = ref<Record<string, AnyFunction<[any]>> | null>(null);
 
 		const formFieldInstance = formField.new(
 			currentValue,
-			"form-field",
+			key,
 			templates,
+			(name, params) => formSlots.value?.[name]?.(params) ?? null,
 		);
 
 		const check = () => formFieldInstance.check();
@@ -75,20 +90,25 @@ export function createForm(templates: Templates) {
 
 		const formFieldVNode = formFieldInstance.getVNode();
 
-		const component: FormProperties["component"] = (props, { slots }) => h(
-			() => templateForm.getVNode(
-				{
-					...props,
-					fieldKey: "form",
-					onSubmit: () => {},
-					getCurrentValue,
-				},
-				{
-					submitter: slots.default ?? (() => null),
-					formField: () => formFieldVNode,
-				},
-			),
-		);
+		const component: FormProperties["component"] = (props, { slots }) => {
+			formSlots.value = slots;
+
+			return h(
+				() => templateForm.getVNode(
+					{
+						...props,
+						class: normalizeClass([props.class, params.class]),
+						fieldKey: key,
+						onSubmit: () => {},
+						getCurrentValue,
+					},
+					{
+						submitter: slots.default ?? (() => null),
+						formField: () => formFieldVNode,
+					},
+				),
+			);
+		};
 
 		return {
 			currentValue,
@@ -99,3 +119,13 @@ export function createForm(templates: Templates) {
 		};
 	};
 }
+
+export type GetCheckedValue<
+	GenericCheck extends FormProperties["check"],
+> = Unwrap<
+	Extract<
+		ReturnType<GenericCheck>,
+		EE.Right
+	>
+>;
+

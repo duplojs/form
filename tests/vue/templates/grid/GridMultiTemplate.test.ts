@@ -1,9 +1,8 @@
-import { createForm, createInput, createTemplate, useMultiLayout } from "@V";
+import { createForm, createInput, useMultiLayout } from "@V";
 import { mount } from "@vue/test-utils";
 import TextInput from "@test-utils/TextInput.vue";
 import { testTemplates } from "@test-utils/templates";
-import GridMultiTemplate from "@V/templates/grid/GridMultiTemplate.vue";
-
+import { templatesGrid } from "@test-utils/grid";
 describe("GridMultiTemplate", () => {
 	it("renders a real multi layout inside the grid container with layout styles", async() => {
 		const useForm = createForm(testTemplates);
@@ -14,7 +13,7 @@ describe("GridMultiTemplate", () => {
 					second: createInput(TextInput, { defaultValue: "second-default" })(),
 				},
 				{
-					template: createTemplate("multi", GridMultiTemplate)({
+					template: templatesGrid.useMultiTemplate({
 						columns: 7,
 						maxColumns: 10,
 						gap: 9,
@@ -28,14 +27,14 @@ describe("GridMultiTemplate", () => {
 		expect(multiTemplate.classes()).toEqual(
 			expect.arrayContaining([
 				"DFV-template_multi",
-				"DFV-deep_form-field",
+				"DFV-deep_FRM_MUL",
 				"DFV-grid-container",
 				"DFV-grid-element",
 			]),
 		);
-		expect(multiTemplate.attributes("style")).toContain("--columns: 7");
-		expect(multiTemplate.attributes("style")).toContain("--max-columns: 10");
-		expect(multiTemplate.attributes("style")).toContain("--gap: 9px");
+		expect(multiTemplate.attributes("style")).toContain("--DFV-grid-columns: 7");
+		expect(multiTemplate.attributes("style")).toContain("--DFV-grid-max-columns: 10");
+		expect(multiTemplate.attributes("style")).toContain("--DFV-grid-gap: 9px");
 		expect(multiTemplate.findAll("#test-text-input")).toHaveLength(2);
 
 		await multiTemplate.findAll("#test-text-input")[0]!.setValue("first-value");
@@ -54,7 +53,7 @@ describe("GridMultiTemplate", () => {
 					first: createInput(TextInput, { defaultValue: "first-default" })(),
 				},
 				{
-					template: createTemplate("multi", GridMultiTemplate)({
+					template: templatesGrid.useMultiTemplate({
 						columns: 3,
 					}),
 				},
@@ -63,7 +62,7 @@ describe("GridMultiTemplate", () => {
 		const wrapper = mount(component);
 		const multiTemplate = wrapper.get(".DFV-template_multi");
 
-		expect(multiTemplate.attributes("style")).toContain("--columns: 3");
-		expect(multiTemplate.attributes("style")).not.toContain("--gap:");
+		expect(multiTemplate.attributes("style")).toContain("--DFV-grid-columns: 3");
+		expect(multiTemplate.attributes("style")).not.toContain("--DFV-grid-gap:");
 	});
 });

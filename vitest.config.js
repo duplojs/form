@@ -1,6 +1,6 @@
 import { defineConfig } from "vitest/config";
-import tsconfigPaths from 'vite-tsconfig-paths'
 import vue from "@vitejs/plugin-vue";
+import tsconfigPaths from 'vite-tsconfig-paths'
 import { Path } from "@duplojs/utils";
 
 export default defineConfig({

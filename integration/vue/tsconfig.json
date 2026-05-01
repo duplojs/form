@@ -1,0 +1,13 @@
+{
+  "extends": "../../tsconfig.app.json",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+	  "@testClient": ["./testClient.ts"],
+	  "@envs": ["./envs.ts"]
+    },
+	"types": ["web"],
+  },
+  "include": ["**/*.ts", "**/*.vue"],
+  "exclude": ["playwright.config.ts"],
+}

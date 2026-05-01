@@ -22,7 +22,7 @@ describe("useCheckLayout", () => {
 		const wrapper = mount(component);
 
 		expect(wrapper.find("#test-text-input").exists()).toBe(true);
-		expect(wrapper.find("#check-field-key").text()).toBe("form-field");
+		expect(wrapper.find("#check-field-key").text()).toBe("FRM_CHK");
 		expect(wrapper.find("#check-current-value").text()).toBe("default");
 		expect(wrapper.find("#check-error-message").text()).toBe("");
 
@@ -30,7 +30,7 @@ describe("useCheckLayout", () => {
 		expect(E.isLeft(firstCheck)).toBe(true);
 		expect(unwrap(firstCheck)).toMatchObject([
 			{
-				key: "form-field",
+				key: "FRM_CHK",
 				dataParserError: {
 					issues: [
 						{
@@ -99,7 +99,7 @@ describe("useCheckLayout", () => {
 		const wrapper = mount(component);
 
 		expect(wrapper.find("#local-check-template").exists()).toBe(true);
-		expect(wrapper.find("#local-check-field-key").text()).toBe("form-field");
+		expect(wrapper.find("#local-check-field-key").text()).toBe("FRM_CHK");
 		expect(wrapper.find("#test-text-input").exists()).toBe(true);
 
 		await wrapper.find("#test-text-input").setValue("value");
@@ -148,6 +148,60 @@ describe("useCheckLayout", () => {
 		expect(E.isLeft(check())).toBe(true);
 		await sleep();
 		expect(wrapper.find("#check-error-message").text()).toBe("Error");
+	});
+
+	it("applies refine before parsing, renders its error, and clears it when the value becomes valid", async() => {
+		const useForm = createForm(testTemplates);
+		const parser = {
+			parse: vi.fn(
+				(value: string) => E.success(value.toUpperCase()),
+			),
+		};
+		const { component, currentValue, check } = useForm(
+			useCheckLayout(
+				createInput(TextInput, {
+					defaultValue: "bad",
+				})(),
+				{
+					refine: (value) => value.length >= 3 && value.startsWith("ok")
+						? E.ok()
+						: E.error("Need an ok value"),
+					dataParser: parser as never,
+				},
+			),
+		);
+		const wrapper = mount(component);
+
+		expect(check()).toStrictEqual(
+			E.error([{ key: "FRM_CHK" }]),
+		);
+		expect(parser.parse).not.toHaveBeenCalled();
+		await sleep();
+		expect(wrapper.find("#check-error-message").text()).toBe("Need an ok value");
+
+		currentValue.value = "ok-value";
+		await sleep();
+		expect(wrapper.find("#check-error-message").text()).toBe("");
+		expect(parser.parse).toHaveBeenCalledWith("ok-value");
+		expect(check()).toStrictEqual(
+			E.success("OK-VALUE"),
+		);
+	});
+
+	it("returns the checked field value when no parser is provided", () => {
+		const useForm = createForm(testTemplates);
+		const { check } = useForm(
+			useCheckLayout(
+				createInput(TextInput, {
+					defaultValue: "default",
+				})(),
+				{},
+			),
+		);
+
+		expect(check()).toStrictEqual(
+			E.success("default"),
+		);
 	});
 
 	it("updates the dom when currentValue changes directly", async() => {

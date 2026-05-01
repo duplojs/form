@@ -1,27 +1,32 @@
-import { type MayBeGetter, type AnyFunction, type SimplifyTopLevel, type Unwrap } from "@duplojs/utils";
+import { type MayBeGetter, type AnyFunction, type SimplifyTopLevel, type Unwrap, type IsEqual, unwrap } from "@duplojs/utils";
+import type * as DP from "@duplojs/utils/dataParser";
 import * as EE from "@duplojs/utils/either";
 import { createFormField, type FormFieldInstance, type FormField } from "./formField";
 import { type VueComponent } from "./types";
-import { h, ref } from "vue";
+import { effectScope, h, ref, watch } from "vue";
 import { type Templates } from "@V/template";
 
 export interface InputTemplateProperties {
 	props: {
+		getLabel?(): string;
 		getCurrentValue(): unknown;
+		getErrorMessage?(): string | null;
+		fieldKey: string;
 	};
 	slots: {
 		input(): any;
-	};
-	expose: {
-		check?: FormFieldInstance["check"];
-		reset?: FormFieldInstance["reset"];
-		dispose?: FormFieldInstance["dispose"];
 	};
 }
 declare module "./template" {
 	interface AllowedTemplateComponents {
 		input: VueComponent<InputTemplateProperties>;
 	}
+}
+
+export interface ExposeInputProperties {
+	check?: FormFieldInstance["check"];
+	reset?: FormFieldInstance["reset"];
+	dispose?: FormFieldInstance["dispose"];
 }
 
 export type VueInputComponent = VueComponent<{
@@ -31,7 +36,7 @@ export type VueInputComponent = VueComponent<{
 	emits: {
 		"update:modelValue"(value: any): any;
 	};
-	expose: InputTemplateProperties["expose"];
+	expose: ExposeInputProperties;
 }>;
 
 export type GetVueInputComponentValue<
@@ -43,9 +48,11 @@ export type GetVueInputComponentValue<
 
 export type GetVueInputComponentProps<
 	GenericInputComponentInstance extends InstanceType<VueInputComponent>,
-> = Omit<
-	GenericInputComponentInstance["$props"],
-	"modelValue" | "onUpdate:modelValue"
+> = SimplifyTopLevel<
+	Omit<
+		GenericInputComponentInstance["$props"],
+		"modelValue" | "onUpdate:modelValue" | "id" | "ref" | "key"
+	>
 >;
 
 export type GetVueInputComponentCheckedValue<
@@ -87,7 +94,9 @@ export type CreateInputParams<
 
 export interface UseInputParams<
 	GenericInputComponentInstance extends InstanceType<VueInputComponent> = InstanceType<VueInputComponent>,
+	GenericDataParser extends DP.DataParser = DP.DataParser,
 > {
+	label?: MayBeGetter<string>;
 	defaultValue?: (
 		| Exclude<
 			GetVueInputComponentValue<GenericInputComponentInstance>,
@@ -100,16 +109,26 @@ export interface UseInputParams<
 			GenericInputComponentInstance
 		>
 	>;
+	dataParser?: GenericDataParser;
+	class?: string;
 	template?: Templates["input"];
 }
 
 export type UseInput<
 	GenericInputComponentInstance extends InstanceType<VueInputComponent> = InstanceType<VueInputComponent>,
-> = (
-	params?: UseInputParams<GenericInputComponentInstance>
+> = <
+	GenericDataParser extends DP.DataParser = never,
+>(
+	params?: UseInputParams<
+		GenericInputComponentInstance,
+		GenericDataParser
+	>
 ) => FormField<
 	GetVueInputComponentValue<GenericInputComponentInstance>,
-	GetVueInputComponentCheckedValue<GenericInputComponentInstance>
+	IsEqual<GenericDataParser, never> extends true
+		? GetVueInputComponentCheckedValue<GenericInputComponentInstance>
+		: DP.Output<GenericDataParser>,
+	{}
 >;
 
 export function createInput<
@@ -141,8 +160,14 @@ export function createInput(
 			? params.props
 			: () => params.props;
 
+		const preparedLabel = params.label;
+		const getLabel = typeof preparedLabel === "string"
+			? () => preparedLabel
+			: preparedLabel;
+
 		return createFormField(
-			(modelValue, key, templates) => {
+			(modelValue, parentKey, templates) => {
+				const key = `${parentKey}_INP`;
 				const template = params?.template ?? defaultParams.template ?? templates.input;
 				let isDispose = false;
 
@@ -150,19 +175,62 @@ export function createInput(
 					InstanceType<VueInputComponent> | null
 				>(null);
 
+				const scope = effectScope();
+				const { errorMessage } = scope.run(() => {
+					const errorMessage = ref<null | string>(null);
+
+					watch(
+						modelValue,
+						() => {
+							if (errorMessage.value !== null) {
+								check();
+							}
+						},
+						{ flush: "post" },
+					);
+
+					return {
+						errorMessage,
+					};
+				})!;
+
 				const check = () => {
-					if (componentRef.value?.check) {
-						return componentRef.value.check();
+					const result = componentRef.value?.check?.() || EE.success(modelValue.value);
+
+					if (params.dataParser === undefined || EE.isLeft(result)) {
+						return result;
 					}
 
-					return EE.success(modelValue.value);
+					const value = unwrap(result);
+
+					const parserResult = params.dataParser.parse(value);
+
+					if (EE.isLeft(parserResult)) {
+						const dataParserError = unwrap(parserResult);
+						errorMessage.value = dataParserError.issues[0]?.message ?? "Error";
+
+						return EE.error(
+							[
+								{
+									key,
+									dataParserError,
+								},
+							] as const,
+						);
+					}
+
+					errorMessage.value = null;
+
+					return parserResult;
 				};
 
 				const reset = () => {
 					componentRef.value?.reset?.();
+					errorMessage.value = null;
 				};
 
 				const dispose = () => {
+					scope.stop();
 					isDispose = true;
 					componentRef.value?.dispose?.();
 				};
@@ -192,11 +260,16 @@ export function createInput(
 
 				const getInputVNode = () => inputVNode;
 
+				const getErrorMessage = params.dataParser && (() => errorMessage.value);
+
 				const getVNode = () => h(
 					() => template.getVNode(
 						{
+							getLabel,
 							fieldKey: key,
 							getCurrentValue,
+							getErrorMessage,
+							class: params.class,
 						},
 						{
 							input: getInputVNode,

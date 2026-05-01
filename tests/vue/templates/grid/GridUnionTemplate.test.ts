@@ -1,9 +1,9 @@
-import { createForm, createInput, createTemplate, useUnionLayout } from "@V";
+import { createForm, createInput, useUnionLayout } from "@V";
 import { sleep } from "@duplojs/utils";
 import { mount } from "@vue/test-utils";
 import TextInput from "@test-utils/TextInput.vue";
 import { testTemplates } from "@test-utils/templates";
-import { GridUnionTemplate } from "@V/templates/grid";
+import { templatesGrid } from "@test-utils/grid";
 
 describe("GridUnionTemplate", () => {
 	it("renders a real union layout with the design-system select and grid container", async() => {
@@ -16,7 +16,7 @@ describe("GridUnionTemplate", () => {
 				] as const,
 				{
 					defaultKind: "aa",
-					template: createTemplate("union", GridUnionTemplate)({
+					template: templatesGrid.useUnionTemplate({
 						columns: 9,
 						maxColumns: 11,
 						gap: 7,
@@ -34,20 +34,20 @@ describe("GridUnionTemplate", () => {
 		expect(unionTemplate.classes()).toEqual(
 			expect.arrayContaining([
 				"DFV-template_union",
-				"DFV-deep_form-field",
+				"DFV-deep_FRM_UNI",
 				"DFV-grid-element",
 			]),
 		);
-		expect(unionTemplate.attributes("style")).toContain("--columns: 9");
+		expect(unionTemplate.attributes("style")).toContain("--DFV-grid-columns: 9");
 
-		const select = unionTemplate.get<HTMLSelectElement>("#select-union-form-field");
+		const select = unionTemplate.get<HTMLSelectElement>(".DFV-select-input");
 		expect(select.findAll("option")).toHaveLength(2);
 		expect(select.text()).toContain("Kind A");
 		expect(select.text()).toContain("Kind B");
 
 		const container = unionTemplate.get(".DFV-grid-container");
-		expect(container.attributes("style")).toContain("--max-columns: 11");
-		expect(container.attributes("style")).toContain("--gap: 7px");
+		expect(container.attributes("style")).toContain("--DFV-grid-max-columns: 11");
+		expect(container.attributes("style")).toContain("--DFV-grid-gap: 7px");
 		expect(unionTemplate.get("#test-text-input").element.id).toBe("test-text-input");
 
 		await select.setValue("bb");
@@ -66,7 +66,7 @@ describe("GridUnionTemplate", () => {
 				] as const,
 				{
 					defaultKind: "a",
-					template: createTemplate("union", GridUnionTemplate)({
+					template: templatesGrid.useUnionTemplate({
 						columns: 4,
 					}),
 				},
@@ -74,10 +74,10 @@ describe("GridUnionTemplate", () => {
 		);
 		const wrapper = mount(component);
 		const unionTemplate = wrapper.get(".DFV-template_union");
-		const select = unionTemplate.get<HTMLSelectElement>("#select-union-form-field");
+		const select = unionTemplate.get<HTMLSelectElement>(".DFV-select-input");
 
 		expect(select.text()).toContain("a");
 		expect(select.text()).toContain("b");
-		expect(unionTemplate.get(".DFV-grid-container").attributes("style") ?? "").not.toContain("--gap:");
+		expect(unionTemplate.get(".DFV-grid-container").attributes("style") ?? "").not.toContain("--DFV-grid-gap:");
 	});
 });

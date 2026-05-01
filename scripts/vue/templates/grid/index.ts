@@ -1,65 +1,129 @@
 import { createTemplate, type Templates } from "@V/template";
 
-import "./styles.scss";
-import GridFormTemplate from "./GridFormTemplate.vue";
-import GridInputTemplate from "./GridInputTemplate.vue";
-import GridMultiTemplate from "./GridMultiTemplate.vue";
-import GridCheckTemplate from "./GridCheckTemplate.vue";
-import GridRepeatTemplate from "./GridRepeatTemplate.vue";
-import GridUnionTemplate from "./GridUnionTemplate.vue";
-import GridStepByStepTemplate from "./GridStepByStepTemplate.vue";
-import { useCheckLayout } from "@V/layouts";
+import "./grid.scss";
+import { GridCheckTemplate, GridFormTemplate, GridInputTemplate, GridMultiTemplate, GridRepeatTemplate, GridSectionTemplate, GridStepByStepTemplate, GridUnionTemplate } from "./components";
+import { type FormTemplateProperties } from "@V/form";
+import { type SimplifyTopLevel } from "@duplojs/utils";
+import { type InputTemplateProperties } from "@V/input";
+import { type SectionTemplateProperties, type CheckTemplateProperties, type MultiTemplateProperties, type RepeatTemplateProperties, type StepTemplateProperties, type UnionTemplateProperties } from "@V/layouts";
 
 export * from "./types";
-export { default as GridFormTemplate } from "./GridFormTemplate.vue";
-export { default as GridInputTemplate } from "./GridInputTemplate.vue";
-export { default as GridMultiTemplate } from "./GridMultiTemplate.vue";
-export { default as GridCheckTemplate } from "./GridCheckTemplate.vue";
-export { default as GridRepeatTemplate } from "./GridRepeatTemplate.vue";
-export { default as GridUnionTemplate } from "./GridUnionTemplate.vue";
-export { default as GridStepByStepTemplate } from "./GridStepByStepTemplate.vue";
+export * from "./components";
 
-export const useGridFormTemplate = createTemplate(
-	"form",
-	GridFormTemplate,
-);
+export interface CreateGridTemplatesInput {
+	form?: SimplifyTopLevel<
+		Omit<
+			InstanceType<typeof GridFormTemplate>["$props"],
+			keyof FormTemplateProperties["props"]
+		>
+	>;
+	input?: SimplifyTopLevel<
+		Omit<
+			InstanceType<typeof GridInputTemplate>["$props"],
+			keyof InputTemplateProperties["props"]
+		>
+	>;
+	multi?: SimplifyTopLevel<
+		Omit<
+			InstanceType<typeof GridMultiTemplate>["$props"],
+			keyof MultiTemplateProperties["props"]
+		>
+	>;
+	check?: SimplifyTopLevel<
+		Omit<
+			InstanceType<typeof GridCheckTemplate>["$props"],
+			keyof CheckTemplateProperties["props"]
+		>
+	>;
+	section?: SimplifyTopLevel<
+		Omit<
+			InstanceType<typeof GridSectionTemplate>["$props"],
+			keyof SectionTemplateProperties["props"]
+		>
+	>;
+	repeat: SimplifyTopLevel<
+		Omit<
+			InstanceType<typeof GridRepeatTemplate>["$props"],
+			keyof RepeatTemplateProperties["props"]
+		>
+	>;
+	step: SimplifyTopLevel<
+		Omit<
+			InstanceType<typeof GridStepByStepTemplate>["$props"],
+			keyof StepTemplateProperties["props"]
+		>
+	>;
+	union: SimplifyTopLevel<
+		Omit<
+			InstanceType<typeof GridUnionTemplate>["$props"],
+			keyof UnionTemplateProperties["props"]
+		>
+	>;
+}
 
-export const useGridInputTemplate = createTemplate(
-	"input",
-	GridInputTemplate,
-);
+export function createGridTemplates(
+	params: CreateGridTemplatesInput,
+) {
+	const useFormTemplate = createTemplate(
+		"form",
+		GridFormTemplate,
+		{ props: params.form },
+	);
+	const useInputTemplate = createTemplate(
+		"input",
+		GridInputTemplate,
+		{ props: params.input },
+	);
+	const useMultiTemplate = createTemplate(
+		"multi",
+		GridMultiTemplate,
+		{ props: params.multi },
+	);
+	const useCheckTemplate = createTemplate(
+		"check",
+		GridCheckTemplate,
+		{ props: params.check },
+	);
+	const useRepeatTemplate = createTemplate(
+		"repeat",
+		GridRepeatTemplate,
+		{ props: params.repeat },
+	);
+	const useUnionTemplate = createTemplate(
+		"union",
+		GridUnionTemplate,
+		{ props: params.union },
+	);
+	const useStepByStepTemplate = createTemplate(
+		"step",
+		GridStepByStepTemplate,
+		{ props: params.step },
+	);
+	const useSectionTemplate = createTemplate(
+		"section",
+		GridSectionTemplate,
+		{ props: params.section },
+	);
 
-export const useGridMultiTemplate = createTemplate(
-	"multi",
-	GridMultiTemplate,
-);
+	return {
+		useFormTemplate,
+		useInputTemplate,
+		useMultiTemplate,
+		useCheckTemplate,
+		useRepeatTemplate,
+		useUnionTemplate,
+		useStepByStepTemplate,
+		useSectionTemplate,
 
-export const useGridCheckTemplate = createTemplate(
-	"check",
-	GridCheckTemplate,
-);
-
-export const useGridRepeatTemplate = createTemplate(
-	"repeat",
-	GridRepeatTemplate,
-);
-
-export const useGridUnionTemplate = createTemplate(
-	"union",
-	GridUnionTemplate,
-);
-
-export const useGridStepByStepTemplate = createTemplate(
-	"step",
-	GridStepByStepTemplate,
-);
-
-export const defaultGridTemplates: Templates = {
-	check: useGridCheckTemplate(),
-	form: useGridFormTemplate(),
-	input: useGridInputTemplate(),
-	multi: useGridMultiTemplate(),
-	repeat: useGridRepeatTemplate(),
-	step: useGridStepByStepTemplate(),
-	union: useGridUnionTemplate(),
-};
+		useTemplates: (): Templates => ({
+			check: useCheckTemplate(),
+			form: useFormTemplate(),
+			input: useInputTemplate(),
+			multi: useMultiTemplate(),
+			repeat: useRepeatTemplate(),
+			section: useSectionTemplate(),
+			step: useStepByStepTemplate(),
+			union: useUnionTemplate(),
+		}),
+	};
+}

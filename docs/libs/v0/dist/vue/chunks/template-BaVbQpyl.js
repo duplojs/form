@@ -1,0 +1,1 @@
+"use strict";const r=require("./kind-Dcym95WX.js"),c=require("vue"),l=r.createVueFormKind("template");function d(n,a,t){return s=>l.setTo({getVNode:(e,i)=>c.h(a,{...t?.props,...s,...e,class:c.normalizeClass([t?.props?.class,s?.class,e.class,`DFV-template_${n} DFV-deep_${e.fieldKey}`])},i)})}exports.createTemplate=d;exports.templateKind=l;

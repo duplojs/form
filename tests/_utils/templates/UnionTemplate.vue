@@ -27,7 +27,9 @@ const modelValue = computed({
 <template>
 	<div>
 		<small id="union-field-key">{{ props.fieldKey }}</small>
+
 		<small id="union-current-value">{{ JSON.stringify(props.getCurrentValue()) }}</small>
+
 		<small id="union-current-kind">{{ props.getCurrentKind() }}</small>
 
 		<select

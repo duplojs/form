@@ -1,7 +1,7 @@
-import { createFormField, type FormField, type GetFormFieldValue } from "@V/formField";
+import { createFormField, type GetFormFieldCheckedValue, type FormField, type GetFormFieldValue, type GetFormFieldSlots } from "@V/formField";
 import * as EE from "@duplojs/utils/either";
 import type * as DP from "@duplojs/utils/dataParser";
-import { unwrap } from "@duplojs/utils";
+import { type IsEqual, unwrap } from "@duplojs/utils";
 import { effectScope, h, ref, watch } from "vue";
 import { type VueComponent } from "@V/types";
 import { type Templates } from "@V/template";
@@ -24,20 +24,29 @@ declare module "@V/template" {
 
 export interface UseCheckLayoutParams<
 	GenericDataParser extends DP.DataParser = DP.DataParser,
+	GenericCheckedValue extends unknown = unknown,
 > {
-	dataParser: GenericDataParser;
+	dataParser?: GenericDataParser;
+	refine?(value: GenericCheckedValue): EE.Ok | EE.Error<string>;
+	class?: string;
 	template?: Templates["check"];
 }
 
 export function useCheckLayout<
 	GenericFormField extends FormField,
-	GenericDataParser extends DP.DataParser,
+	GenericDataParser extends DP.DataParser = never,
 >(
 	formField: GenericFormField,
-	params: UseCheckLayoutParams<GenericDataParser>
+	params: UseCheckLayoutParams<
+		GenericDataParser,
+		GetFormFieldCheckedValue<GenericFormField>
+	>
 ): FormField<
 	GetFormFieldValue<GenericFormField>,
-	DP.Output<GenericDataParser>
+	IsEqual<GenericDataParser, never> extends true
+		? GetFormFieldCheckedValue<GenericFormField>
+		: DP.Output<GenericDataParser>,
+	GetFormFieldSlots<GenericFormField>
 >;
 
 export function useCheckLayout(
@@ -45,13 +54,15 @@ export function useCheckLayout(
 	params: UseCheckLayoutParams,
 ): FormField {
 	return createFormField(
-		(modelValue, key, templates) => {
+		(modelValue, parentKey, templates, getSlot) => {
+			const key = `${parentKey}_CHK`;
 			const template = params?.template ?? templates.check;
 
 			const formFieldInstance = formField.new(
 				modelValue,
 				key,
 				templates,
+				getSlot,
 			);
 
 			const scope = effectScope();
@@ -74,19 +85,29 @@ export function useCheckLayout(
 			})!;
 
 			const check = () => {
-				const fieldValue = formFieldInstance.check();
+				const fieldResult = formFieldInstance.check();
 
-				if (EE.isLeft(fieldValue)) {
-					return fieldValue;
+				if (EE.isLeft(fieldResult)) {
+					return fieldResult;
 				}
 
-				const result = params.dataParser.parse(
-					unwrap(fieldValue),
-				);
+				const fieldValue = unwrap(fieldResult);
+				const refineResult = params.refine?.(fieldValue);
+				if (EE.isLeft(refineResult)) {
+					errorMessage.value = unwrap(refineResult);
+
+					return EE.error(
+						[{ key }] as const,
+					);
+				}
+
+				const result = params.dataParser?.parse(
+					fieldValue,
+				) ?? EE.success(fieldValue);
 
 				if (EE.isLeft(result)) {
 					const dataParserError = unwrap(result);
-					errorMessage.value = dataParserError.issues[0]?.source.definition.errorMessage ?? "Error";
+					errorMessage.value = dataParserError.issues[0]?.message ?? "Error";
 
 					return EE.error(
 						[
@@ -126,6 +147,7 @@ export function useCheckLayout(
 						fieldKey: key,
 						getErrorMessage,
 						getCurrentValue,
+						class: params.class,
 					},
 					{ formField: getFormFieldVNode },
 				),

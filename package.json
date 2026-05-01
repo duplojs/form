@@ -20,6 +20,7 @@
   "scripts": {
     "build": "./.commands/build.sh",
     "dev:vue": "cd dev/vue && vite --config vite.config.js",
+    "dev:vue:integration": "npx -w integration/vue vite",
     "docs:dev": "npm -w docs run docs:dev",
     "docs:build": "npm -w docs run docs:build",
     "docs:preview": "npm -w docs run docs:preview",
@@ -27,6 +28,7 @@
     "test:tu:bench": "vitest bench",
     "test:tu:watch": "vitest --coverage --watch",
     "test:tu:update": "vitest --coverage --update",
+    "test:integration": "npm -w integration/vue run test",
     "test:types": "./.commands/test-types.sh",
     "test:lint": "./.commands/test-lint.sh",
     "test:lint:fix": "./.commands/test-lint.sh --fix",
@@ -34,29 +36,35 @@
   },
   "exports": {
     "./vue": {
+      "types": "./dist/vue/index.d.ts",
       "import": "./dist/vue/index.js",
-      "require": "./dist/vue/index.cjs",
-      "types": "./dist/vue/index.d.ts"
+      "require": "./dist/vue/index.cjs"
     },
-    "./vue/grid": {
-      "import": "./dist/vue/grid.js",
-      "require": "./dist/vue/grid.cjs",
-      "types": "./dist/vue/templates/grid/index.d.ts"
+    "./vueGrid": {
+      "types": "./dist/vue/templates/grid/index.d.ts",
+      "import": "./dist/vue/templates/grid/index.js",
+      "require": "./dist/vue/templates/grid/index.cjs"
     },
-    "./vue/grid.css": "./dist/vue/grid.css",
-    "./vue/designSystem": {
-      "import": "./dist/vue/designSystem.js",
-      "require": "./dist/vue/designSystem.cjs",
-      "types": "./dist/vue/designSystem/index.d.ts"
-    }
+    "./vueGrid.css": "./dist/vue/assets/index.css",
+    "./vueDesignSystem": {
+      "types": "./dist/vue/designSystem/index.d.ts",
+      "import": "./dist/vue/designSystem/index.js",
+      "require": "./dist/vue/designSystem/index.cjs"
+    },
+    "./vueDesignSystem.css": "./dist/vue/assets/index2.css"
   },
   "files": [
     "dist",
     "README.md"
   ],
   "peerDependencies": {
-    "@duplojs/utils": ">=1.6.1 <2.0.0",
+    "@duplojs/utils": ">=1.7.0 <2.0.0",
     "vue": ">=3.5.30 <4.0.0"
+  },
+  "peerDependenciesMeta": {
+    "vue": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@commitlint/cli": "19.8.1",
@@ -82,29 +90,7 @@
     "vue-tsc": "3.2.6"
   },
   "workspaces": [
-    "integration",
+    "integration/**",
     "docs"
-  ],
-  "keywords": [
-    "typescript",
-    "utils",
-    "functional-programming",
-    "immutable",
-    "pipe",
-    "curry",
-    "data-parser",
-    "pattern-matching",
-    "either",
-    "monad",
-    "array-utils",
-    "object-utils",
-    "string-utils",
-    "date-utils",
-    "ddd",
-    "clean-architecture",
-    "duplojs"
-  ],
-  "engines": {
-    "node": ">=22.15.1"
-  }
+  ]
 }
