@@ -1,120 +1,116 @@
-import { c as j, i as O, e as _, s as R, f as B } from "./chunks/input-BfByoR1U.js";
-import { a as ie } from "./chunks/input-BfByoR1U.js";
-import { c as ae } from "./chunks/kind-DwvbGHaV.js";
-import { ref as P, h as w, normalizeClass as G, effectScope as D, computed as T, watch as z } from "vue";
-import { simpleClone as A, unwrap as b } from "@duplojs/utils";
-import { c as de, t as ve } from "./chunks/template-Dz0VDr0a.js";
-function Y(r) {
-  return (s, e = {}) => {
-    const t = e.template ?? r.form, d = P(A(s.defaultValue)), i = P(null), l = s.new(
+import { c as C, i as M, e as R, s as b, f as Q } from "./chunks/input-C4gxrRt9.js";
+import { a as oe } from "./chunks/input-C4gxrRt9.js";
+import { c as ue } from "./chunks/kind-DwvbGHaV.js";
+import { ref as j, normalizeClass as z, effectScope as O, computed as A, watch as T } from "vue";
+import { simpleClone as _, unwrap as $ } from "@duplojs/utils";
+import { c as ae, t as le } from "./chunks/template-Dz0VDr0a.js";
+function G(s) {
+  return (n, e = {}) => {
+    const t = e.template ?? s.form, d = j(_(n.defaultValue)), i = j(null), a = n.new(
       d,
       "FRM",
-      r,
-      (m, S) => i.value?.[m]?.(S) ?? null
-    ), c = () => l.check(), v = () => {
-      l.reset(), d.value = A(s.defaultValue);
-    }, o = () => {
-      l.dispose();
-    }, a = () => d.value, g = l.getVNode();
+      s,
+      (v, N) => i.value?.[v]?.(N) ?? null
+    ), o = () => a.check(), h = () => {
+      a.reset(), d.value = _(n.defaultValue);
+    }, r = () => {
+      a.dispose();
+    }, f = () => d.value;
     return {
       currentValue: d,
-      component: (m, { slots: S }) => (i.value = S, w(
-        () => t.getVNode(
-          {
-            ...m,
-            class: G([m.class, e.class]),
-            fieldKey: "FRM",
-            onSubmit: () => {
-            },
-            getCurrentValue: a
+      component: (v, { slots: N }) => (i.value = N, t.getVNode(
+        {
+          ...v,
+          class: z([v.class, e.class]),
+          fieldKey: "FRM",
+          onSubmit: () => {
           },
-          {
-            submitter: S.default ?? (() => null),
-            formField: () => g
-          }
-        )
+          getCurrentValue: f
+        },
+        {
+          submitter: N.default ?? (() => null),
+          formField: () => a.getVNode()
+        }
       )),
-      reset: v,
-      dispose: o,
-      check: c
+      reset: h,
+      dispose: r,
+      check: o
     };
   };
 }
-function U(...r) {
-  if (r.length === 1) {
-    const [u] = r;
+function P(...s) {
+  if (s.length === 1) {
+    const [u] = s;
+    return (t) => P(t, u);
+  }
+  const [n, e] = s;
+  return n.length >= e;
+}
+function U(...s) {
+  if (s.length === 1) {
+    const [u] = s;
     return (t) => U(t, u);
   }
-  const [s, e] = r;
-  return s.length >= e;
+  const [n, e] = s;
+  return n.length - 1 === e;
 }
-function q(...r) {
-  if (r.length === 1) {
-    const [u] = r;
-    return (t) => q(t, u);
-  }
-  const [s, e] = r;
-  return s.length - 1 === e;
-}
-function Z(r, s) {
-  const e = r instanceof Array ? r : Object.entries(r);
-  return j(
+function J(s, n) {
+  const e = s instanceof Array ? s : Object.entries(s);
+  return C(
     (u, t, d, i) => {
-      const l = `${t}_MUL`, c = s?.template ?? d.multi, v = D(), { formFieldInstanceEntries: o } = v.run(() => ({
+      const a = `${t}_MUL`, o = n?.template ?? d.multi, h = O(), { formFieldInstanceEntries: r } = h.run(() => ({
         formFieldInstanceEntries: e.map(
           ([p, y]) => [
             p,
             y.new(
-              T({
+              A({
                 get: () => u.value[p],
                 set: (E) => {
                   u.value[p] = E;
                 }
               }),
-              `${l}-${p}`,
+              `${a}-${p}`,
               d,
               i
             )
           ]
         )
-      })), a = () => {
-        const F = {}, p = [];
-        for (let y = 0; y < o.length; y++) {
-          const [E, L] = o[y], $ = L.check();
-          O($) ? p.push(...b($)) : F[E] = b($);
+      })), f = () => {
+        const k = {}, p = [];
+        for (let y = 0; y < r.length; y++) {
+          const [E, L] = r[y], g = L.check();
+          M(g) ? p.push(...$(g)) : k[E] = $(g);
         }
-        return U(p, 1) ? _(p) : R(F);
-      }, g = () => {
-        o.forEach(
-          ([, F]) => {
-            F.reset();
+        return P(p, 1) ? R(p) : b(k);
+      }, F = () => {
+        r.forEach(
+          ([, k]) => {
+            k.reset();
           }
         );
-      }, h = () => {
-        v.stop(), o.forEach(
-          ([, F]) => {
-            F.dispose();
+      }, v = () => {
+        h.stop(), r.forEach(
+          ([, k]) => {
+            k.dispose();
           }
         );
-      }, m = () => u.value, S = o.map(
-        (F) => F[1].getVNode()
-      ), V = () => S;
+      }, N = () => u.value, m = () => r.map(
+        (k) => k[1].getVNode()
+      );
       return {
-        check: a,
-        reset: g,
-        dispose: h,
-        getVNode: () => w(
-          () => c.getVNode(
-            {
-              fieldKey: l,
-              getFormFields: V,
-              getCurrentValue: m,
-              class: s?.class
-            },
-            {
-              formField: V
-            }
-          )
+        check: f,
+        reset: F,
+        dispose: v,
+        getVNode: () => o.getVNode(
+          {
+            fieldKey: a,
+            getFormFields: m,
+            getCurrentValue: N,
+            class: n?.class
+          },
+          {
+            formField: m
+          }
         )
       };
     },
@@ -124,498 +120,473 @@ function Z(r, s) {
     )
   );
 }
-function x(r, s) {
-  return j(
+function W(s, n) {
+  return C(
     (e, u, t, d) => {
-      const i = `${u}_DIS`, l = r.new(
+      const i = `${u}_DIS`, a = s.new(
         e,
         i,
         t,
         d
-      ), c = () => s.isDisabled() ? R(void 0) : l.check(), v = () => {
-        l.reset();
-      }, o = () => {
-        l.dispose();
-      }, a = l.getVNode();
+      );
       return {
-        check: c,
-        reset: v,
-        dispose: o,
-        getVNode: () => w(
-          () => s.isDisabled() ? null : a
-        )
+        check: () => n.isDisabled() ? b(void 0) : a.check(),
+        reset: () => {
+          a.reset();
+        },
+        dispose: () => {
+          a.dispose();
+        },
+        getVNode: () => n.isDisabled() ? null : a.getVNode()
       };
     },
-    r.defaultValue
+    s.defaultValue
   );
 }
-function ee(r, s) {
-  return j(
+function X(s, n) {
+  return C(
     (e, u, t, d) => {
-      const i = `${u}_CHK`, l = s?.template ?? t.check, c = r.new(
+      const i = `${u}_CHK`, a = n?.template ?? t.check, o = s.new(
         e,
         i,
         t,
         d
-      ), v = D(), { errorMessage: o } = v.run(() => {
-        const p = P(null);
-        return z(
+      ), h = O(), { errorMessage: r } = h.run(() => {
+        const p = j(null);
+        return T(
           e,
           () => {
-            p.value !== null && a();
+            p.value !== null && f();
           },
           { flush: "post" }
         ), {
           errorMessage: p
         };
-      }), a = () => {
-        const p = c.check();
-        if (O(p))
+      }), f = () => {
+        const p = o.check();
+        if (M(p))
           return p;
-        const y = b(p), E = s.refine?.(y);
-        if (O(E))
-          return o.value = b(E), _(
+        const y = $(p), E = n.refine?.(y);
+        if (M(E))
+          return r.value = $(E), R(
             [{ key: i }]
           );
-        const L = s.dataParser?.parse(
+        const L = n.dataParser?.parse(
           y
-        ) ?? R(y);
-        if (O(L)) {
-          const $ = b(L);
-          return o.value = $.issues[0]?.message ?? "Error", _(
+        ) ?? b(y);
+        if (M(L)) {
+          const g = $(L);
+          return r.value = g.issues[0]?.message ?? "Error", R(
             [
               {
                 key: i,
-                dataParserError: $
+                dataParserError: g
               }
             ]
           );
         }
-        return o.value = null, L;
-      }, g = () => {
-        c.reset(), o.value = null;
-      }, h = () => {
-        v.stop(), c.dispose();
-      }, m = () => e.value, S = c.getVNode(), V = () => S, M = () => o.value;
+        return r.value = null, L;
+      }, F = () => {
+        o.reset(), r.value = null;
+      }, v = () => {
+        h.stop(), o.dispose();
+      }, N = () => e.value, m = () => o.getVNode(), w = () => r.value;
       return {
-        check: a,
-        reset: g,
-        dispose: h,
-        getVNode: () => w(
-          () => l.getVNode(
-            {
-              fieldKey: i,
-              getErrorMessage: M,
-              getCurrentValue: m,
-              class: s.class
-            },
-            { formField: V }
-          )
+        check: f,
+        reset: F,
+        dispose: v,
+        getVNode: () => a.getVNode(
+          {
+            fieldKey: i,
+            getErrorMessage: w,
+            getCurrentValue: N,
+            class: n.class
+          },
+          { formField: m }
         )
       };
     },
-    r.defaultValue
+    s.defaultValue
   );
 }
-function te(r, s) {
-  const e = s.min ?? 0, u = s.max;
-  return j(
-    (t, d, i, l) => {
-      const c = `${d}_REP`, v = s?.template ?? i.repeat, o = {}, a = (n) => (o[n] === void 0 && (o[n] = r.new(
-        T({
-          get: () => n in t.value ? t.value[n] : r.defaultValue,
-          set: (k) => {
-            n >= t.value.length || (t.value[n] = k);
+function Y(s, n) {
+  const e = n.min ?? 0, u = n.max;
+  return C(
+    (t, d, i, a) => {
+      const o = `${d}_REP`, h = n?.template ?? i.repeat, r = {}, f = (c) => (r[c] === void 0 && (r[c] = s.new(
+        A({
+          get: () => c in t.value ? t.value[c] : s.defaultValue,
+          set: (l) => {
+            c >= t.value.length || (t.value[c] = l);
           }
         }),
-        `${c}-${n}`,
+        `${o}-${c}`,
         i,
-        l
-      )), o[n]), g = D(), {
-        formFieldInstances: h
-      } = g.run(() => {
-        const n = P([]);
-        return z(
+        a
+      )), r[c]), F = O(), {
+        formFieldInstances: v
+      } = F.run(() => {
+        const c = j([]);
+        return T(
           () => t.value.length,
-          (k) => {
-            n.value = Array.from({ length: k }).map(
-              (f, I) => a(I)
+          (l) => {
+            c.value = Array.from({ length: l }).map(
+              (V, K) => f(K)
             );
           },
           { immediate: !0 }
         ), {
-          formFieldInstances: n
+          formFieldInstances: c
         };
-      }), m = () => {
-        const n = [], k = [];
-        for (let f = 0; f < h.value.length; f++) {
-          const C = h.value[f].check();
-          O(C) ? k.push(...b(C)) : n.push(b(C));
+      }), N = () => {
+        const c = [], l = [];
+        for (let V = 0; V < v.value.length; V++) {
+          const I = v.value[V].check();
+          M(I) ? l.push(...$(I)) : c.push($(I));
         }
-        return U(k, 1) ? _(k) : R(n);
-      }, S = () => {
-        Object.entries(o).forEach(
-          ([, n]) => {
-            n.reset();
+        return P(l, 1) ? R(l) : b(c);
+      }, m = () => {
+        Object.entries(r).forEach(
+          ([, c]) => {
+            c.reset();
           }
         );
-      }, V = () => {
-        g.stop(), Object.entries(o).forEach(
-          ([, n]) => {
-            n.dispose();
+      }, w = () => {
+        F.stop(), Object.entries(r).forEach(
+          ([, c]) => {
+            c.dispose();
           }
         );
-      }, M = () => t.value, F = {}, p = () => h.value.map(
-        (n, k) => (F[k] === void 0 && (F[k] = n.getVNode()), F[k])
-      ), y = () => h.value.length, E = () => {
+      }, k = () => t.value, p = () => v.value.map(
+        (c) => c.getVNode()
+      ), y = () => v.value.length, E = () => {
         t.value.length >= u || t.value.push(
-          A(r.defaultValue)
+          _(s.defaultValue)
         );
-      }, L = (n) => {
-        t.value.length <= e || t.value.splice(n, 1);
-      }, $ = (n) => {
-        n in t.value && (h.value[n]?.reset(), t.value[n] = A(r.defaultValue));
+      }, L = (c) => {
+        t.value.length <= e || t.value.splice(c, 1);
+      }, g = (c) => {
+        c in t.value && (v.value[c]?.reset(), t.value[c] = _(s.defaultValue));
       };
       return {
-        check: m,
-        reset: S,
-        dispose: V,
-        getVNode: () => w(
-          () => v.getVNode(
-            {
-              fieldKey: c,
-              getFormFields: p,
-              getFormFieldsQuantity: y,
-              getCurrentValue: M,
-              max: u,
-              min: e,
-              onAddElement: E,
-              onRemoveElement: L,
-              onResetElement: $,
-              class: s.class
-            },
-            {
-              formField: p
-            }
-          )
+        check: N,
+        reset: m,
+        dispose: w,
+        getVNode: () => h.getVNode(
+          {
+            fieldKey: o,
+            getFormFields: p,
+            getFormFieldsQuantity: y,
+            getCurrentValue: k,
+            max: u,
+            min: e,
+            onAddElement: E,
+            onRemoveElement: L,
+            onResetElement: g,
+            class: n.class
+          },
+          {
+            formField: p
+          }
         )
       };
     },
-    Array.from({ length: e }).fill(r.defaultValue)
+    Array.from({ length: e }).fill(s.defaultValue)
   );
 }
-function ne(r, s) {
-  const e = Object.fromEntries(r), u = Object.keys(e);
-  return j(
-    (t, d, i, l) => {
-      const c = `${d}_UNI`, v = s?.template ?? i.union;
-      let o = {};
-      const a = {}, g = D(), {
-        formFieldInstances: h
-      } = g.run(() => (z(
+function Z(s, n) {
+  const e = Object.fromEntries(s), u = Object.keys(e);
+  return C(
+    (t, d, i, a) => {
+      const o = `${d}_UNI`, h = n?.template ?? i.union;
+      let r = {};
+      const f = {}, F = O(), {
+        formFieldInstances: v
+      } = F.run(() => (T(
         t,
         () => {
-          t.value.updateKind = (n, ...k) => {
-            o[t.value.kind] = t.value.value;
-            const f = k.length === 1 ? k[0] : n in o ? o[n] : A(
-              e[n].defaultValue
+          t.value.updateKind = (S, ...c) => {
+            r[t.value.kind] = t.value.value;
+            const l = c.length === 1 ? c[0] : S in r ? r[S] : _(
+              e[S].defaultValue
             );
-            t.value.kind = n, t.value.value = f;
-          }, o = {};
+            t.value.kind = S, t.value.value = l;
+          }, r = {};
         },
         {
           immediate: !0
         }
       ), {
         formFieldInstances: Object.fromEntries(
-          r.map(
-            ([n, k]) => [
-              n,
-              () => (a[n] === void 0 && (a[n] = k.new(
-                T({
-                  get: () => n === t.value.kind ? t.value.value : e[n].defaultValue,
-                  set: (f) => {
-                    n === t.value.kind && (t.value.value = f);
+          s.map(
+            ([S, c]) => [
+              S,
+              () => (f[S] === void 0 && (f[S] = c.new(
+                A({
+                  get: () => S === t.value.kind ? t.value.value : e[S].defaultValue,
+                  set: (l) => {
+                    S === t.value.kind && (t.value.value = l);
                   }
                 }),
-                `${c}-${n}`,
+                `${o}-${S}`,
                 i,
-                l
-              )), a[n])
+                a
+              )), f[S])
             ]
           )
         )
-      })), m = () => {
-        const N = h[t.value.kind]().check();
-        return O(N) ? N : R({
+      })), N = () => {
+        const g = v[t.value.kind]().check();
+        return M(g) ? g : b({
           kind: t.value.kind,
-          value: b(N)
+          value: $(g)
         });
-      }, S = () => {
-        o = {}, Object.entries(a).forEach(
-          ([, N]) => {
-            N.reset();
+      }, m = () => {
+        r = {}, Object.entries(f).forEach(
+          ([, g]) => {
+            g.reset();
           }
         );
-      }, V = () => {
-        g.stop(), Object.entries(a).forEach(
-          ([, N]) => {
-            N.dispose();
+      }, w = () => {
+        F.stop(), Object.entries(f).forEach(
+          ([, g]) => {
+            g.dispose();
           }
         );
-      }, M = () => t.value, F = {}, p = Object.fromEntries(
-        Object.entries(h).map(
-          ([N, n]) => [
-            N,
-            () => (F[N] === void 0 && (F[N] = n().getVNode()), F[N])
-          ]
-        )
-      ), y = () => p[t.value.kind](), E = () => t.value.kind, L = (N) => {
-        e[N] !== void 0 && t.value.updateKind(N);
+      }, k = () => t.value, p = () => v[t.value.kind]().getVNode(), y = () => t.value.kind, E = (g) => {
+        e[g] !== void 0 && t.value.updateKind(g);
       };
       return {
-        check: m,
-        reset: S,
-        dispose: V,
-        getVNode: () => w(
-          () => v.getVNode(
-            {
-              fieldKey: c,
-              kinds: u,
-              getCurrentValue: M,
-              getCurrentKind: E,
-              onChangeKind: L,
-              class: s.class
-            },
-            {
-              formField: y
-            }
-          )
+        check: N,
+        reset: m,
+        dispose: w,
+        getVNode: () => h.getVNode(
+          {
+            fieldKey: o,
+            kinds: u,
+            getCurrentValue: k,
+            getCurrentKind: y,
+            onChangeKind: E,
+            class: n.class
+          },
+          {
+            formField: p
+          }
         )
       };
     },
     {
-      kind: s.defaultKind,
-      value: e[s.defaultKind].defaultValue,
+      kind: n.defaultKind,
+      value: e[n.defaultKind].defaultValue,
       updateKind: () => {
       }
     }
   );
 }
-function se(r, s) {
-  return j(
+function ee(s, n) {
+  return C(
     (e, u, t, d) => {
-      const i = `${u}_STP`, l = s?.template ?? t.step, c = {}, v = D(), {
-        formFieldInstances: o,
-        errorMessageNotAtLastStep: a
-      } = v.run(() => {
-        const f = P(null);
+      const i = `${u}_STP`, a = n?.template ?? t.step, o = {}, h = O(), {
+        formFieldInstances: r,
+        errorMessageNotAtLastStep: f
+      } = h.run(() => {
+        const l = j(null);
         return {
-          formFieldInstances: r.map(
-            (C, K) => (() => (c[K] === void 0 && (c[K] = C.new(
-              T({
-                get: () => e.value.steps[K],
-                set: (H) => {
-                  e.value.steps[K] = H;
+          formFieldInstances: s.map(
+            (K, I) => (() => (o[I] === void 0 && (o[I] = K.new(
+              A({
+                get: () => e.value.steps[I],
+                set: (x) => {
+                  e.value.steps[I] = x;
                 }
               }),
-              `${i}-${K}`,
+              `${i}-${I}`,
               t,
               d
-            )), c[K]))
+            )), o[I]))
           ),
-          errorMessageNotAtLastStep: f
+          errorMessageNotAtLastStep: l
         };
-      }), g = () => {
-        const f = [], I = [];
-        if (y() !== !0)
-          return a.value = s.errorMessageNotAtLastStep, _([{ key: i }]);
-        let C;
-        for (let K = 0; K < o.length; K++) {
-          const Q = o[K]().check();
-          O(Q) ? (C === void 0 && (C = K), I.push(...b(Q))) : f.push(b(Q));
+      }), F = () => {
+        const l = [], V = [];
+        if (p() !== !0)
+          return f.value = n.errorMessageNotAtLastStep, R([{ key: i }]);
+        let K;
+        for (let I = 0; I < r.length; I++) {
+          const D = r[I]().check();
+          M(D) ? (K === void 0 && (K = I), V.push(...$(D))) : l.push($(D));
         }
-        return C !== void 0 && (e.value.currentStep = C), U(I, 1) ? _(I) : R(f);
-      }, h = () => {
-        Object.values(c).forEach(
-          (f) => {
-            f.reset();
+        return K !== void 0 && (e.value.currentStep = K), P(V, 1) ? R(V) : b(l);
+      }, v = () => {
+        Object.values(o).forEach(
+          (l) => {
+            l.reset();
           }
         );
-      }, m = () => {
-        v.stop(), Object.values(c).forEach(
-          (f) => {
-            f.dispose();
-          }
-        );
-      }, S = () => e.value, V = {}, M = o.map(
-        (f, I) => () => (V[I] === void 0 && (V[I] = f().getVNode()), V[I])
-      ), F = () => M, p = () => e.value.currentStep, y = () => q(r, e.value.currentStep), E = () => M[e.value.currentStep](), L = () => a.value, $ = () => {
-        a.value = null;
-        const f = o[e.value.currentStep]().check();
-        if (O(f))
-          return;
-        const I = e.value.currentStep + 1;
-        e.value.steps[I] !== void 0 && (e.value.currentStep = I);
       }, N = () => {
-        a.value = null;
-        const f = e.value.currentStep - 1;
-        e.value.steps[f] !== void 0 && (e.value.currentStep = f);
-      }, n = () => {
-        a.value = null, o[e.value.currentStep]().reset(), e.value.steps[e.value.currentStep] = A(
-          r[e.value.currentStep]?.defaultValue
+        h.stop(), Object.values(o).forEach(
+          (l) => {
+            l.dispose();
+          }
+        );
+      }, m = () => e.value, w = () => r.map(
+        (l) => () => l().getVNode()
+      ), k = () => e.value.currentStep, p = () => U(s, e.value.currentStep), y = () => r[e.value.currentStep]().getVNode(), E = () => f.value, L = () => {
+        f.value = null;
+        const l = r[e.value.currentStep]().check();
+        if (M(l))
+          return;
+        const V = e.value.currentStep + 1;
+        e.value.steps[V] !== void 0 && (e.value.currentStep = V);
+      }, g = () => {
+        f.value = null;
+        const l = e.value.currentStep - 1;
+        e.value.steps[l] !== void 0 && (e.value.currentStep = l);
+      }, S = () => {
+        f.value = null, r[e.value.currentStep]().reset(), e.value.steps[e.value.currentStep] = _(
+          s[e.value.currentStep]?.defaultValue
         );
       };
       return {
-        check: g,
-        reset: h,
-        dispose: m,
-        getVNode: () => w(
-          () => l.getVNode(
-            {
-              fieldKey: i,
-              stepQuantity: r.length,
-              getFormFields: F,
-              getCurrentValue: S,
-              getCurrentStep: p,
-              isLastStep: y,
-              getErrorMessageNotAtLastStep: L,
-              onNextStep: $,
-              onPreviousStep: N,
-              onResetStep: n,
-              class: s.class
-            },
-            {
-              formField: E
-            }
-          )
+        check: F,
+        reset: v,
+        dispose: N,
+        getVNode: () => a.getVNode(
+          {
+            fieldKey: i,
+            stepQuantity: s.length,
+            getFormFields: w,
+            getCurrentValue: m,
+            getCurrentStep: k,
+            isLastStep: p,
+            getErrorMessageNotAtLastStep: E,
+            onNextStep: L,
+            onPreviousStep: g,
+            onResetStep: S,
+            class: n.class
+          },
+          {
+            formField: y
+          }
         )
       };
     },
     {
       currentStep: 0,
-      steps: r.map(
+      steps: s.map(
         (e) => e.defaultValue
       )
     }
   );
 }
-function re(r, s) {
-  return j(
+function te(s, n) {
+  return C(
     (e, u, t, d) => {
-      const i = `${u}_SEC`, l = s?.template ?? t.section, c = r.new(
+      const i = `${u}_SEC`, a = n?.template ?? t.section, o = s.new(
         e,
         i,
         t,
         d
-      ), v = () => c.check(), o = () => {
-        c.reset();
-      }, a = () => {
-        c.dispose();
-      }, g = c.getVNode(), h = () => g, m = () => e.value;
+      ), h = () => o.check(), r = () => {
+        o.reset();
+      }, f = () => {
+        o.dispose();
+      }, F = () => o.getVNode(), v = () => e.value;
       return {
-        check: v,
-        reset: o,
-        dispose: a,
-        getVNode: () => w(
-          () => l.getVNode(
-            {
-              fieldKey: i,
-              getCurrentValue: m,
-              title: s?.title,
-              class: s?.class
-            },
-            {
-              formField: h
-            }
-          )
+        check: h,
+        reset: r,
+        dispose: f,
+        getVNode: () => a.getVNode(
+          {
+            fieldKey: i,
+            getCurrentValue: v,
+            title: n?.title,
+            class: n?.class
+          },
+          {
+            formField: F
+          }
         )
       };
     },
-    r.defaultValue
+    s.defaultValue
   );
 }
-function oe(r, s) {
-  if (B.has(s)) {
-    const e = s;
-    return j(
+function ne(s, n) {
+  if (Q.has(n)) {
+    const e = n;
+    return C(
       (u, t, d, i) => {
-        const l = `${t}_SLT`, c = e.new(
+        const a = `${t}_SLT`, o = e.new(
           u,
-          l,
+          a,
           d,
           i
-        ), v = () => c.check(), o = () => {
-          c.reset();
-        }, a = () => {
-          c.dispose();
-        }, g = c.getVNode(), h = () => g, m = (V) => {
-          u.value = V;
+        ), h = () => o.check(), r = () => {
+          o.reset();
+        }, f = () => {
+          o.dispose();
+        }, F = () => o.getVNode(), v = (m) => {
+          u.value = m;
         };
         return {
-          check: v,
-          reset: o,
-          dispose: a,
-          getVNode: () => w(
-            () => i(
-              r,
-              {
-                fieldKey: l,
-                get value() {
-                  return u.value;
-                },
-                update: m,
-                formField: h
-              }
-            )
+          check: h,
+          reset: r,
+          dispose: f,
+          getVNode: () => i(
+            s,
+            {
+              fieldKey: a,
+              get value() {
+                return u.value;
+              },
+              update: v,
+              formField: F
+            }
           )
         };
       },
       e.defaultValue
     );
   }
-  return j(
+  return C(
     (e, u, t, d) => {
-      const i = `${u}_SLT`, l = () => R(e.value), c = () => {
-      }, v = () => {
-      }, o = (g) => {
-        e.value = g;
+      const i = `${u}_SLT`, a = () => b(e.value), o = () => {
+      }, h = () => {
+      }, r = (F) => {
+        e.value = F;
       };
       return {
-        check: l,
-        reset: c,
-        dispose: v,
-        getVNode: () => w(
-          () => d(
-            r,
-            {
-              fieldKey: i,
-              get value() {
-                return e.value;
-              },
-              update: o
-            }
-          )
+        check: a,
+        reset: o,
+        dispose: h,
+        getVNode: () => d(
+          s,
+          {
+            fieldKey: i,
+            value: e.value,
+            update: r
+          }
         )
       };
     },
-    typeof s.defaultValue == "function" ? s.defaultValue() : s.defaultValue
+    typeof n.defaultValue == "function" ? n.defaultValue() : n.defaultValue
   );
 }
 export {
-  Y as createForm,
-  j as createFormField,
-  ie as createInput,
-  de as createTemplate,
-  ae as createVueFormKind,
-  B as formFieldKind,
-  ve as templateKind,
-  ee as useCheckLayout,
-  x as useDisabledLayout,
-  Z as useMultiLayout,
-  te as useRepeatLayout,
-  re as useSectionLayout,
-  oe as useSlotLayout,
-  se as useStepLayout,
-  ne as useUnionLayout
+  G as createForm,
+  C as createFormField,
+  oe as createInput,
+  ae as createTemplate,
+  ue as createVueFormKind,
+  Q as formFieldKind,
+  le as templateKind,
+  X as useCheckLayout,
+  W as useDisabledLayout,
+  J as useMultiLayout,
+  Y as useRepeatLayout,
+  te as useSectionLayout,
+  ne as useSlotLayout,
+  ee as useStepLayout,
+  Z as useUnionLayout
 };

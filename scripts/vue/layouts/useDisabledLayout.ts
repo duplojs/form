@@ -1,6 +1,5 @@
 import { createFormField, type GetFormFieldSlots, type FormField, type GetFormFieldCheckedValue, type GetFormFieldValue } from "@V/formField";
 import * as EE from "@duplojs/utils/either";
-import { h } from "vue";
 
 export interface UseDisabledLayoutParams {
 	isDisabled(): boolean;
@@ -48,13 +47,9 @@ export function useDisabledLayout(
 				formFieldInstance.dispose();
 			};
 
-			const formFieldVNode = formFieldInstance.getVNode();
-
-			const getVNode = () => h(
-				() => params.isDisabled()
-					? null
-					: formFieldVNode,
-			);
+			const getVNode = () => params.isDisabled()
+				? null
+				: formFieldInstance.getVNode();
 
 			return {
 				check,

@@ -102,6 +102,7 @@ describe("input", () => {
 			"reset",
 		);
 		dispose();
+		await sleep();
 		expect(currentValue.value).toBe("reset");
 		await sleep();
 		expect(wrapper.find("#text-input-with-expose-disposed").exists()).toBe(true);

@@ -88,25 +88,21 @@ export function createForm(templates: Templates) {
 
 		const getCurrentValue = () => currentValue.value;
 
-		const formFieldVNode = formFieldInstance.getVNode();
-
 		const component: FormProperties["component"] = (props, { slots }) => {
 			formSlots.value = slots;
 
-			return h(
-				() => templateForm.getVNode(
-					{
-						...props,
-						class: normalizeClass([props.class, params.class]),
-						fieldKey: key,
-						onSubmit: () => {},
-						getCurrentValue,
-					},
-					{
-						submitter: slots.default ?? (() => null),
-						formField: () => formFieldVNode,
-					},
-				),
+			return templateForm.getVNode(
+				{
+					...props,
+					class: normalizeClass([props.class, params.class]),
+					fieldKey: key,
+					onSubmit: () => {},
+					getCurrentValue,
+				},
+				{
+					submitter: slots.default ?? (() => null),
+					formField: () => formFieldInstance.getVNode(),
+				},
 			);
 		};
 
@@ -128,4 +124,3 @@ export type GetCheckedValue<
 		EE.Right
 	>
 >;
-

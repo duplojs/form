@@ -6,7 +6,7 @@
 	  "@V/*": ["./*"],
 	  "@V": ["./index.ts"],
     },
-	"types": ["web"],
+	"types": ["@types/web"],
   },
   "include": ["**/*.ts", "**/*.vue"],
 }

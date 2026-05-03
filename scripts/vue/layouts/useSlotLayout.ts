@@ -1,7 +1,6 @@
 import { createFormField, type GetFormFieldSlots, type FormField, type GetFormFieldCheckedValue, type GetFormFieldValue, type FormFieldSlotParams, formFieldKind } from "@V/formField";
 import { type AnyFunction, type SimplifyTopLevel } from "@duplojs/utils";
 import * as EE from "@duplojs/utils/either";
-import { h } from "vue";
 
 export type SlotPrimitiveDefaultValue = null | string | undefined | boolean | bigint | number;
 export type SlotDefaultValue = SlotPrimitiveDefaultValue | (() => object | SlotPrimitiveDefaultValue);
@@ -87,26 +86,22 @@ export function useSlotLayout(
 					formFieldInstance.dispose();
 				};
 
-				const formFieldVNode = formFieldInstance.getVNode();
-
-				const getFormFieldVNode = () => formFieldVNode;
+				const getFormFieldVNode = () => formFieldInstance.getVNode();
 
 				const updateValue = (value: unknown) => {
 					modelValue.value = value;
 				};
 
-				const getVNode = () => h(
-					() => getSlot(
-						name,
-						{
-							fieldKey: key,
-							get value() {
-								return modelValue.value;
-							},
-							update: updateValue,
-							formField: getFormFieldVNode,
+				const getVNode = () => getSlot(
+					name,
+					{
+						fieldKey: key,
+						get value() {
+							return modelValue.value;
 						},
-					),
+						update: updateValue,
+						formField: getFormFieldVNode,
+					},
 				);
 
 				return {
@@ -132,17 +127,13 @@ export function useSlotLayout(
 				modelValue.value = value;
 			};
 
-			const getVNode = () => h(
-				() => getSlot(
-					name,
-					{
-						fieldKey: key,
-						get value() {
-							return modelValue.value;
-						},
-						update: updateValue,
-					},
-				),
+			const getVNode = () => getSlot(
+				name,
+				{
+					fieldKey: key,
+					value: modelValue.value,
+					update: updateValue,
+				},
 			);
 
 			return {

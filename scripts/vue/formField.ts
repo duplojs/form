@@ -11,7 +11,7 @@ export interface FormFieldSlotParams<
 	fieldKey: string;
 	value: GenericValue;
 	update(value: GenericValue): void;
-	formField?(): VNode;
+	formField?(): VNode | null;
 }
 
 export type FormFieldSlots = Record<
@@ -42,7 +42,7 @@ export interface FormFieldInstance<
 	check(): EE.Error<AnyTuple<ErrorProperties>> | EE.Success<GenericCheckedValue>;
 	reset(): void;
 	dispose(): void;
-	getVNode(): VNode;
+	getVNode(): VNode | null;
 }
 
 export interface FormFieldProperties<

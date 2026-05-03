@@ -46,7 +46,7 @@ describe("GridStepByStepTemplate", () => {
 		expect(stepTemplate.text()).toContain("Go to the end");
 
 		await stepTemplate.findAll("button[type=\"button\"]")[2]!.trigger("click");
-		await sleep();
+		await sleep(1000);
 		expect(currentValue.value.currentStep).toBe(1);
 		expect(stepTemplate.findAll("button[type=\"button\"]")[0]!.attributes("disabled")).toBeUndefined();
 		expect(stepTemplate.findAll("button[type=\"button\"]")[2]!.attributes("disabled")).toBeDefined();

@@ -6,6 +6,7 @@ import TextInput from "@test-utils/TextInput.vue";
 import TextInputWithErrorExpose from "@test-utils/TextInputWithErrorExpose.vue";
 import TextInputWithExpose from "@test-utils/TextInputWithExpose.vue";
 import StepTemplateAlt from "@test-utils/templates/StepTemplateAlt.vue";
+import StepTemplateProbe from "@test-utils/templates/StepTemplateProbe.vue";
 import { testTemplates } from "@test-utils/templates";
 
 describe("useStepLayout", () => {
@@ -193,5 +194,26 @@ describe("useStepLayout", () => {
 		dispose();
 		await sleep();
 		expect(wrapper.findAll("#text-input-with-expose-disposed")).toHaveLength(1);
+	});
+
+	it("invokes callbacks returned by getFormFields in the step template", () => {
+		const useForm = createForm(testTemplates);
+		const probingTemplate = createTemplate("step", StepTemplateProbe)();
+
+		const field = useStepLayout(
+			[
+				createInput(TextInput, { defaultValue: "first-default" })(),
+				createInput(TextInput, { defaultValue: "second-default" })(),
+			],
+			{
+				template: probingTemplate,
+				errorMessageNotAtLastStep: "Go to the end",
+			},
+		);
+
+		const { component } = useForm(field);
+		const wrapper = mount(component);
+
+		expect(wrapper.find("#probe-step-current").text()).toBe("0");
 	});
 });

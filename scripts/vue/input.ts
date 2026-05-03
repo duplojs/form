@@ -237,44 +237,38 @@ export function createInput(
 
 				const getCurrentValue = () => modelValue.value;
 
-				const inputVNode = h(
-					() => h(
-						inputComponent,
-						{
-							...defaultParams.props,
-							...getLocalProps(),
-							modelValue: modelValue.value,
-							"onUpdate:modelValue": (value: any) => {
-								if (isDispose) {
-									return;
-								}
+				const getInputVNode = () => h(
+					inputComponent,
+					{
+						...defaultParams.props,
+						...getLocalProps(),
+						modelValue: modelValue.value,
+						"onUpdate:modelValue": (value: any) => {
+							if (isDispose) {
+								return;
+							}
 
-								modelValue.value = value;
-							},
-							id: key,
-							key,
-							ref: componentRef,
+							modelValue.value = value;
 						},
-					),
+						id: key,
+						key,
+						ref: componentRef,
+					},
 				);
-
-				const getInputVNode = () => inputVNode;
 
 				const getErrorMessage = params.dataParser && (() => errorMessage.value);
 
-				const getVNode = () => h(
-					() => template.getVNode(
-						{
-							getLabel,
-							fieldKey: key,
-							getCurrentValue,
-							getErrorMessage,
-							class: params.class,
-						},
-						{
-							input: getInputVNode,
-						},
-					),
+				const getVNode = () => template.getVNode(
+					{
+						getLabel,
+						fieldKey: key,
+						getCurrentValue,
+						getErrorMessage,
+						class: params.class,
+					},
+					{
+						input: getInputVNode,
+					},
 				);
 
 				return {

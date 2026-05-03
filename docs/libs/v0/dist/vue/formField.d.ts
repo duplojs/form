@@ -7,7 +7,7 @@ export interface FormFieldSlotParams<GenericValue extends unknown = unknown> {
     fieldKey: string;
     value: GenericValue;
     update(value: GenericValue): void;
-    formField?(): VNode;
+    formField?(): VNode | null;
 }
 export type FormFieldSlots = Record<string, FormFieldSlotParams>;
 export type FormFieldInstanceParams<GenericValue extends unknown = unknown> = [
@@ -24,7 +24,7 @@ export interface FormFieldInstance<GenericCheckedValue extends unknown = unknown
     check(): EE.Error<AnyTuple<ErrorProperties>> | EE.Success<GenericCheckedValue>;
     reset(): void;
     dispose(): void;
-    getVNode(): VNode;
+    getVNode(): VNode | null;
 }
 export interface FormFieldProperties<GenericValue extends unknown = unknown, GenericCheckedValue extends unknown = unknown, GenericSlots extends FormFieldSlots = FormFieldSlots> {
     value: GenericValue;

@@ -1,9 +1,9 @@
-import { createFormField, type FormFieldInstance, type FormField, type GetFormFieldCheckedValue, type GetFormFieldValue, type GetFormFieldSlots, type FormFieldSlots, type MergeFormFieldSlots } from "@V/formField";
+import { createFormField, type FormFieldInstance, type FormField, type GetFormFieldCheckedValue, type GetFormFieldValue, type MergeFormFieldSlots } from "@V/formField";
 import { type Templates } from "@V/template";
 import { type VueComponent } from "@V/types";
-import { simpleClone, type UnionToIntersection, unwrap, type AnyTuple, type SimplifyTopLevel } from "@duplojs/utils";
+import { simpleClone, unwrap, type AnyTuple } from "@duplojs/utils";
 import * as EE from "@duplojs/utils/either";
-import { computed, effectScope, h, type VNode, watch } from "vue";
+import { computed, effectScope, watch } from "vue";
 
 export interface UnionTemplateProperties {
 	props: {
@@ -197,25 +197,7 @@ export function useUnionLayout(
 
 			const getCurrentValue = () => modelValue.value;
 
-			const cacheFormFieldVNodes: Record<string, VNode> = {};
-			const formFieldVNodes = Object.fromEntries(
-				Object
-					.entries(formFieldInstances)
-					.map(
-						([kind, getFormFieldInstance]) => [
-							kind,
-							() => {
-								if (cacheFormFieldVNodes[kind] === undefined) {
-									cacheFormFieldVNodes[kind] = getFormFieldInstance().getVNode();
-								}
-
-								return cacheFormFieldVNodes[kind];
-							},
-						],
-					),
-			);
-
-			const getFieldVNode = () => formFieldVNodes[modelValue.value.kind]!();
+			const getFieldVNode = () => formFieldInstances[modelValue.value.kind]!().getVNode();
 
 			const getCurrentKind = () => modelValue.value.kind;
 
@@ -227,20 +209,18 @@ export function useUnionLayout(
 				modelValue.value.updateKind(value);
 			};
 
-			const getVNode = () => h(
-				() => template.getVNode(
-					{
-						fieldKey: key,
-						kinds,
-						getCurrentValue,
-						getCurrentKind,
-						onChangeKind,
-						class: params.class,
-					},
-					{
-						formField: getFieldVNode,
-					},
-				),
+			const getVNode = () => template.getVNode(
+				{
+					fieldKey: key,
+					kinds,
+					getCurrentValue,
+					getCurrentKind,
+					onChangeKind,
+					class: params.class,
+				},
+				{
+					formField: getFieldVNode,
+				},
 			);
 
 			return {

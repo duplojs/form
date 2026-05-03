@@ -6,7 +6,7 @@ export interface MultiTemplateProperties {
     props: {
         fieldKey: string;
         getCurrentValue(): unknown;
-        getFormFields(): VNode[];
+        getFormFields(): (VNode | null)[];
     };
     slots: {
         formField(): any;

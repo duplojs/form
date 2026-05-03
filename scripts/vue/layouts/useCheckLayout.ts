@@ -2,7 +2,7 @@ import { createFormField, type GetFormFieldCheckedValue, type FormField, type Ge
 import * as EE from "@duplojs/utils/either";
 import type * as DP from "@duplojs/utils/dataParser";
 import { type IsEqual, unwrap } from "@duplojs/utils";
-import { effectScope, h, ref, watch } from "vue";
+import { effectScope, ref, watch } from "vue";
 import { type VueComponent } from "@V/types";
 import { type Templates } from "@V/template";
 
@@ -135,22 +135,18 @@ export function useCheckLayout(
 
 			const getCurrentValue = () => modelValue.value;
 
-			const formFieldVNode = formFieldInstance.getVNode();
-
-			const getFormFieldVNode = () => formFieldVNode;
+			const getFormFieldVNode = () => formFieldInstance.getVNode();
 
 			const getErrorMessage = () => errorMessage.value;
 
-			const getVNode = () => h(
-				() => template.getVNode(
-					{
-						fieldKey: key,
-						getErrorMessage,
-						getCurrentValue,
-						class: params.class,
-					},
-					{ formField: getFormFieldVNode },
-				),
+			const getVNode = () => template.getVNode(
+				{
+					fieldKey: key,
+					getErrorMessage,
+					getCurrentValue,
+					class: params.class,
+				},
+				{ formField: getFormFieldVNode },
 			);
 
 			return {

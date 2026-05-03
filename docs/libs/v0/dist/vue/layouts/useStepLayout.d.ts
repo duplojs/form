@@ -8,7 +8,7 @@ export interface StepTemplateProperties {
         fieldKey: string;
         stepQuantity: number;
         isLastStep(): boolean;
-        getFormFields(): (() => VNode)[];
+        getFormFields(): (() => (VNode | null))[];
         getCurrentValue(): unknown;
         getCurrentStep(): number;
         getErrorMessageNotAtLastStep(): null | string;

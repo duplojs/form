@@ -1,7 +1,6 @@
 import { createFormField, type GetFormFieldSlots, type FormField, type GetFormFieldCheckedValue, type GetFormFieldValue } from "@V/formField";
 import { type Templates } from "@V/template";
 import { type VueComponent } from "@V/types";
-import { h } from "vue";
 
 export interface SectionTemplateProperties {
 	props: {
@@ -63,24 +62,20 @@ export function useSectionLayout(
 				formFieldInstance.dispose();
 			};
 
-			const formFieldVNode = formFieldInstance.getVNode();
-
-			const getFormFieldVNode = () => formFieldVNode;
+			const getFormFieldVNode = () => formFieldInstance.getVNode();
 
 			const getCurrentValue = () => modelValue.value;
 
-			const getVNode = () => h(
-				() => template.getVNode(
-					{
-						fieldKey: key,
-						getCurrentValue,
-						title: params?.title,
-						class: params?.class,
-					},
-					{
-						formField: getFormFieldVNode,
-					},
-				),
+			const getVNode = () => template.getVNode(
+				{
+					fieldKey: key,
+					getCurrentValue,
+					title: params?.title,
+					class: params?.class,
+				},
+				{
+					formField: getFormFieldVNode,
+				},
 			);
 
 			return {

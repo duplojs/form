@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/prefer-for-of */
 import { type GetFormFieldCheckedValue, type GetFormFieldValue, type FormField, createFormField, type ErrorProperties, type GetFormFieldSlots, type FormFieldSlots, type MergeFormFieldSlots } from "@V/formField";
-import { computed, effectScope, h, type VNode } from "vue";
+import { computed, effectScope, type VNode } from "vue";
 import * as EE from "@duplojs/utils/either";
 import * as AA from "@duplojs/utils/array";
 import { unwrap } from "@duplojs/utils";
@@ -11,7 +11,7 @@ export interface MultiTemplateProperties {
 	props: {
 		fieldKey: string;
 		getCurrentValue(): unknown;
-		getFormFields(): VNode[];
+		getFormFields(): (VNode | null)[];
 	};
 	slots: {
 		formField(): any;
@@ -152,24 +152,20 @@ export function useMultiLayout(
 
 			const getCurrentValue = () => modelValue.value;
 
-			const formFieldVNodes = formFieldInstanceEntries.map(
+			const getFormFieldVNodes = () => formFieldInstanceEntries.map(
 				(entry) => entry[1].getVNode(),
 			);
 
-			const getFormFieldVNodes = () => formFieldVNodes;
-
-			const getVNode = () => h(
-				() => template.getVNode(
-					{
-						fieldKey: key,
-						getFormFields: getFormFieldVNodes,
-						getCurrentValue,
-						class: params?.class,
-					},
-					{
-						formField: getFormFieldVNodes,
-					},
-				),
+			const getVNode = () => template.getVNode(
+				{
+					fieldKey: key,
+					getFormFields: getFormFieldVNodes,
+					getCurrentValue,
+					class: params?.class,
+				},
+				{
+					formField: getFormFieldVNodes,
+				},
 			);
 
 			return {

@@ -5,7 +5,7 @@ import { type VueComponent } from "@V/types";
 import { simpleClone, unwrap } from "@duplojs/utils";
 import * as EE from "@duplojs/utils/either";
 import * as AA from "@duplojs/utils/array";
-import { computed, effectScope, h, ref, watch, type VNode } from "vue";
+import { computed, effectScope, ref, watch, type VNode } from "vue";
 
 export interface RepeatTemplateProperties {
 	props: {
@@ -14,7 +14,7 @@ export interface RepeatTemplateProperties {
 		min: number;
 		getFormFieldsQuantity(): number;
 		getCurrentValue(): unknown;
-		getFormFields(): VNode[];
+		getFormFields(): (VNode | null)[];
 	};
 	emits: {
 		addElement: [];
@@ -156,15 +156,8 @@ export function useRepeatLayout(
 
 			const getCurrentValue = () => modelValue.value;
 
-			const cacheFormFieldVNodes: Record<number, VNode> = {};
 			const getFormFieldVNodes = () => formFieldInstances.value.map(
-				(formFieldInstance, index) => {
-					if (cacheFormFieldVNodes[index] === undefined) {
-						cacheFormFieldVNodes[index] = formFieldInstance.getVNode();
-					}
-
-					return cacheFormFieldVNodes[index];
-				},
+				(formFieldInstance) => formFieldInstance.getVNode(),
 			);
 
 			const getFormFieldsQuantity = () => formFieldInstances.value.length;
@@ -194,24 +187,22 @@ export function useRepeatLayout(
 				}
 			};
 
-			const getVNode = () => h(
-				() => template.getVNode(
-					{
-						fieldKey: key,
-						getFormFields: getFormFieldVNodes,
-						getFormFieldsQuantity,
-						getCurrentValue,
-						max: maxElements,
-						min: minElements,
-						onAddElement,
-						onRemoveElement,
-						onResetElement,
-						class: params.class,
-					},
-					{
-						formField: getFormFieldVNodes,
-					},
-				),
+			const getVNode = () => template.getVNode(
+				{
+					fieldKey: key,
+					getFormFields: getFormFieldVNodes,
+					getFormFieldsQuantity,
+					getCurrentValue,
+					max: maxElements,
+					min: minElements,
+					onAddElement,
+					onRemoveElement,
+					onResetElement,
+					class: params.class,
+				},
+				{
+					formField: getFormFieldVNodes,
+				},
 			);
 
 			return {

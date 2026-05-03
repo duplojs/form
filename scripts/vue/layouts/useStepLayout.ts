@@ -1,7 +1,7 @@
 
-import { createFormField, type GetFormFieldCheckedValue, type FormField, type GetFormFieldValue, type FormFieldInstance, type ErrorProperties, type GetFormFieldSlots, type FormFieldSlots, type MergeFormFieldSlots } from "@V/formField";
-import { simpleClone, type UnionToIntersection, unwrap, type AnyTuple, type SimplifyTopLevel } from "@duplojs/utils";
-import { computed, effectScope, h, ref, type VNode } from "vue";
+import { createFormField, type GetFormFieldCheckedValue, type FormField, type GetFormFieldValue, type FormFieldInstance, type ErrorProperties, type MergeFormFieldSlots } from "@V/formField";
+import { simpleClone, unwrap, type AnyTuple } from "@duplojs/utils";
+import { computed, effectScope, ref, type VNode } from "vue";
 import { type VueComponent } from "@V/types";
 import { type Templates } from "@V/template";
 import * as EE from "@duplojs/utils/either";
@@ -12,7 +12,7 @@ export interface StepTemplateProperties {
 		fieldKey: string;
 		stepQuantity: number;
 		isLastStep(): boolean;
-		getFormFields(): (() => VNode)[];
+		getFormFields(): (() => (VNode | null))[];
 		getCurrentValue(): unknown;
 		getCurrentStep(): number;
 		getErrorMessageNotAtLastStep(): null | string;
@@ -167,24 +167,15 @@ export function useStepLayout(
 
 			const getCurrentValue = () => modelValue.value;
 
-			const cacheFormFieldVNodes: Record<number, VNode> = {};
-			const formFieldVNodes = formFieldInstances.map(
-				(getFormFieldInstance, index) => () => {
-					if (cacheFormFieldVNodes[index] === undefined) {
-						cacheFormFieldVNodes[index] = getFormFieldInstance().getVNode();
-					}
-
-					return cacheFormFieldVNodes[index];
-				},
+			const getFormFieldVNodes = () => formFieldInstances.map(
+				(getFormFieldInstance) => () => getFormFieldInstance().getVNode(),
 			);
-
-			const getFormFieldVNodes = () => formFieldVNodes;
 
 			const getCurrentStep = () => modelValue.value.currentStep;
 
 			const isLastStep = () => AA.isLastIndex(formFields, modelValue.value.currentStep);
 
-			const getCurrentFormFieldStepVNodes = () => formFieldVNodes[modelValue.value.currentStep]!();
+			const getCurrentFormFieldStepVNodes = () => formFieldInstances[modelValue.value.currentStep]!().getVNode();
 
 			const getErrorMessageNotAtLastStep = () => errorMessageNotAtLastStep.value;
 
@@ -225,25 +216,23 @@ export function useStepLayout(
 				);
 			};
 
-			const getVNode = () => h(
-				() => template.getVNode(
-					{
-						fieldKey: key,
-						stepQuantity: formFields.length,
-						getFormFields: getFormFieldVNodes,
-						getCurrentValue,
-						getCurrentStep,
-						isLastStep,
-						getErrorMessageNotAtLastStep,
-						onNextStep,
-						onPreviousStep,
-						onResetStep,
-						class: params.class,
-					},
-					{
-						formField: getCurrentFormFieldStepVNodes,
-					},
-				),
+			const getVNode = () => template.getVNode(
+				{
+					fieldKey: key,
+					stepQuantity: formFields.length,
+					getFormFields: getFormFieldVNodes,
+					getCurrentValue,
+					getCurrentStep,
+					isLastStep,
+					getErrorMessageNotAtLastStep,
+					onNextStep,
+					onPreviousStep,
+					onResetStep,
+					class: params.class,
+				},
+				{
+					formField: getCurrentFormFieldStepVNodes,
+				},
 			);
 
 			return {

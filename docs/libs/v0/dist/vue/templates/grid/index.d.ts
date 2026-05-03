@@ -66,7 +66,7 @@ export declare function createGridTemplates(params: CreateGridTemplatesInput): {
         $watch<T extends string | ((...args: any) => any)>(source: T, cb: T extends (...args: any) => infer R ? (...args: [R, R, import("@vue/reactivity").OnCleanup]) => any : (...args: [any, any, import("@vue/reactivity").OnCleanup]) => any, options?: import("vue").WatchOptions): import("vue").WatchStopHandle;
     } & Readonly<{}> & Omit<Readonly<import("./components/GridFormTemplate.vue").Props> & Readonly<{
         onSubmit?: (() => any) | undefined;
-    }>, never> & import("vue").ShallowUnwrapRef<{}> & {} & import("vue").ComponentCustomProperties & {} & {
+    }>, never> & {} & import("vue").ComponentCustomProperties & {} & {
         $slots: {
             formField(): any;
             submitter(): any;
@@ -134,7 +134,7 @@ export declare function createGridTemplates(params: CreateGridTemplatesInput): {
         fieldKey: string;
     } & import("./types").GridTemplateLayoutProps & {
         hideEmptyMessageError?: boolean;
-    }> & Readonly<{}>, never> & import("vue").ShallowUnwrapRef<{}> & {} & import("vue").ComponentCustomProperties & {} & {
+    }> & Readonly<{}>, never> & {} & import("vue").ComponentCustomProperties & {} & {
         $slots: {
             input(): any;
         };
@@ -150,7 +150,7 @@ export declare function createGridTemplates(params: CreateGridTemplatesInput): {
         $props: {
             readonly fieldKey: string;
             readonly getCurrentValue: () => unknown;
-            readonly getFormFields: () => import("vue").VNode[];
+            readonly getFormFields: () => (import("vue").VNode | null)[];
             readonly maxColumns?: number | undefined;
             readonly gap?: number | undefined;
             readonly columns?: number | undefined;
@@ -187,14 +187,14 @@ export declare function createGridTemplates(params: CreateGridTemplatesInput): {
         $forceUpdate: () => void;
         $nextTick: typeof import("vue").nextTick;
         $watch<T extends string | ((...args: any) => any)>(source: T, cb: T extends (...args: any) => infer R ? (...args: [R, R, import("@vue/reactivity").OnCleanup]) => any : (...args: [any, any, import("@vue/reactivity").OnCleanup]) => any, options?: import("vue").WatchOptions): import("vue").WatchStopHandle;
-    } & Readonly<{}> & Omit<Readonly<import("./components/GridMultiTemplate.vue").Props> & Readonly<{}>, never> & import("vue").ShallowUnwrapRef<{}> & {} & import("vue").ComponentCustomProperties & {} & {
+    } & Readonly<{}> & Omit<Readonly<import("./components/GridMultiTemplate.vue").Props> & Readonly<{}>, never> & {} & import("vue").ComponentCustomProperties & {} & {
         $slots: {
             formField(): any;
         };
     }, {
         fieldKey: string;
         getCurrentValue(): unknown;
-        getFormFields(): import("vue").VNode[];
+        getFormFields(): (import("vue").VNode | null)[];
     } & {
         fieldKey: string;
         getCurrentValue(): unknown;
@@ -244,7 +244,7 @@ export declare function createGridTemplates(params: CreateGridTemplatesInput): {
         $forceUpdate: () => void;
         $nextTick: typeof import("vue").nextTick;
         $watch<T extends string | ((...args: any) => any)>(source: T, cb: T extends (...args: any) => infer R ? (...args: [R, R, import("@vue/reactivity").OnCleanup]) => any : (...args: [any, any, import("@vue/reactivity").OnCleanup]) => any, options?: import("vue").WatchOptions): import("vue").WatchStopHandle;
-    } & Readonly<{}> & Omit<Readonly<import("./components/GridCheckTemplate.vue").Props> & Readonly<{}>, never> & import("vue").ShallowUnwrapRef<{}> & {} & import("vue").ComponentCustomProperties & {} & {
+    } & Readonly<{}> & Omit<Readonly<import("./components/GridCheckTemplate.vue").Props> & Readonly<{}>, never> & {} & import("vue").ComponentCustomProperties & {} & {
         $slots: {
             formField(): any;
         };
@@ -266,7 +266,7 @@ export declare function createGridTemplates(params: CreateGridTemplatesInput): {
             readonly min: number;
             readonly getFormFieldsQuantity: () => number;
             readonly getCurrentValue: () => unknown;
-            readonly getFormFields: () => import("vue").VNode[];
+            readonly getFormFields: () => (import("vue").VNode | null)[];
             readonly maxColumns?: number | undefined;
             readonly gap?: number | undefined;
             readonly columns?: number | undefined;
@@ -334,7 +334,7 @@ export declare function createGridTemplates(params: CreateGridTemplatesInput): {
         onAddElement?: (() => any) | undefined;
         onRemoveElement?: ((index: number) => any) | undefined;
         onResetElement?: ((index: number) => any) | undefined;
-    }>, "removeLabel" | "addLabel" | "resetLabel"> & import("vue").ShallowUnwrapRef<{}> & {} & import("vue").ComponentCustomProperties & {} & {
+    }>, "removeLabel" | "addLabel" | "resetLabel"> & {} & import("vue").ComponentCustomProperties & {} & {
         $slots: {
             formField(): any;
         };
@@ -344,7 +344,7 @@ export declare function createGridTemplates(params: CreateGridTemplatesInput): {
         min: number;
         getFormFieldsQuantity(): number;
         getCurrentValue(): unknown;
-        getFormFields(): import("vue").VNode[];
+        getFormFields(): (import("vue").VNode | null)[];
     } & {
         onAddElement?: (() => any) | undefined;
         onRemoveElement?: ((index: number) => any) | undefined;
@@ -403,7 +403,7 @@ export declare function createGridTemplates(params: CreateGridTemplatesInput): {
         $watch<T extends string | ((...args: any) => any)>(source: T, cb: T extends (...args: any) => infer R ? (...args: [R, R, import("@vue/reactivity").OnCleanup]) => any : (...args: [any, any, import("@vue/reactivity").OnCleanup]) => any, options?: import("vue").WatchOptions): import("vue").WatchStopHandle;
     } & Readonly<{}> & Omit<Readonly<import("./components/GridUnionTemplate.vue").Props> & Readonly<{
         onChangeKind?: ((kind: string) => any) | undefined;
-    }>, never> & import("vue").ShallowUnwrapRef<{}> & {} & import("vue").ComponentCustomProperties & {} & {
+    }>, never> & {} & import("vue").ComponentCustomProperties & {} & {
         $slots: {
             formField(): any;
         };
@@ -422,7 +422,7 @@ export declare function createGridTemplates(params: CreateGridTemplatesInput): {
             readonly fieldKey: string;
             readonly stepQuantity: number;
             readonly isLastStep: () => boolean;
-            readonly getFormFields: () => (() => import("vue").VNode)[];
+            readonly getFormFields: () => (() => (import("vue").VNode | null))[];
             readonly getCurrentValue: () => unknown;
             readonly getCurrentStep: () => number;
             readonly getErrorMessageNotAtLastStep: () => null | string;
@@ -487,7 +487,7 @@ export declare function createGridTemplates(params: CreateGridTemplatesInput): {
         onNextStep?: (() => any) | undefined;
         onPreviousStep?: (() => any) | undefined;
         onResetStep?: (() => any) | undefined;
-    }>, "nextLabel" | "previousLabel"> & import("vue").ShallowUnwrapRef<{}> & {} & import("vue").ComponentCustomProperties & {} & {
+    }>, "nextLabel" | "previousLabel"> & {} & import("vue").ComponentCustomProperties & {} & {
         $slots: {
             formField(): any;
         };
@@ -495,7 +495,7 @@ export declare function createGridTemplates(params: CreateGridTemplatesInput): {
         fieldKey: string;
         stepQuantity: number;
         isLastStep(): boolean;
-        getFormFields(): (() => import("vue").VNode)[];
+        getFormFields(): (() => (import("vue").VNode | null))[];
         getCurrentValue(): unknown;
         getCurrentStep(): number;
         getErrorMessageNotAtLastStep(): null | string;
@@ -555,7 +555,7 @@ export declare function createGridTemplates(params: CreateGridTemplatesInput): {
         fieldKey: string;
         getCurrentValue(): unknown;
         title?: string;
-    } & import("./types").GridTemplateLayoutContainerProps> & Readonly<{}>, never> & import("vue").ShallowUnwrapRef<{}> & {} & import("vue").ComponentCustomProperties & {} & {
+    } & import("./types").GridTemplateLayoutContainerProps> & Readonly<{}>, never> & {} & import("vue").ComponentCustomProperties & {} & {
         $slots: {
             formField(): any;
         };

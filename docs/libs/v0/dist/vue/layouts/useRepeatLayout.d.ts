@@ -10,7 +10,7 @@ export interface RepeatTemplateProperties {
         min: number;
         getFormFieldsQuantity(): number;
         getCurrentValue(): unknown;
-        getFormFields(): VNode[];
+        getFormFields(): (VNode | null)[];
     };
     emits: {
         addElement: [];
