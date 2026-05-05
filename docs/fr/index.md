@@ -4,8 +4,8 @@ title: "@duplojs/form"
 heroAfter: "HomeExample"
 hero:
   name: "@duplojs/form"
-  text: "Des super formulaires Vue.js, simplement."
-  tagline: "Créez des formulaires complexes sans aucune difficulté, avec un typage à 100 %."
+  text: "Juste des super formulaires VueJS."
+  tagline: "Créez des formulaires complexes sans aucune difficulté et 100% typysafe."
   image: "/images/logo.png"
   actions:
     - theme: brand
@@ -16,7 +16,7 @@ hero:
       link: "https://github.com/duplojs/form"
 features:
   - icon: ✨
-    title: 100 % personnalisable
+    title: 100% personnalisable
     details: Utilisez vos propres inputs, créez vos propres templates et personnalisez chaque détail de vos formulaires !
   - icon: 🔗
     title: Typés jusqu'au bout des pieds
