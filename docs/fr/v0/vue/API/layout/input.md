@@ -34,7 +34,7 @@ createInput(component, {
 ```
 
 - `component`: composant Vue compatible avec le contrat des inputs.
-- `defaultValue`: valeur par défaut du field. Obligatoire.
+- `defaultValue`: valeur par défaut du champ. Obligatoire.
 - `props`: props par défaut injectées dans le composant.
 - `template`: template `input` par défaut.
 
@@ -122,5 +122,5 @@ Il peut aussi exposer :
 ## À retenir
 
 - un input est déjà un `FormField` ;
-- `createInput(...)` fabrique une factory de fields ;
+- `createInput(...)` fabrique une factory de champs ;
 - la validation peut se faire dans le composant, dans `dataParser`, ou dans les deux.

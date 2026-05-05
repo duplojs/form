@@ -20,12 +20,12 @@ useSlotLayout(name, formField);
 ### Paramètres
 
 - `name`: nom du slot Vue attendu.
-- `formField`: field à réinjecter dans le slot.
+- `formField`: champ à réinjecter dans le slot.
 
 ### Valeur produite
 
-- `currentValue`: identique à celle du field enfant.
-- `check()`: valeur validée du field enfant, ou `undefined` si le slot ne réinjecte pas le field selon le flux choisi.
+- `currentValue`: identique à celle du champ enfant.
+- `check()`: valeur validée du champ enfant, ou `undefined` si le slot ne réinjecte pas le champ selon le flux choisi.
 
 ### Paramètres de slot
 

@@ -4,8 +4,8 @@ title: "@duplojs/form"
 heroAfter: "HomeExample"
 hero:
   name: "@duplojs/form"
-  text: "Juste des super Formulaire VueJS."
-  tagline: "Créer des formulaire complexe sans aucune difficulter et 100% typesafe."
+  text: "Des super formulaires Vue.js, simplement."
+  tagline: "Créez des formulaires complexes sans aucune difficulté, avec un typage à 100 %."
   image: "/images/logo.png"
   actions:
     - theme: brand
@@ -16,11 +16,11 @@ hero:
       link: "https://github.com/duplojs/form"
 features:
   - icon: ✨
-    title: 100% customizable
+    title: 100 % personnalisable
     details: Utilisez vos propres inputs, créez vos propres templates et personnalisez chaque détail de vos formulaires !
   - icon: 🔗
     title: Typés jusqu'au bout des pieds
-    details: Valeur courante, valeur checkée et slots d'insertion complètement typés !
+    details: Valeur courante, valeur validée et slots d'insertion complètement typés !
   - icon: 🗿
     title: Système d'erreur complet
     details: Chaque champ peut avoir son propre message d'erreur, de manière détaillée et automatiquement gérée par la structure du formulaire. L'affichage reste 100% personnalisable !
@@ -29,7 +29,7 @@ features:
     details: Optimisé avec des systèmes de cache pour éviter de reconstruire du DOM inutilement.
   - icon: ☁️
     title: Super léger
-    details: Très peu de fonctions et de code, et tout est tree-shakeable au besoin.
+    details: Très peu de fonctions et de code, avec prise en charge du tree shaking au besoin.
   - icon: 🤩
     title: Inputs et templates par défaut
     details: Rien de mieux pour prototyper que d'avoir tous les composants déjà fournis par défaut !

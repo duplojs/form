@@ -28,7 +28,7 @@ pnpm add @duplojs/form@0 @duplojs/utils@1
 <!--@include: @/examples/v0/vue/guide/quickStart/init.ts-->
 ```
 ::: info
-Tout ce qui provient de `@duplojs/form/vueGrid` et de `@duplojs/form/vueDesignSystem` ne sont que des valeurs fournies par défaut. Tout est interchangeable et surchargeable. Cela permet de configurer rapidement un environnement dans lequel les formulaires sont opérationnels.
+Tout ce qui provient de `@duplojs/form/vueGrid` et de `@duplojs/form/vueDesignSystem` n'est fourni que par défaut. Tout est interchangeable et peut être surchargé. Cela permet de configurer rapidement un environnement dans lequel les formulaires sont opérationnels.
 
 **N'oubliez pas d'importer `@duplojs/form/vueGrid.css` et `@duplojs/form/vueDesignSystem.css` si vous les utilisez.**
 :::

@@ -35,5 +35,5 @@ Template grid par défaut pour le type `check`.
 
 ## Ce que fait ce template
 
-- encapsule le field validé dans une grille ;
+- encapsule le champ validé dans une grille ;
 - affiche l'erreur de validation sous le bloc.

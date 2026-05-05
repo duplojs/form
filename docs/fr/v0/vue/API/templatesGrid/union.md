@@ -42,4 +42,4 @@ Template grid par défaut pour le type `union`.
 ## Ce que fait ce template
 
 - affiche un sélecteur de variante ;
-- rend ensuite le field actif dans la grille.
+- rend ensuite le champ actif dans la grille.

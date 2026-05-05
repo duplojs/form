@@ -19,15 +19,15 @@ useSectionLayout(formField, {
 
 ## Paramètres
 
-- `formField`: field enfant à envelopper.
+- `formField`: champ enfant à envelopper.
 - `title`: titre facultatif de la section.
 - `class`: classe CSS ajoutée au template `section`.
 - `template`: surcharge locale du template `section`.
 
 ## Valeur produite
 
-- `currentValue`: identique à celle du field enfant.
-- `check()`: identique à celui du field enfant.
+- `currentValue`: identique à celle du champ enfant.
+- `check()`: identique à celui du champ enfant.
 
 ## Contrat du template `section`
 

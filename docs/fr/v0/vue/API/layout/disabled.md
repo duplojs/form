@@ -22,13 +22,13 @@ useDisabledLayout(formField, {
 
 ## Paramètres
 
-- `formField`: field enfant.
+- `formField`: champ enfant.
 - `isDisabled()`: condition de désactivation.
 
 ## Valeur produite
 
-- `currentValue`: conserve la valeur interne du field enfant.
-- `check()`: retourne `undefined` si désactivé, sinon le résultat du field enfant.
+- `currentValue`: conserve la valeur interne du champ enfant.
+- `check()`: retourne `undefined` si désactivé, sinon le résultat du champ enfant.
 
 ## Template
 
@@ -37,7 +37,7 @@ Ce layout n'a pas de template dédié.
 Son `getVNode()` retourne directement :
 
 - `null` si le champ est désactivé ;
-- le `VNode` du field enfant sinon.
+- le `VNode` du champ enfant sinon.
 
 Il n'y a donc pas d'exemple de `createTemplate(...)` pour ce layout.
 

@@ -20,7 +20,7 @@ useRepeatLayout(formField, {
 
 ## Paramètres
 
-- `formField`: field répété.
+- `formField`: champ répété.
 - `max`: nombre maximum d'éléments.
 - `min`: nombre minimum d'éléments. Par défaut `0`.
 - `class`: classe CSS ajoutée au template `repeat`.
@@ -31,7 +31,7 @@ useRepeatLayout(formField, {
 - `currentValue`: tableau de valeurs.
 - `check()`: tableau de valeurs validées.
 
-Le `defaultValue` du layout est initialisé avec `min` occurrences du `defaultValue` du field enfant.
+Le `defaultValue` du layout est initialisé avec `min` occurrences du `defaultValue` du champ enfant.
 
 ## Contrat du template `repeat`
 

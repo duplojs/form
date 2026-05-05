@@ -20,8 +20,8 @@ useCheckLayout(formField, {
 
 ## Paramètres
 
-- `formField`: field enfant à valider.
-- `dataParser`: validation et transformation supplémentaires appliquées après `check()` du field enfant.
+- `formField`: champ enfant à valider.
+- `dataParser`: validation et transformation supplémentaires appliquées après `check()` du champ enfant.
 - `refine`: fonction de validation synchrone retournant `EE.ok()` ou `EE.error(message)`.
 - `class`: classe CSS ajoutée au template `check`.
 - `template`: surcharge locale du template `check`.
@@ -30,7 +30,7 @@ useCheckLayout(formField, {
 
 `useCheckLayout(...)` exécute :
 
-1. `check()` du field enfant ;
+1. `check()` du champ enfant ;
 2. `refine(...)`, si présent ;
 3. `dataParser.parse(...)`, si présent.
 

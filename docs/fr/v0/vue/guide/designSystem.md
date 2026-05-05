@@ -14,6 +14,6 @@ Vous y trouvez notamment :
 - des composants `select`, `radio`, `checkbox` et `range` ;
 - des helpers destinés aux templates grid par défaut.
 
-Ce design system repose sur des variables CSS explicites, ce qui permet de le rethémer sans réécrire les composants.
+Ce design system repose sur des variables CSS explicites, ce qui permet de le retoucher sans réécrire les composants.
 
 Pour la documentation détaillée de chaque composant et de ses variables CSS, consultez aussi [l'API designSystem](/fr/v0/vue/API/designSystem/).
