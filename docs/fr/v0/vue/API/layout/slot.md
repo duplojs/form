@@ -80,3 +80,18 @@ useSlotLayout(name, {
 `useSlotLayout(...)` n'a pas de template dédié.
 
 Le rendu passe directement par le slot nommé que vous fournissez sur le composant de formulaire.
+
+## Petit exemple d'implémentation dans un formulaire
+
+```ts twoslash [ts]
+// @version: 0
+// @filename: init.ts
+<!--@include: @/examples/v0/vue/API/layout/slot/init.ts-->
+// @filename: main.ts
+// ---cut---
+<!--@include: @/examples/v0/vue/API/layout/slot/slotForm.ts-->
+```
+
+```vue [vue]
+<!--@include: @/examples/v0/vue/API/layout/slot/slotFormImplement.vue-->
+```

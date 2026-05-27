@@ -80,3 +80,18 @@ useSlotLayout(name, {
 `useSlotLayout(...)` does not have a dedicated template.
 
 Rendering goes directly through the named slot you provide on the form component.
+
+## Small implementation example inside a form
+
+```ts twoslash [ts]
+// @version: 0
+// @filename: init.ts
+<!--@include: @/examples/v0/vue/API/layout/slot/init.ts-->
+// @filename: main.ts
+// ---cut---
+<!--@include: @/examples/v0/vue/API/layout/slot/slotForm.ts-->
+```
+
+```vue [vue]
+<!--@include: @/examples/v0/vue/API/layout/slot/slotFormImplement.vue-->
+```
